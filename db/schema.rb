@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180929203739) do
+ActiveRecord::Schema.define(version: 20180930023651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180929203739) do
     t.string "encrypted_personal_access_token_iv"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "git_hub_username"
   end
 
 end
