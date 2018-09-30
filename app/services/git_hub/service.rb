@@ -32,6 +32,25 @@ module GitHub
 
       HTTParty.get(url, basic_auth: auth)
     end
+
+    # @see https://developer.github.com/v3/orgs/#list-your-organizations
+    #
+    def user_organizations
+      endpoint = '/user/memberships/orgs'
+      url      = "#{BASE_URI}#{endpoint}"
+
+      HTTParty.get(url, basic_auth: auth)
+    end
+
+    # @see https://developer.github.com/v3/repos/#list-organization-repositories
+    #
+    def repos_for(organization)
+      endpoint = "/orgs/#{organization}/repos"
+      url      = "#{BASE_URI}#{endpoint}"
+
+      HTTParty.get(url, basic_auth: auth)
+    end
+
     private
 
     def auth_credentials
