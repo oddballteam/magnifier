@@ -1,4 +1,8 @@
 module GitHub
+  # Note that all calls to the GitHub v3 API returns paginated results.
+  #
+  # @see https://developer.github.com/v3/#pagination
+  #
   class Service
     BASE_URI = 'https://api.github.com'
 
