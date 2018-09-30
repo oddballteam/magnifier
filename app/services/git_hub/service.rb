@@ -6,10 +6,11 @@ module GitHub
   class Service
     BASE_URI = 'https://api.github.com'
 
-    attr_reader :user
+    attr_reader :user, :auth
 
     def initialize(user)
       @user = user
+      @auth = auth_credentials
     end
 
     # Proof of concept for testing that a private repository can be accessed,
@@ -25,12 +26,19 @@ module GitHub
     def spike
       endpoint = '/search/issues'
       repo     = 'department-of-veterans-affairs/vets.gov-team'
-      date     = '2018-09-27'
+      date     = 3.days.ago.to_date.to_s
       query    = "q=type:issue+is:open+repo:#{repo}+created:>=#{date}"
       url      = "#{BASE_URI}#{endpoint}?#{query}"
-      auth     = { username: user.git_hub_username, password: user.personal_access_token }
 
       HTTParty.get(url, basic_auth: auth)
+    end
+    private
+
+    def auth_credentials
+      {
+        username: user.git_hub_username,
+        password: user.personal_access_token
+      }
     end
   end
 end
