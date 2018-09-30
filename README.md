@@ -1,24 +1,3 @@
-# README
+# GitHub Productivity Magnifier
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
