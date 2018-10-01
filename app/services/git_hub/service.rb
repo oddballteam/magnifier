@@ -6,11 +6,11 @@ module GitHub
   class Service
     BASE_URI = 'https://api.github.com'
 
-    attr_reader :user, :auth
+    attr_reader :user, :options
 
     def initialize(user)
       @user = user
-      @auth = auth_credentials
+      @options = set_options
     end
 
     # Proof of concept for testing that a private repository can be accessed,
@@ -30,33 +30,46 @@ module GitHub
       query    = "q=type:issue+is:open+repo:#{repo}+created:>=#{date}"
       url      = "#{BASE_URI}#{endpoint}?#{query}"
 
-      HTTParty.get(url, basic_auth: auth)
+      HTTParty.get url, options
     end
 
+    # Gets all the organizations that the initialized user belong to.
+    #
     # @see https://developer.github.com/v3/orgs/#list-your-organizations
     #
     def user_organizations
       endpoint = '/user/memberships/orgs'
       url      = "#{BASE_URI}#{endpoint}"
 
-      HTTParty.get(url, basic_auth: auth)
+      HTTParty.get url, options
     end
 
+    # Gets all the repositories that belong to the passed organization.
+    #
     # @see https://developer.github.com/v3/repos/#list-organization-repositories
     #
     def repos_for(organization)
       endpoint = "/orgs/#{organization}/repos"
       url      = "#{BASE_URI}#{endpoint}"
 
-      HTTParty.get(url, basic_auth: auth)
+      HTTParty.get url, options
     end
 
     private
 
-    def auth_credentials
+    # @see https://developer.github.com/v3/media/#request-specific-version
+    # @see https://developer.github.com/v3/#user-agent-required
+    #
+    def set_options
       {
-        username: user.git_hub_username,
-        password: user.personal_access_token
+        headers: {
+          'Accepts' => 'application/vnd.github.v3+json',
+          'User-Agent' => 'Oddball',
+        },
+        basic_auth: {
+          username: user.git_hub_username,
+          password: user.personal_access_token
+        }
       }
     end
   end
