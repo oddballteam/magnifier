@@ -17,3 +17,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# ignore RSpec performance examples
+spec/examples.txt
