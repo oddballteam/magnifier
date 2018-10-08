@@ -28,3 +28,6 @@ config/secrets.yml.key
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# ignore RSpec performance examples
+spec/examples.txt

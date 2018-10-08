@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GitHub
   # Note that all calls to the GitHub v3 API returns paginated results.
   #
@@ -64,7 +66,7 @@ module GitHub
       {
         headers: {
           'Accepts' => 'application/vnd.github.v3+json',
-          'User-Agent' => 'Oddball',
+          'User-Agent' => 'Oddball'
         },
         basic_auth: {
           username: user.git_hub_username,

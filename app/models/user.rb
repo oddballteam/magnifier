@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # @see https://github.com/attr-encrypted/attr_encrypted#usage
   #
