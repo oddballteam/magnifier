@@ -1,0 +1,37 @@
+inherit_from: .rubocop_todo.yml
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: empty_lines, no_empty_lines
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - 'db/schema.rb'
+
+# Cop supports --auto-correct.
+Style/ExpandPathArguments:
+  Exclude:
+    - 'bin/bundle'
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/setup'
+    - 'bin/update'
+    - 'spec/rails_helper.rb'
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
+# SupportedStyles: single_quotes, double_quotes
+Style/StringLiterals:
+  Exclude:
+    - 'db/schema.rb'
+
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
+# URISchemes: http, https
+Metrics/LineLength:
+  Exclude:
+  - 'db/schema.rb'
+  - spec/rails_helper.rb
