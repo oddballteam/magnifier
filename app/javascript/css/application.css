@@ -12,8 +12,6 @@ p {
   font-family: 'Open Sans', sans-serif;
 }
 
-
-
 .hello {
   @apply text-purple p-10 text-center
 }
