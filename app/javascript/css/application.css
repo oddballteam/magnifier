@@ -5,15 +5,15 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Proza+Libre');
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Proza Libre', sans-serif;
+  font-family: 'Proza Libre', sans-serif;
 }
 
 p {
-	font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 
 
 .hello {
-	@apply text-purple p-10 text-center
+  @apply text-purple p-10 text-center
 }
