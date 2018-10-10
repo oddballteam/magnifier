@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2'
 
 gem 'attr_encrypted', '~> 3.0.0'
 gem 'coffee-rails', '~> 4.2'
@@ -19,7 +19,11 @@ gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
+gem 'webpacker', '>= 4.0.x'
+gem 'react-rails'
 
+gem 'graphql'
+gem "omniauth-google-oauth2"
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -37,3 +41,7 @@ group :development do
   # <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
 end
+
+gem 'graphiql-rails', group: :development
+gem 'pry', group: :development
+gem 'bootsnap'
