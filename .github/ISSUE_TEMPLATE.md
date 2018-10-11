@@ -3,4 +3,4 @@
  
 ## Definition of Done
  
- - [ ] _Replace this line with individual tasks/acceptance criteria_
+- [ ] _Replace this line with individual tasks/acceptance criteria_
