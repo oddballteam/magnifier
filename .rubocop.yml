@@ -39,3 +39,12 @@ Metrics/LineLength:
   Exclude:
   - 'db/schema.rb'
   - spec/rails_helper.rb
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
