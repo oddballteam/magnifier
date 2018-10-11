@@ -15,12 +15,12 @@ gem 'httparty', '~> 0.16.2'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
+gem 'react-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '>= 4.0.x'
-gem 'react-rails'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

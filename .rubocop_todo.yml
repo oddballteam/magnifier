@@ -12,13 +12,6 @@ Layout/EmptyLines:
   Exclude:
     - 'bin/setup'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Strict.
-Style/NumericLiterals:
-  MinDigits: 15
-
-# Offense count: 2
 # Cop supports --auto-correct.
 Style/StderrPuts:
   Exclude:
