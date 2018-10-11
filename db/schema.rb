@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20181010154342) do
     t.string "encrypted_personal_access_token_iv"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "git_hub_username"
+    t.string "github_username"
   end
 
   add_foreign_key "repositories", "organizations"

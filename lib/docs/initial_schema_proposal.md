@@ -182,7 +182,7 @@ We would need four tables, two of which have a many-to-many relationship between
     :email                              => "john@example.com",
     :encrypted_personal_access_token    => nil,
     :encrypted_personal_access_token_iv => nil,
-    :git_hub_username                   => "jsmith"
+    :github_username                   => "jsmith"
   },
   #<User> {
     :first_name                         => "Susan",
@@ -190,7 +190,7 @@ We would need four tables, two of which have a many-to-many relationship between
     :email                              => "susan@example.com",
     :encrypted_personal_access_token    => nil,
     :encrypted_personal_access_token_iv => nil,
-    :git_hub_username                   => "suzy"
+    :github_username                   => "suzy"
   }
 ]
 ```

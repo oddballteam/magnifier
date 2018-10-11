@@ -69,7 +69,7 @@ module GitHub
           'User-Agent' => 'Oddball'
         },
         basic_auth: {
-          username: user.git_hub_username,
+          username: user.github_username,
           password: user.personal_access_token
         }
       }
