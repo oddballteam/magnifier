@@ -11,11 +11,3 @@
 Layout/EmptyLines:
   Exclude:
     - 'bin/setup'
-
-# Cop supports --auto-correct.
-Style/StderrPuts:
-  Exclude:
-    - 'bin/yarn'
-
-Style/Documentation:
-  Enabled: false
