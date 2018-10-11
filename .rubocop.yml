@@ -39,11 +39,12 @@ Metrics/LineLength:
   Exclude:
   - 'db/schema.rb'
   - spec/rails_helper.rb
+  - 'spec/factories/*'
 
 Style/FrozenStringLiteralComment:
   Exclude:
-    - 'db/schema.rb'
-    - 'db/seeds.rb'
+    - 'db/*/*'
+    - 'db/*'
 
 Metrics/BlockLength:
   Exclude:

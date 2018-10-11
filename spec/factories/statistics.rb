@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :statistic do
-    sequence(:source_id, 1000) { |n| n.to_s }
+    sequence(:source_id, 1000, &:to_s)
     source_type { Statistic::PR }
     source { Statistic::GITHUB }
     state { Statistic::OPEN }

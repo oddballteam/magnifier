@@ -1,3 +1,6 @@
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
+
 class CreateGithubUserAndStatisticTables < ActiveRecord::Migration[5.1]
   def change
     create_table :github_users do |t|
@@ -34,3 +37,6 @@ class CreateGithubUserAndStatisticTables < ActiveRecord::Migration[5.1]
     end
   end
 end
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
