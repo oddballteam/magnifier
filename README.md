@@ -3,6 +3,10 @@
 A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
 
 
+## Getting started
+
+**You will need to get the master key via keybase and paste the file into `config/master.key`**
+
 ## Front end
 React-rails is configured, without react router currently
 
