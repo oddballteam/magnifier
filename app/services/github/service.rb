@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module GitHub
+module Github
   # Note that all calls to the GitHub v3 API returns paginated results.
   #
   # @see https://developer.github.com/v3/#pagination
