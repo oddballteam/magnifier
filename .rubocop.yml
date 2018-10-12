@@ -35,6 +35,7 @@ Style/StringLiterals:
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
+  Max: 120
   Exclude:
   - 'db/schema.rb'
   - spec/rails_helper.rb
