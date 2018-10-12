@@ -4,9 +4,9 @@
 #
 class User < ApplicationRecord
   # @see https://github.com/attr-encrypted/attr_encrypted#usage
-  #
+  # @see https://github.com/attr-encrypted/attr_encrypted/issues/311
   attr_encrypted :personal_access_token,
-                 key: Rails.application.credentials.personal_access_token_key,
+                 key: [Rails.application.credentials.personal_access_token_key].pack("H*"),
                  encode: true
 
   validates :first_name, :last_name, presence: true
