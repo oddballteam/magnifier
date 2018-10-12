@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+# Class to hold the data we need in order to compile and
+# analyze the contributions that employees are making in their
+# recurring work done in pull requests and issues.
+#
+# Sample data sources for these statistics are GitHub's and
+# JIRA's APIs.
+#
 class Statistic < ApplicationRecord
   # source_types
   ISSUE = 'issue'

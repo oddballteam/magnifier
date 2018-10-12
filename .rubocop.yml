@@ -43,9 +43,17 @@ Metrics/LineLength:
 
 Style/FrozenStringLiteralComment:
   Exclude:
-    - 'db/*/*'
-    - 'db/*'
+    - 'db/**/*'
 
 Metrics/BlockLength:
   Exclude:
     - 'db/schema.rb'
+
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+    - db/seeds.rb
+
+Style/StderrPuts:
+  Exclude:
+    - bin/yarn
