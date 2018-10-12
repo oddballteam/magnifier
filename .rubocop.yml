@@ -39,3 +39,21 @@ Metrics/LineLength:
   Exclude:
   - 'db/schema.rb'
   - spec/rails_helper.rb
+  - 'spec/factories/*'
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
+
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+    - db/seeds.rb
+
+Style/StderrPuts:
+  Exclude:
+    - bin/yarn

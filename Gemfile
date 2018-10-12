@@ -35,3 +35,7 @@ group :development do
   # Access an interactive console on exception pages or by calling `console` anywhere in the code.
   gem 'web-console', '>= 3.3.0'
 end
+
+group :test do
+  gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+end
