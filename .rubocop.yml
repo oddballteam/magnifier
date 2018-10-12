@@ -1,11 +1,14 @@
-inherit_from: .rubocop_todo.yml
-
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: empty_lines, no_empty_lines
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - 'db/schema.rb'
+
+Style/Documentation:
+  Exclude:
+    - 'config/**/*'
+    - 'db/migrate/*'
 
 # Cop supports --auto-correct.
 Style/ExpandPathArguments:
@@ -36,3 +39,21 @@ Metrics/LineLength:
   Exclude:
   - 'db/schema.rb'
   - spec/rails_helper.rb
+  - 'spec/factories/*'
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
+
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+    - db/seeds.rb
+
+Style/StderrPuts:
+  Exclude:
+    - bin/yarn
