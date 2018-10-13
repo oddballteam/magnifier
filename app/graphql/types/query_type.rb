@@ -6,7 +6,9 @@ module Types
   # resides in the Types::QueryTypes::Organization module.
   #
   class QueryType < Types::BaseObject
+    include Types::QueryTypes::GithubUser
     include Types::QueryTypes::Organization
     include Types::QueryTypes::Repository
+    include Types::QueryTypes::Statistic
   end
 end
