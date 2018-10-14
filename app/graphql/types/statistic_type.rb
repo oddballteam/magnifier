@@ -2,7 +2,7 @@
 
 module Types
   class StatisticType < Types::BaseObject
-    field :id, ID, null: false
+    field :id, Int, null: false
     field :source_id, String, null: false
     field :source_type, String, null: false
     field :source, String, null: false

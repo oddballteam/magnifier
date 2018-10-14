@@ -2,7 +2,7 @@
 
 module Types
   class GithubUserType < Types::BaseObject
-    field :id, ID, null: false
+    field :id, Int, null: false
     field :user_id, Int, null: true
     field :github_login, String, null: false
     field :avatar_url, String, null: true
