@@ -14,6 +14,8 @@ module Types
     field :source_created_at, String, null: true
     field :source_updated_at, String, null: true
     field :source_closed_at, String, null: true
+    field :created_at, String, null: false
+    field :updated_at, String, null: false
 
     field :github_users, [GithubUserType], null: true,
       description: "This Statistic's GithubUsers, or null if this Statistic has no GithubUsers."
