@@ -2,5 +2,5 @@
 
 class MagnifierSchema < GraphQL::Schema
   mutation(Types::MutationType)
-  query(Types::QueryType)
+  query(Queries::RootQuery)
 end
