@@ -17,7 +17,7 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = GithubMagnifierSchema.execute(
+    result = MagnifierSchema.execute(
       query,
       variables: variables,
       context: context,
