@@ -10,9 +10,9 @@
 #
 class GraphqlController < ApplicationController
   def execute
-    variables = ensure_hash(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
+    variables = ensure_hash(graphql_params[:variables])
+    query = graphql_params[:query]
+    operation_name = graphql_params[:operationName]
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
@@ -31,6 +31,10 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def graphql_params
+    params.permit(:query, :variables, :operationName)
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
