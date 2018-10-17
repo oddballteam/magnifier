@@ -5,6 +5,11 @@ require_relative 'user_query'
 
 module Queries
   module Users
+    # Module that:
+    #   - lists all of the User queries
+    #   - assigns a field name to each query
+    #   - maps a given field name to a resolver
+    #
     module QueryManifest
       extend ActiveSupport::Concern
 

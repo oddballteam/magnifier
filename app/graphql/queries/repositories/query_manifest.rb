@@ -5,6 +5,11 @@ require_relative 'repository_query'
 
 module Queries
   module Repositories
+    # Module that:
+    #   - lists all of the Repository queries
+    #   - assigns a field name to each query
+    #   - maps a given field name to a resolver
+    #
     module QueryManifest
       extend ActiveSupport::Concern
 

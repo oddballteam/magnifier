@@ -2,6 +2,8 @@
 
 module Queries
   module Statistics
+    # Query class that fetches all Statistics in the db
+    #
     class AllStatisticsQuery < Queries::BaseQuery
       description 'All statistics.'
 

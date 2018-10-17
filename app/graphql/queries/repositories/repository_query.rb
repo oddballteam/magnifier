@@ -2,6 +2,8 @@
 
 module Queries
   module Repositories
+    # Query class that fetches one Repository based on passed criteria
+    #
     class RepositoryQuery < Queries::BaseQuery
       description 'The repository with the passed criteria.'
 

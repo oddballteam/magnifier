@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Types
+  # Defines the fields on Statistic. Fields expose the data that may
+  # be queried, and validated.
+  #
   class StatisticType < Types::BaseObject
     field :id, Int, null: false
     field :source_id, String, null: false

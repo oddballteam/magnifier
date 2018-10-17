@@ -2,6 +2,8 @@
 
 module Queries
   module Repositories
+    # Query class that fetches all Repositories in the db
+    #
     class AllRepositoriesQuery < Queries::BaseQuery
       description 'All repositories.'
 

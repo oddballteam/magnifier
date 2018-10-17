@@ -2,6 +2,8 @@
 
 module Queries
   module Organizations
+    # Query class that fetches one Organization based on passed criteria
+    #
     class OrganizationQuery < Queries::BaseQuery
       description 'The organization with the passed criteria.'
 

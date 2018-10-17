@@ -2,6 +2,8 @@
 
 module Queries
   module Users
+    # Query class that fetches one User based on passed criteria
+    #
     class UserQuery < Queries::BaseQuery
       description 'The User with the passed criteria.'
 

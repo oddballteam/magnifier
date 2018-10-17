@@ -2,6 +2,8 @@
 
 module Mutations
   module Statistics
+    # Mutation class that creates a new Statistic in the db
+    #
     class CreateStatisticMutation < Mutations::BaseMutation
       description 'Creates a Statistic with the passed data.'
       null true

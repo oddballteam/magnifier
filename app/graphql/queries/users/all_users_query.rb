@@ -2,6 +2,8 @@
 
 module Queries
   module Users
+    # Query class that fetches all Users in the db
+    #
     class AllUsersQuery < Queries::BaseQuery
       description 'All Users.'
 

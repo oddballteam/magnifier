@@ -5,6 +5,11 @@ require_relative 'update_statistic_mutation'
 
 module Mutations
   module Statistics
+    # Module that:
+    #   - lists all of the Statistic mutations
+    #   - assigns a field name to each mutation
+    #   - maps a given field name to a resolver
+    #
     module MutationManifest
       extend ActiveSupport::Concern
 

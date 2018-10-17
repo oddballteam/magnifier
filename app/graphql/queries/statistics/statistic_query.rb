@@ -2,6 +2,8 @@
 
 module Queries
   module Statistics
+    # Query class that fetches one Statistic based on passed criteria
+    #
     class StatisticQuery < Queries::BaseQuery
       description 'The statistic with the passed criteria.'
 

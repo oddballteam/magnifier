@@ -5,6 +5,10 @@ require_relative 'organization_query'
 
 module Queries
   module Organizations
+    #   - lists all of the Organization queries
+    #   - assigns a field name to each query
+    #   - maps a given field name to a resolver
+    #
     module QueryManifest
       extend ActiveSupport::Concern
 

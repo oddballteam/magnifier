@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Types
+  # Defines the fields on Organization. Fields expose the data that may
+  # be queried, and validated.
+  #
   class OrganizationType < Types::BaseObject
     field :id, Int, null: false
     field :name, String, null: false

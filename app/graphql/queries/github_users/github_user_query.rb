@@ -2,6 +2,8 @@
 
 module Queries
   module GithubUsers
+    # Query class that fetches one GithubUser based on passed criteria
+    #
     class GithubUserQuery < Queries::BaseQuery
       description 'The Github User with the passed criteria.'
 

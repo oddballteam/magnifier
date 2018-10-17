@@ -2,6 +2,8 @@
 
 module Mutations
   module Statistics
+    # Mutation class that updates an existing Statistic in the db
+    #
     class UpdateStatisticMutation < Mutations::BaseMutation
       description 'Updates a Statistic with the passed data.'
       null true

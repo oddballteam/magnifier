@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Types
+  # Input Object for mutating a Statistic.
+  #
+  # @see http://graphql-ruby.org/type_definitions/input_objects.html
+  #
   class StatisticAttributes < BaseInputObject
     description 'Attributes for creating or updating a Statistic.'
 

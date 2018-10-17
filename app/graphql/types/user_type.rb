@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Types
+  # Defines the fields on User. Fields expose the data that may
+  # be queried, and validated.
+  #
   class UserType < Types::BaseObject
     field :id, Int, null: false
     field :first_name, String, null: false
