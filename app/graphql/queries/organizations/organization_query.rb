@@ -3,7 +3,7 @@
 module Queries
   module Organizations
     class OrganizationQuery < Queries::BaseQuery
-      description "The organization with the passed criteria."
+      description 'The organization with the passed criteria.'
 
       type Types::OrganizationType, null: false
       argument :id, ID, required: false

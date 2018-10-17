@@ -3,7 +3,7 @@
 module Queries
   module Organizations
     class AllOrganizationsQuery < Queries::BaseQuery
-      description "All organizations."
+      description 'All organizations.'
 
       type [Types::OrganizationType], null: false
       argument :limit, Integer, required: false

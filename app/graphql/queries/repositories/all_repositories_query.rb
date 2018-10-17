@@ -3,7 +3,7 @@
 module Queries
   module Repositories
     class AllRepositoriesQuery < Queries::BaseQuery
-      description "All repositories."
+      description 'All repositories.'
 
       type [Types::RepositoryType], null: false
       argument :limit, Integer, required: false

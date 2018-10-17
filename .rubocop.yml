@@ -59,3 +59,7 @@ Style/NumericLiterals:
 Style/StderrPuts:
   Exclude:
     - bin/yarn
+
+Metrics/MethodLength:
+  Exclude:
+    - app/controllers/graphql_controller.rb

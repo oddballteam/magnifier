@@ -3,7 +3,7 @@
 module Queries
   module Users
     class UserQuery < Queries::BaseQuery
-      description "The User with the passed criteria."
+      description 'The User with the passed criteria.'
 
       type Types::UserType, null: false
       argument :id, ID, required: false

@@ -3,7 +3,7 @@
 module Queries
   module GithubUsers
     class AllGithubUsersQuery < Queries::BaseQuery
-      description "All Github Users."
+      description 'All Github Users.'
 
       type [Types::GithubUserType], null: false
       argument :limit, Integer, required: false

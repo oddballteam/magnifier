@@ -8,7 +8,11 @@ module Types
     field :created_at, String, null: false
     field :updated_at, String, null: false
 
-    field :repositories, [RepositoryType], null: true,
+    field(
+      :repositories,
+      [RepositoryType],
+      null: true,
       description: "This organization's repositories, or null if this organization has no repositories."
+    )
   end
 end

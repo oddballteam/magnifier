@@ -3,7 +3,7 @@
 module Queries
   module Repositories
     class RepositoryQuery < Queries::BaseQuery
-      description "The repository with the passed criteria."
+      description 'The repository with the passed criteria.'
 
       type Types::RepositoryType, null: false
       argument :id, ID, required: false

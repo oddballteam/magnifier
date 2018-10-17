@@ -3,7 +3,7 @@
 module Queries
   module GithubUsers
     class GithubUserQuery < Queries::BaseQuery
-      description "The Github User with the passed criteria."
+      description 'The Github User with the passed criteria.'
 
       type Types::GithubUserType, null: false
       argument :id, ID, required: false

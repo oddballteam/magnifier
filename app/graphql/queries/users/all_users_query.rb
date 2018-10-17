@@ -3,7 +3,7 @@
 module Queries
   module Users
     class AllUsersQuery < Queries::BaseQuery
-      description "All Users."
+      description 'All Users.'
 
       type [Types::UserType], null: false
       argument :limit, Integer, required: false

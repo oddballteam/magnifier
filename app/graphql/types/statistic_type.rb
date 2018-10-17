@@ -17,7 +17,11 @@ module Types
     field :created_at, String, null: false
     field :updated_at, String, null: false
 
-    field :github_users, [GithubUserType], null: true,
+    field(
+      :github_users,
+      [GithubUserType],
+      null: true,
       description: "This Statistic's GithubUsers, or null if this Statistic has no GithubUsers."
+    )
   end
 end

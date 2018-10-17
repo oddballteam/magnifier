@@ -3,7 +3,7 @@
 module Queries
   module Statistics
     class StatisticQuery < Queries::BaseQuery
-      description "The statistic with the passed criteria."
+      description 'The statistic with the passed criteria.'
 
       type Types::StatisticType, null: false
       argument :id, ID, required: false

@@ -13,7 +13,11 @@ module Types
     field :created_at, String, null: false
     field :updated_at, String, null: false
 
-    field :statistics, [StatisticType], null: true,
+    field(
+      :statistics,
+      [StatisticType],
+      null: true,
       description: "This GithubUser's statistics, or null if this GithubUser has no statistics."
+    )
   end
 end

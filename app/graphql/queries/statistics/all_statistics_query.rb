@@ -3,7 +3,7 @@
 module Queries
   module Statistics
     class AllStatisticsQuery < Queries::BaseQuery
-      description "All statistics."
+      description 'All statistics.'
 
       type [Types::StatisticType], null: false
       argument :limit, Integer, required: false
