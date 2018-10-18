@@ -76,6 +76,11 @@ ActiveRecord::Schema.define(version: 20181010154342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "github_username"
+    t.string "provider"
+    t.string "uid"
+    t.string "name"
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
   end
 
   add_foreign_key "repositories", "organizations"

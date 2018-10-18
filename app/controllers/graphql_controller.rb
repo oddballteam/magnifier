@@ -15,7 +15,7 @@ class GraphqlController < ApplicationController
     operation_name = graphql_params[:operationName]
     context = {
       # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user,
     }
     result = MagnifierSchema.execute(
       query,
