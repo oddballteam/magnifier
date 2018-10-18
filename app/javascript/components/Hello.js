@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 class Hello extends React.Component {
   render() {
     return (
-      <div>
+      <div className="flex-auto">
         <h1 className="hello">Hello World!</h1>
       </div>
     );

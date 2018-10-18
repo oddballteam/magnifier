@@ -1,17 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Proza+Libre');
 @tailwind preflight;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Proza+Libre');
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Proza Libre', sans-serif;
 }
 
-p {
+* {
   font-family: 'Open Sans', sans-serif;
+}
+a:visited {
+  color: #3490DC;
 }
 
 .hello {
   @apply text-purple p-10 text-center
+}
+.goodbye {
+  @apply text-blue p-10 text-center
 }
