@@ -21,6 +21,9 @@ const Navbar = () => (
         Goodbye
       </NavLink>
     </li>
+    <li className="mr-6 p5">
+      <a href="/auth/google_oauth2">Login</a>
+    </li>
   </ul>
 );
 export default Navbar;
