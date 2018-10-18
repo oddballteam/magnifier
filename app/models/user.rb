@@ -9,7 +9,19 @@ class User < ApplicationRecord
                  key: Rails.application.credentials.encryption_key,
                  encode: true
 
-  validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :github_username, presence: true, uniqueness: true
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.email = auth.info["email"]
+      user.first_name = auth.info["first_name"]
+      user.last_name = auth.info["last_name"]
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name
+      user.oauth_token = auth.credentials.token
+      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      user.save!
+    end
+  end
 end

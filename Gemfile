@@ -19,6 +19,7 @@ gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '>= 4.0.x'
+gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
@@ -36,6 +37,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Access an interactive console on exception pages or by calling `console` anywhere in the code.
   gem 'web-console', '>= 3.3.0'
+  gem 'pry'
 end
 
 group :test do
