@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'statistics_query'
-require_relative 'statistic_query'
-
 module Queries
   module Statistics
     # Module that:
