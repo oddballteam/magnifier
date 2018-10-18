@@ -40,7 +40,7 @@ RSpec.describe 'GraphQL requests', type: :request do
       let(:bad_query) do
         <<-GRAPHQL
           query {
-            allOrganizations {
+            organizations {
             }
           }
         GRAPHQL

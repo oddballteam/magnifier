@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'organizations_query'
-require_relative 'organization_query'
-
 module Queries
   module Organizations
     #   - lists all of the Organization queries
