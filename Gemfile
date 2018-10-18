@@ -9,6 +9,7 @@ gem 'rails', '~> 5.2.1'
 gem 'attr_encrypted', '~> 3.0.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'coffee-rails', '~> 4.2'
+gem 'graphql', '~> 1.8', '>= 1.8.10'
 gem 'httparty', '~> 0.16.2'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -28,6 +29,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'graphiql-rails', '~> 1.4', '>= 1.4.11'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'

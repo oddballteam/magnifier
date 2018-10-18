@@ -48,6 +48,8 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'db/schema.rb'
+    - spec/graphql/**/*
+    - spec/requests/**/*
 
 Style/NumericLiterals:
   Exclude:
@@ -57,3 +59,7 @@ Style/NumericLiterals:
 Style/StderrPuts:
   Exclude:
     - bin/yarn
+
+Metrics/MethodLength:
+  Exclude:
+    - app/controllers/graphql_controller.rb
