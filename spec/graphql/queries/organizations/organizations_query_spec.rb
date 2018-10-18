@@ -2,36 +2,36 @@
 
 require 'rails_helper'
 
-RSpec.describe Queries::GithubUsers::AllGithubUsersQuery do
-  before { 6.times { create :github_user } }
+RSpec.describe Queries::Organizations::OrganizationsQuery do
+  before { 6.times { create :organization } }
 
   context 'with no arguments' do
     let(:query) do
       <<-GRAPHQL
         query {
-          allGithubUsers {
-            githubLogin
-            id
-            userId
-            githubId
+          organizations {
+            url
+            name
+            createdAt
+            updatedAt
           }
         }
       GRAPHQL
     end
     let(:response) { MagnifierSchema.execute(query, context: {}) }
-    let(:results) { response.dig('data', 'allGithubUsers') }
+    let(:results) { response.dig('data', 'organizations') }
 
-    it 'returns all Github Users in the db' do
+    it 'returns all organizations in the db' do
       expect(results.size).to eq(6)
     end
 
     it 'returns the requested db attributes' do
       expect(results.first.keys).to match(
         %w[
-          githubLogin
-          id
-          userId
-          githubId
+          url
+          name
+          createdAt
+          updatedAt
         ]
       )
     end
@@ -41,11 +41,9 @@ RSpec.describe Queries::GithubUsers::AllGithubUsersQuery do
     let(:limited_query) do
       <<-GRAPHQL
         query {
-          allGithubUsers(limit: 3) {
-            githubLogin
-            id
-            userId
-            githubId
+          organizations(limit: 3) {
+            url
+            name
           }
         }
       GRAPHQL
@@ -53,7 +51,7 @@ RSpec.describe Queries::GithubUsers::AllGithubUsersQuery do
 
     it 'limits the response items to the requested limit' do
       response = MagnifierSchema.execute limited_query, context: {}
-      results  = response.dig('data', 'allGithubUsers')
+      results  = response.dig('data', 'organizations')
 
       expect(results.size).to eq(3)
     end

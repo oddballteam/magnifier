@@ -4,7 +4,7 @@ module Queries
   module Statistics
     # Query class that fetches all Statistics in the db
     #
-    class AllStatisticsQuery < Queries::BaseQuery
+    class StatisticsQuery < Queries::BaseQuery
       description 'All statistics.'
 
       type [Types::StatisticType], null: false

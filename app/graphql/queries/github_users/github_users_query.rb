@@ -4,7 +4,7 @@ module Queries
   module GithubUsers
     # Query class that fetches all GithubUsers in the db
     #
-    class AllGithubUsersQuery < Queries::BaseQuery
+    class GithubUsersQuery < Queries::BaseQuery
       description 'All Github Users.'
 
       type [Types::GithubUserType], null: false
