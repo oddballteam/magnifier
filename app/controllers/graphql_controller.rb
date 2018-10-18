@@ -9,6 +9,7 @@
 # @see http://graphql-ruby.org/schema/generators#graphqlinstall
 #
 class GraphqlController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def execute
     variables = ensure_hash(graphql_params[:variables])
     query = graphql_params[:query]
