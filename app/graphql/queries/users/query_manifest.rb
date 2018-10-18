@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'all_users_query'
+require_relative 'users_query'
 require_relative 'user_query'
 
 module Queries
@@ -14,8 +14,8 @@ module Queries
       extend ActiveSupport::Concern
 
       included do
-        field :all_users, resolver: Queries::Users::AllUsersQuery
         field :user, resolver: Queries::Users::UserQuery
+        field :users, resolver: Queries::Users::UsersQuery
       end
     end
   end

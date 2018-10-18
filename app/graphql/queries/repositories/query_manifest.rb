@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'all_repositories_query'
+require_relative 'repositories_query'
 require_relative 'repository_query'
 
 module Queries
@@ -14,7 +14,7 @@ module Queries
       extend ActiveSupport::Concern
 
       included do
-        field :all_repositories, resolver: Queries::Repositories::AllRepositoriesQuery
+        field :repositories, resolver: Queries::Repositories::RepositoriesQuery
         field :repository, resolver: Queries::Repositories::RepositoryQuery
       end
     end

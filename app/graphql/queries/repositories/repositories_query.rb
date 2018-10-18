@@ -4,7 +4,7 @@ module Queries
   module Repositories
     # Query class that fetches all Repositories in the db
     #
-    class AllRepositoriesQuery < Queries::BaseQuery
+    class RepositoriesQuery < Queries::BaseQuery
       description 'All repositories.'
 
       type [Types::RepositoryType], null: false

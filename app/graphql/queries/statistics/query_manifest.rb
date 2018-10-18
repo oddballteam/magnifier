@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'all_statistics_query'
+require_relative 'statistics_query'
 require_relative 'statistic_query'
 
 module Queries
@@ -14,8 +14,8 @@ module Queries
       extend ActiveSupport::Concern
 
       included do
-        field :all_statistics, resolver: Queries::Statistics::AllStatisticsQuery
         field :statistic, resolver: Queries::Statistics::StatisticQuery
+        field :statistics, resolver: Queries::Statistics::StatisticsQuery
       end
     end
   end

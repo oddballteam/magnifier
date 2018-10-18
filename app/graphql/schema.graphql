@@ -56,26 +56,20 @@ type RootMutation {
 }
 
 type RootQuery {
-  # All Github Users.
-  allGithubUsers(limit: Int): [GithubUser!]!
-
-  # All organizations.
-  allOrganizations(limit: Int): [Organization!]!
-
-  # All repositories.
-  allRepositories(limit: Int): [Repository!]!
-
-  # All statistics.
-  allStatistics(limit: Int): [Statistic!]!
-
-  # All Users.
-  allUsers(limit: Int): [User!]!
-
   # The Github User with the passed criteria.
   githubUser(githubLogin: String, id: ID): GithubUser!
 
+  # All Github Users.
+  githubUsers(limit: Int): [GithubUser!]!
+
   # The organization with the passed criteria.
   organization(id: ID, name: String): Organization!
+
+  # All organizations.
+  organizations(limit: Int): [Organization!]!
+
+  # All repositories.
+  repositories(limit: Int): [Repository!]!
 
   # The repository with the passed criteria.
   repository(id: ID, name: String): Repository!
@@ -83,8 +77,14 @@ type RootQuery {
   # The statistic with the passed criteria.
   statistic(id: ID, sourceId: String): Statistic!
 
+  # All statistics.
+  statistics(limit: Int): [Statistic!]!
+
   # The User with the passed criteria.
   user(githubUsername: String, id: ID): User!
+
+  # All Users.
+  users(limit: Int): [User!]!
 }
 
 type Statistic {

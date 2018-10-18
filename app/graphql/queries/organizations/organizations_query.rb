@@ -4,7 +4,7 @@ module Queries
   module Organizations
     # Query class that fetches all Organizations in the db
     #
-    class AllOrganizationsQuery < Queries::BaseQuery
+    class OrganizationsQuery < Queries::BaseQuery
       description 'All organizations.'
 
       type [Types::OrganizationType], null: false

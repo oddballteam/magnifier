@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Queries::Statistics::AllStatisticsQuery do
+RSpec.describe Queries::Statistics::StatisticsQuery do
   before { 6.times { create :statistic } }
 
   context 'with no arguments' do
     let(:query) do
       <<-GRAPHQL
         query {
-          allStatistics {
+          statistics {
             source
             sourceId
             sourceType
@@ -23,7 +23,7 @@ RSpec.describe Queries::Statistics::AllStatisticsQuery do
       GRAPHQL
     end
     let(:response) { MagnifierSchema.execute(query, context: {}) }
-    let(:results) { response.dig('data', 'allStatistics') }
+    let(:results) { response.dig('data', 'statistics') }
 
     it 'returns all Statistics in the db' do
       expect(results.size).to eq(6)
@@ -49,7 +49,7 @@ RSpec.describe Queries::Statistics::AllStatisticsQuery do
     let(:limited_query) do
       <<-GRAPHQL
         query {
-          allStatistics(limit: 3) {
+          statistics(limit: 3) {
             source
             sourceId
             sourceType
@@ -65,7 +65,7 @@ RSpec.describe Queries::Statistics::AllStatisticsQuery do
 
     it 'limits the response items to the requested limit' do
       response = MagnifierSchema.execute limited_query, context: {}
-      results  = response.dig('data', 'allStatistics')
+      results  = response.dig('data', 'statistics')
 
       expect(results.size).to eq(3)
     end
