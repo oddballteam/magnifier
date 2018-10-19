@@ -6,6 +6,8 @@ A spike for a tool to reveal the individual and team contributions that employee
 
 **You will need to get the master key via keybase and copy the file to `config/master.key`**
 
+Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+
 ## Front end
 
 React-rails is configured, without react router currently
