@@ -17,8 +17,8 @@
     "yarn": "^1.10.1"
   },
   "scripts": {
-    "eslint:fix": "eslint --fix app/javascript --ignore-pattern tailwind.js",
-    "eslint": "eslint app/javascript --ignore-pattern tailwind.js"
+    "eslint:fix": "eslint --fix app/javascript",
+    "eslint": "eslint app/javascript"
   },
   "version": "1.0.0",
   "main": "index.js",
