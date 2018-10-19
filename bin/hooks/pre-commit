@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Enforce no direct commits to master
 branch="$(git rev-parse --abbrev-ref HEAD)"
@@ -7,27 +7,4 @@ if [ "$branch" = "master" ]; then
   exit 1
 fi
 
-# Pronto crashes on checking new files
-# so we reset them and re-add after
-newfiles=$(git diff --name-only --diff-filter=A HEAD | \
-           grep -e '\.\(rb\|rake\)$' | tr '\n' ' ')
-
-[ -z "${newfiles// }" ] && exit
-
-git reset $newfiles
-
-# Check for pronto and run on staged files
-hash pronto 2>/dev/null || {
-  echo >&2 "Pronto is not installed. Install with 'gem install pronto
-pronto-rubocop'";
-  echo >&2 "Find other Pronto runners at https://github.com/mmozuras/pronto#runners";
-  exit 0;
-}
-
-status=0
-bundle exec pronto run --staged || let ++status
-git add $newfiles
-
-bundle exec rubocop `echo $newfiles` || let ++status
-
-exit $status
+exit 0
