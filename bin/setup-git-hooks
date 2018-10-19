@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'fileutils'
+require 'highline/import'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+chdir APP_ROOT do
+  hooks      = Dir[APP_ROOT + '/bin/hooks/*']
+  hooks_path = APP_ROOT + '/.git/hooks'
+
+  exit unless HighLine.agree('This will overwrite existing hooks in .git/hooks. Do you want to proceed?')
+  hooks.each do |hook|
+    hook_path = hooks_path + '/' + hook.split('/').last
+    return true if FileUtils.uptodate?(hook_path, [hook])
+
+    puts "Copying hook to #{hook_path}...\n"
+    FileUtils.cp hook, hook_path
+  end
+end

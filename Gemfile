@@ -29,8 +29,14 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman'
   gem 'graphiql-rails', '~> 1.4', '>= 1.4.11'
+  gem 'highline', require: false
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'pronto'
+  gem 'pronto-brakeman', require: false
+  gem 'pronto-reek', require: false
+  gem 'pronto-rubocop', require: false
   gem 'spring'
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
   gem 'spring-watcher-listen', '~> 2.0.0'
