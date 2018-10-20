@@ -13,29 +13,35 @@ At its core, Magnifier is comprised of a Rails backend, and a React frontend.  H
 
 Once you've ensured that you have all of the above installed, here are the steps to getting the app up and running locally:
 
-1. Clone the repo and `cd` into the `magnifier` directory
+#### 1. Clone the repo
 
-2. You will need our **master key** to run the app. See the [Master Key](#master-key) section for more details.
+Clone the repo and `cd` into the `magnifier` directory
 
-3. Install JS dependencies
+#### 2. Get the Master Key
+
+You will need our **master key** to run the app. See the [Master Key](#master-key) section for more details.
+
+#### 3. Install JS dependencies
 
 ```
 $ yarn install
 ```
 
-4. Setup Rails
+#### 4. Setup Rails
 
 ```
 $ bin/setup
 ```
 
-5. Start the Rails server
+#### 5. Start the Rails server
 
 ```
 $ rails s
 ```
 
-6. Visit http://localhost:3000/
+#### 6. Open the app
+
+Visit http://localhost:3000/
 
 ### Master Key
 
