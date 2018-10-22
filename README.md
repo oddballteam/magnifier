@@ -1,10 +1,59 @@
-# GitHub Productivity Magnifier
+# Magnifier
 
 A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
 
-## Getting started
+## Native Installation 
 
-**You will need to get the master key via keybase and copy the file to `config/master.key`**
+At its core, Magnifier is comprised of a Rails backend, and a React frontend.  Here are the associated dependencies you'll need:
+
+- [Required Ruby version](https://github.com/oddballio/magnifier/blob/master/.ruby-version)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/en/docs/getting-started)
+
+Once you've ensured that you have all of the above installed, here are the steps to getting the app up and running locally:
+
+#### 1. Clone the repo
+
+Clone the repo and `cd` into the `magnifier` directory
+
+#### 2. Get the Master Key
+
+You will need our **master key** to run the app. See the [Master Key](#master-key) section for more details.
+
+#### 3. Install JS dependencies
+
+```
+$ yarn install
+```
+
+#### 4. Setup Rails
+
+```
+$ bin/setup
+```
+
+#### 5. Start the Rails server
+
+```
+$ rails s
+```
+
+#### 6. Open the app
+
+Visit http://localhost:3000/
+
+### Master Key
+
+**You will need our master key** to work with the application.  More details can be found on our [Encrypted Credentials wiki page](https://github.com/oddballio/magnifier/wiki/Encrypted-Credentials). 
+
+Here's how to get your master key setup:
+
+1. To maintain security around this key, it will be shared via the [Keybase app](https://keybase.io/)
+2. Ping our Slack `#oddball-tools` room, and request for someone to send you the key via Keybase
+3. Create a file `config/master.key` file in your local Magnifier repo (this file is already part of our [`.gitignore` file](https://github.com/oddballio/magnifier/blob/master/.gitignore))
+4. Add the `master` key to the file
+
 
 ## Front end
 
