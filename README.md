@@ -55,6 +55,8 @@ Here's how to get your master key setup:
 4. Add the `master` key to the file
 
 
+Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+
 ## Front end
 
 React-rails is configured, without react router currently

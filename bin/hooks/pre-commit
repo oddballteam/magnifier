@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Enforce no direct commits to master
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$branch" = "master" ]; then
+  echo "Please do not commit directly to master"
+  exit 1
+fi
+
+exit 0
