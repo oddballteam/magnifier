@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'create_statistic_mutation'
-require_relative 'update_statistic_mutation'
-
 module Mutations
   module Statistics
     # Module that:

@@ -9,7 +9,7 @@ RSpec.describe 'GraphQL requests', type: :request do
     let(:query) do
       <<-GRAPHQL
         query {
-          allOrganizations {
+          organizations {
             url
             name
             createdAt
@@ -23,7 +23,7 @@ RSpec.describe 'GraphQL requests', type: :request do
       post '/graphql', params: { query: query }
 
       body = JSON.parse(response.body)
-      results = body.dig('data', 'allOrganizations')
+      results = body.dig('data', 'organizations')
 
       expect(results.length).to eq 3
       expect(results.first.keys).to match(
@@ -40,7 +40,7 @@ RSpec.describe 'GraphQL requests', type: :request do
       let(:bad_query) do
         <<-GRAPHQL
           query {
-            allOrganizations {
+            organizations {
             }
           }
         GRAPHQL

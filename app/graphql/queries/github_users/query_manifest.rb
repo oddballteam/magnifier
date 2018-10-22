@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'github_users_query'
-require_relative 'github_user_query'
-
 module Queries
   module GithubUsers
     # Module that:

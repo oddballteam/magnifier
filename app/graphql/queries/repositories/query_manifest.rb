@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'repositories_query'
-require_relative 'repository_query'
-
 module Queries
   module Repositories
     # Module that:
