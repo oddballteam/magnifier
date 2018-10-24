@@ -12,7 +12,6 @@ module Github
 
     def initialize(user)
       @user = user
-      @options = set_options
     end
 
     # Proof of concept for testing that a private repository can be accessed,
@@ -59,20 +58,6 @@ module Github
 
     private
 
-    # @see https://developer.github.com/v3/media/#request-specific-version
-    # @see https://developer.github.com/v3/#user-agent-required
-    #
-    def set_options
-      {
-        headers: {
-          'Accepts' => 'application/vnd.github.v3+json',
-          'User-Agent' => 'Oddball'
-        },
-        basic_auth: {
-          username: user.github_username,
-          password: user.personal_access_token
-        }
-      }
     end
   end
 end
