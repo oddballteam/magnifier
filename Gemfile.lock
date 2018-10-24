@@ -81,8 +81,8 @@ GEM
       railties
       sprockets-rails
     graphql (1.8.10)
-    highline (2.0.0)
     hashdiff (0.3.7)
+    highline (2.0.0)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     i18n (1.1.0)
