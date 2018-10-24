@@ -48,8 +48,7 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'db/schema.rb'
-    - spec/graphql/**/*
-    - spec/requests/**/*
+    - spec/**/*
 
 Style/NumericLiterals:
   Exclude:
