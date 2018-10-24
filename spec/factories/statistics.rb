@@ -10,5 +10,6 @@ FactoryBot.define do
     sequence(:url, 100) { |n| "https://github.com/organization/repository/pulls/#{n}" }
     title { 'Some title' }
     sequence(:source_created_at, 10) { |n| "2018-10-08T#{n}:31:41Z" }
+    sequence(:source_updated_at, 10) { |n| "2018-10-09T#{n}:31:41Z" }
   end
 end
