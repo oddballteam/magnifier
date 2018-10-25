@@ -19,7 +19,8 @@ RSpec.describe Mutations::Statistics::UpdateStatisticMutation do
             organizationId: #{statistic.organization.id},
             url: "#{statistic.url}",
             title: "#{new_title}",
-            sourceCreatedAt: "#{statistic.source_created_at}"
+            sourceCreatedAt: "#{statistic.source_created_at}",
+            sourceUpdatedAt: "#{statistic.source_updated_at}"
           }
         ) {
           statistic {
@@ -31,6 +32,7 @@ RSpec.describe Mutations::Statistics::UpdateStatisticMutation do
             url
             title
             sourceCreatedAt
+            sourceUpdatedAt
             id
           }
           errors

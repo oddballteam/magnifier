@@ -113,10 +113,10 @@ input StatisticAttributes {
   repositoryId: Int
   source: String!
   sourceClosedAt: String
-  sourceCreatedAt: String
+  sourceCreatedAt: String!
   sourceId: String!
   sourceType: String!
-  sourceUpdatedAt: String
+  sourceUpdatedAt: String!
   state: String!
   title: String!
   url: String!

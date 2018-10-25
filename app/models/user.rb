@@ -12,4 +12,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :github_username, presence: true, uniqueness: true
+
+  def org
+    Organization.find_by id: organization_id
+  end
 end

@@ -10,6 +10,7 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
   let(:url) { 'https://api.github.com/repos/org/repo/issues/123' }
   let(:title) { 'Some title' }
   let(:sourceCreatedAt) { '2018-10-17T20:31:41Z' }
+  let(:sourceUpdatedAt) { '2018-10-18T20:31:41Z' }
   let(:organization) { create :organization }
   let(:mutation) do
     <<-GRAPHQL
@@ -22,7 +23,8 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
           organizationId: #{organization.id},
           url: "#{url}",
           title: "#{title}",
-          sourceCreatedAt: "#{sourceCreatedAt}"
+          sourceCreatedAt: "#{sourceCreatedAt}",
+          sourceUpdatedAt: "#{sourceUpdatedAt}"
         }) {
           statistic {
             source
@@ -33,6 +35,7 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
             url
             title
             sourceCreatedAt
+            sourceUpdatedAt
             id
           }
           errors
@@ -51,7 +54,16 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
     MagnifierSchema.execute(mutation, context: {})
 
     statistic  = Statistic.first
-    attributes = %w[sourceId sourceType source state url title sourceCreatedAt]
+    attributes = %w[
+      sourceId
+      sourceType
+      source
+      state
+      url
+      title
+      sourceCreatedAt
+      sourceUpdatedAt
+    ]
 
     attributes.each do |attribute|
       expect(statistic.send(attribute.underscore)).to eq send(attribute)
