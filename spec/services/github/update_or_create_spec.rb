@@ -127,6 +127,7 @@ RSpec.describe Github::UpdateOrCreate do
         expect(statistic.title).to eq issue['title']
         expect(statistic.source_created_at).to eq issue['created_at']
         expect(statistic.source_updated_at).to eq issue['updated_at']
+        expect(statistic.source_created_by).to eq issue_user['id']
       end
     end
 
@@ -148,6 +149,7 @@ RSpec.describe Github::UpdateOrCreate do
         expect(statistic.title).to eq issue['title']
         expect(statistic.source_created_at).to eq issue['created_at']
         expect(statistic.source_updated_at).to eq issue['updated_at']
+        expect(statistic.source_created_by).to eq issue_user['id']
       end
 
       it 'creates the associated Githubuser record, if one does not already exist', :aggregate_failures do
@@ -231,7 +233,8 @@ def existing_statistic
     url: issue['html_url'],
     title: issue['title'],
     source_created_at: initial_datetime,
-    source_updated_at: initial_datetime
+    source_updated_at: initial_datetime,
+    source_created_by: issue_user['id']
   )
 
   github_user = create(

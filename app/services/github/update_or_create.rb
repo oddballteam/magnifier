@@ -88,7 +88,8 @@ module Github
         url: issue['html_url'],
         title: issue['title'],
         source_created_at: issue['created_at'],
-        source_updated_at: issue['updated_at']
+        source_updated_at: issue['updated_at'],
+        source_created_by: issue_user['id']
       }
     end
 

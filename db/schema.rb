@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_021310) do
+ActiveRecord::Schema.define(version: 2018_11_18_193554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_021310) do
     t.string "source_closed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "source_created_by"
     t.index ["organization_id"], name: "index_statistics_on_organization_id"
+    t.index ["source_created_by"], name: "index_statistics_on_source_created_by"
     t.index ["source_id"], name: "index_statistics_on_source_id"
   end
 
