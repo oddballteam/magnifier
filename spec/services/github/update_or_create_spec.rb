@@ -1,22 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/github_setup'
 
 RSpec.describe Github::UpdateOrCreate do
-  let(:datetime) { '2018-09-01T20:43:46Z' }
-  let(:personal_access_token) { SecureRandom.hex(16) }
-  let(:org_name) { 'department-of-veterans-affairs' }
-  let(:org) { create :organization, name: org_name }
+  setup_github_org_and_user
 
-  let(:github_username) { 'hpjaj' }
-  let(:user) do
-    create(
-      :user,
-      github_username: github_username,
-      organization_id: org.id,
-      personal_access_token: personal_access_token
-    )
-  end
   let!(:issue) do
     VCR.use_cassette 'github/issues_created/success' do
       response = Github::Service.new(user, datetime).issues_created
@@ -250,7 +239,7 @@ end
 def initial_datetime
   datetime = issue['created_at']
   datetime = Time.parse datetime
-  datetime = datetime - 1.day
+  datetime -= 1.day
 
   datetime.iso8601
 end

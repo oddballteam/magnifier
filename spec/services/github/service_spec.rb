@@ -1,21 +1,10 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/github_setup'
 
 RSpec.describe Github::Service do
-  let(:datetime) { '2018-09-01T20:43:46Z' }
-  let(:personal_access_token) { SecureRandom.hex(16) }
-  let(:org_name) { 'department-of-veterans-affairs' }
-  let(:org) { create :organization, name: org_name }
-  let(:github_username) { 'hpjaj' }
-  let(:user) do
-    create(
-      :user,
-      github_username: github_username,
-      organization_id: org.id,
-      personal_access_token: personal_access_token
-    )
-  end
+  setup_github_org_and_user
 
   context 'authorization criteria' do
     it 'will raise an error when user.github_username is not present' do
