@@ -118,6 +118,36 @@ RSpec.describe Github::UpdateOrCreate do
         expect(statistic.source_updated_at).to eq issue['updated_at']
         expect(statistic.source_created_by).to eq issue_user['id']
       end
+
+      context 'when the GithubUser is *not* already associated with the Statistic' do
+        it 'creates an association between the GithubUser and the Statistic' do
+          github_user = GithubUser.first
+          statistic   = Statistic.first
+
+          expect(statistic.github_users).to eq [github_user]
+          statistic.github_users.delete github_user
+          expect(statistic.github_users).to eq []
+
+          updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+
+          expect(updated_statistic).to eq statistic
+          expect(updated_statistic.github_users).to eq [github_user]
+        end
+      end
+
+      context 'when the GithubUser is already associated with the Statistic' do
+        it 'does not duplicate the association' do
+          github_user = GithubUser.first
+          statistic   = Statistic.first
+
+          expect(statistic.github_users).to eq [github_user]
+
+          updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+
+          expect(updated_statistic).to eq statistic
+          expect(updated_statistic.github_users).to eq [github_user]
+        end
+      end
     end
 
     context 'when the Statistic does not exist' do

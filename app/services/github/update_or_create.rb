@@ -44,9 +44,9 @@ module Github
         statistic.tap { |stat| stat.update! issue_attributes }
       else
         statistic = Statistic.create! issue_attributes
-
-        associate_github_user_with statistic
       end
+
+      associate_github_user_with statistic
     end
 
     private
@@ -72,8 +72,12 @@ module Github
     end
 
     def associate_github_user_with(statistic)
-      statistic.tap do |stat|
-        stat.github_users << github_user!
+      github_user = github_user!
+
+      if statistic.github_users.include? github_user
+        statistic
+      else
+        statistic.tap { |stat| stat.github_users << github_user }
       end
     end
 
