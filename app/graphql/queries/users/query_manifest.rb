@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'users_query'
-require_relative 'user_query'
-
 module Queries
   module Users
     # Module that:

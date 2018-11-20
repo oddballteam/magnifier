@@ -16,8 +16,8 @@ module Types
     argument :organization_id, Int, required: true
     argument :url, String, required: true
     argument :title, String, required: true
-    argument :source_created_at, String, required: false
-    argument :source_updated_at, String, required: false
+    argument :source_created_at, String, required: true
+    argument :source_updated_at, String, required: true
     argument :source_closed_at, String, required: false
   end
 end

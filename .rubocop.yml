@@ -22,8 +22,7 @@ Style/ExpandPathArguments:
 
 Style/MixinUsage:
   Exclude:
-    - 'bin/setup'
-    - 'bin/update'
+    - bin/**/*
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
@@ -49,8 +48,7 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'db/schema.rb'
-    - spec/graphql/**/*
-    - spec/requests/**/*
+    - spec/**/*
 
 Style/NumericLiterals:
   Exclude:

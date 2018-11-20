@@ -7,72 +7,146 @@ module Github
   #
   class Service
     BASE_URI = 'https://api.github.com'
+    SEARCH_ENDPOINT = "#{BASE_URI}/search/issues"
 
-    attr_reader :user, :options
+    attr_reader :configuration, :options, :results_size, :user, :datetime, :username, :org
 
-    def initialize(user)
+    def initialize(user, datetime = nil)
+      @configuration = Github::Configuration.new(user)
+      @options = configuration.set_options!
+      @results_size = configuration.results_size
       @user = user
-      @options = set_options
+      @datetime = datetime
+      @username = user.github_username
+      @org = user.org&.name
     end
 
-    # Proof of concept for testing that a private repository can be accessed,
-    # through GitHub's v3 REST API, from a server side call.
+    # Fetches all of the issues that:
+    #   - the user has created
+    #   - stem from any of the repositories in the user's organization
+    #   - have a created_at datetime >= the passed datetime
+    #   - have a state of open or closed
     #
-    # Testing involved deployment to Heroku, and basic auth requiring the users:
-    #   - GitHub username
-    #   - GitHub personal access token the user uses for accessing that repo
-    #
-    # @see app/models/user.rb for encrypting the personal_access_token
+    # @return [HTTParty::Response]
     # @see https://developer.github.com/v3/search/#search-issues
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
     #
-    def spike
-      endpoint = '/search/issues'
-      repo     = 'department-of-veterans-affairs/vets.gov-team'
-      date     = 3.days.ago.to_date.to_s
-      query    = "q=type:issue+is:open+repo:#{repo}+created:>=#{date}"
-      url      = "#{BASE_URI}#{endpoint}?#{query}"
+    def issues_created
+      search_criteria_present!
 
-      HTTParty.get url, options
+      query    = "q=type:issue+org:#{org}+author:#{username}+created:>=#{datetime}"
+      url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Fetches all of the issues that:
+    #   - the user is assigned to
+    #   - stem from any of the repositories in the user's organization
+    #   - have an updated datetime >= the passed datetime
+    #   - have a state of open or closed
+    #
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/search/#search-issues
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
+    #
+    def issues_worked
+      search_criteria_present!
+
+      query    = "q=type:issue+org:#{org}+assignee:#{username}+updated:>=#{datetime}"
+      url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Fetches all of the pull requests that:
+    #   - the user created
+    #   - stem from any of the repositories in the user's organization
+    #   - have an updated datetime >= the passed datetime
+    #   - have a state of open
+    #
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/search/#search-issues
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
+    #
+    def pull_requests_worked
+      search_criteria_present!
+
+      query    = "q=type:pr+state:open+org:#{org}+author:#{username}+updated:>=#{datetime}"
+      url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Fetches all of the pull requests that:
+    #   - the user created
+    #   - stem from any of the repositories in the user's organization
+    #   - have an updated datetime >= the passed datetime
+    #   - have a state of merged
+    #
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/search/#search-issues
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
+    #
+    def pull_requests_merged
+      search_criteria_present!
+
+      query    = "q=type:pr+is:merged+org:#{org}+author:#{username}+updated:>=#{datetime}"
+      url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
+      response = HTTParty.get url, options
+
+      handle! response
     end
 
     # Gets all the organizations that the initialized user belong to.
     #
+    # @return [HTTParty::Response]
     # @see https://developer.github.com/v3/orgs/#list-your-organizations
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
     #
     def user_organizations
       endpoint = '/user/memberships/orgs'
-      url      = "#{BASE_URI}#{endpoint}"
+      url      = "#{BASE_URI}#{endpoint}?#{results_size}"
+      response = HTTParty.get url, options
 
-      HTTParty.get url, options
+      handle! response
     end
 
     # Gets all the repositories that belong to the passed organization.
     #
+    # @return [HTTParty::Response]
     # @see https://developer.github.com/v3/repos/#list-organization-repositories
+    # @see https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response
     #
     def repos_for(organization)
       endpoint = "/orgs/#{organization}/repos"
-      url      = "#{BASE_URI}#{endpoint}"
+      url      = "#{BASE_URI}#{endpoint}?#{results_size}"
+      response = HTTParty.get url, options
 
-      HTTParty.get url, options
+      handle! response
     end
 
     private
 
-    # @see https://developer.github.com/v3/media/#request-specific-version
-    # @see https://developer.github.com/v3/#user-agent-required
-    #
-    def set_options
-      {
-        headers: {
-          'Accepts' => 'application/vnd.github.v3+json',
-          'User-Agent' => 'Oddball'
-        },
-        basic_auth: {
-          username: user.github_username,
-          password: user.personal_access_token
-        }
-      }
+    def search_criteria_present!
+      raise Github::ServiceError, 'Missing user organization' if org.blank?
+      raise Github::ServiceError, 'Missing datetime' if datetime.blank?
+    end
+
+    def handle!(response)
+      if response.code.to_i == 200
+        response
+      else
+        raise Github::ServiceError, {
+          status: response.code,
+          body: response.parsed_response,
+          user_id: user.id,
+          source: self.class.to_s
+        }.to_json
+      end
     end
   end
 end

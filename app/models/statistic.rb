@@ -24,5 +24,5 @@ class Statistic < ApplicationRecord
   belongs_to :organization
 
   validates :source_id, :source_type, :source, :state, :organization_id,
-            :url, :title, :source_created_at, presence: true
+            :url, :title, :source_created_at, :source_updated_at, presence: true
 end
