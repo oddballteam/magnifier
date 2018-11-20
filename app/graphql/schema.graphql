@@ -62,6 +62,9 @@ type RootQuery {
   # All Github Users.
   githubUsers(limit: Int): [GithubUser!]!
 
+  # The Logged in user
+  me: User
+
   # The organization with the passed criteria.
   organization(id: ID, name: String): Organization!
 

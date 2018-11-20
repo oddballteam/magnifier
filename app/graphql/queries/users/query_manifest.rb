@@ -13,6 +13,7 @@ module Queries
       included do
         field :user, resolver: Queries::Users::UserQuery
         field :users, resolver: Queries::Users::UsersQuery
+        field :me, resolver: Queries::Users::MeQuery
       end
     end
   end

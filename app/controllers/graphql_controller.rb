@@ -9,13 +9,14 @@
 # @see http://graphql-ruby.org/schema/generators#graphqlinstall
 #
 class GraphqlController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def execute
     variables = ensure_hash(graphql_params[:variables])
     query = graphql_params[:query]
     operation_name = graphql_params[:operationName]
     context = {
       # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user,
     }
     result = MagnifierSchema.execute(
       query,
