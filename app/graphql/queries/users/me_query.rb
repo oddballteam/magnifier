@@ -3,7 +3,7 @@ module Queries
     class MeQuery < Queries::BaseQuery
       description 'The Logged in user'
       type Types::UserType, null: true
-      def resolve()
+      def resolve
         context[:current_user]
       end
     end
