@@ -42,6 +42,7 @@ Metrics/LineLength:
   - 'spec/factories/*'
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
   Exclude:
     - 'db/**/*'
 
