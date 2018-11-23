@@ -12,6 +12,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'graphql', '~> 1.8', '>= 1.8.10'
 gem 'httparty', '~> 0.16.2'
 gem 'jbuilder', '~> 2.5'
+gem 'omniauth-google-oauth2'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -19,7 +20,6 @@ gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '>= 4.0.x'
-gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
@@ -38,8 +38,8 @@ group :development do
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Access an interactive console on exception pages or by calling `console` anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'pry'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :test do

@@ -21,12 +21,12 @@ RSpec.describe User, type: :model do
       token = SecureRandom.hex
       authmock = OmniAuth::AuthHash.new
       authmock.info = {
-        first_name: "Jane",
-        last_name: "Doe",
-        name: "Jane Doe",
-        email: "jane.doe@gmail.com"
+        first_name: 'Jane',
+        last_name: 'Doe',
+        name: 'Jane Doe',
+        email: 'jane.doe@gmail.com'
       }
-      authmock.provider = "test"
+      authmock.provider = 'test'
       authmock.credentials = {
         token: token,
         expires_at: 1.year.from_now

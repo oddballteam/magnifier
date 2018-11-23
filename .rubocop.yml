@@ -62,3 +62,12 @@ Style/StderrPuts:
 Metrics/MethodLength:
   Exclude:
     - app/controllers/graphql_controller.rb
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - app/controllers/graphql_controller.rb
+    - spec/**/*
