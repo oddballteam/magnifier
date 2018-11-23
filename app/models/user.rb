@@ -35,4 +35,7 @@ class User < ApplicationRecord
   def org
     Organization.find_by id: organization_id
   end
+  def has_access_token
+    self.personal_access_token != nil
+  end
 end

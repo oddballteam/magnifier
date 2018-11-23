@@ -79,12 +79,12 @@ ActiveRecord::Schema.define(version: 2018_11_18_193554) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "github_username"
-    t.integer "organization_id"
     t.string "provider"
     t.string "uid"
     t.string "name"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
+    t.integer "organization_id"
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
