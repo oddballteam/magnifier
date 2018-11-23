@@ -57,13 +57,15 @@ people = [
     first_name: 'John',
     last_name: 'Smith',
     email: 'john@example.com',
-    github_username: 'jsmith'
+    github_username: 'jsmith',
+    organization_id: dova.id
   },
   {
     first_name: 'Susan',
     last_name: 'Williams',
     email: 'susan@example.com',
-    github_username: 'suzy'
+    github_username: 'suzy',
+    organization_id: etsy.id
   }
 ]
 
@@ -117,7 +119,8 @@ stats = [
     url: 'https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/14066',
     title: 'Clean up URL parameters in View Settings',
     source_created_at: '2018-10-08T20:31:41Z',
-    source_updated_at: '2018-10-08T20:31:42Z'
+    source_updated_at: '2018-10-08T20:31:42Z',
+    source_created_by: 123456789
   },
   {
     source_id: '367942274',
@@ -130,7 +133,8 @@ stats = [
     title: 'Link on Housing hub in yellow homeless box needs to be populated',
     source_created_at: '2018-10-07T20:31:41Z',
     source_updated_at: '2018-10-09T20:31:42Z',
-    source_closed_at: '2018-10-09T50:31:42Z'
+    source_closed_at: '2018-10-09T50:31:42Z',
+    source_created_by: beth.github_id
   }
 ]
 
