@@ -10,18 +10,38 @@ module Github
       @service = Github::Service.new(user, datetime)
     end
 
+    # Calls Github::Service#issues_created and creates/updates associated
+    # Statistic, GithubUser, and Repository records.
+    #
+    # @return [Array<Statistic>] An array of the created/updated Statistic records
+    #
     def created_issues!
       update_or_create_stats!('issues_created')
     end
 
+    # Calls Github::Service#issues_worked and creates/updates associated
+    # Statistic, GithubUser, and Repository records.
+    #
+    # @return [Array<Statistic>] An array of the created/updated Statistic records
+    #
     def worked_issues!
       update_or_create_stats!('issues_worked')
     end
 
+    # Calls Github::Service#pull_requests_worked and creates/updates associated
+    # Statistic, GithubUser, and Repository records.
+    #
+    # @return [Array<Statistic>] An array of the created/updated Statistic records
+    #
     def worked_pull_requests!
       update_or_create_stats!('pull_requests_worked')
     end
 
+    # Calls Github::Service#pull_requests_merged and creates/updates associated
+    # Statistic, GithubUser, and Repository records.
+    #
+    # @return [Array<Statistic>] An array of the created/updated Statistic records
+    #
     def merged_pull_requests!
       update_or_create_stats!('pull_requests_merged', merged: true)
     end

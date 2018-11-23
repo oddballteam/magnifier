@@ -15,6 +15,10 @@ module Github
       @merged = merged
     end
 
+    # Based on the initialized issue and user, finds/creates a Repository record
+    #
+    # @return [Repository]
+    #
     def repository!
       Repository.find_or_create_by!(url: repository_url) do |repo|
         repo.organization_id = org_id
@@ -22,6 +26,10 @@ module Github
       end
     end
 
+    # Based on the initialized issue and user, finds/creates a GithubUser record
+    #
+    # @return [GithubUser]
+    #
     def github_user!
       GithubUser.find_or_create_by!(github_login: user.github_username) do |github_user|
         github_user.oddball_employee = true
@@ -33,9 +41,13 @@ module Github
       end
     end
 
-    # - Creates/Updates a Statistic record
-    # - Finds/Creates associated Repository record
-    # - Finds/Creates associated GithubUser record
+    # Based on the initialized issue and user, does all of the following:
+    #   - Creates/Updates a Statistic record
+    #   - Finds/Creates associated Repository record
+    #   - Finds/Creates associated GithubUser record
+    #   - Associates the Statistic Record with its GithubUser record
+    #
+    # @return [Statistic]
     #
     def statistic!
       statistic = Statistic.find_by(source: Statistic::GITHUB, source_id: issue_id)
