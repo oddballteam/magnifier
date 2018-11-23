@@ -52,11 +52,9 @@ module Github
     private
 
     def org_id!(organization_id)
-      if organization_id.present?
-        organization_id
-      else
-        raise Github::ServiceError, 'Missing user organization'
-      end
+      return organization_id if organization_id.present?
+
+      raise Github::ServiceError, 'Missing user organization'
     end
 
     def derive_repository_url
@@ -81,6 +79,8 @@ module Github
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def issue_attributes
       {
         source_id: issue_id,
@@ -96,6 +96,8 @@ module Github
         source_created_by: issue_user['id']
       }
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     def state
       if merged

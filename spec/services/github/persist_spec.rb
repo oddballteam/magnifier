@@ -14,7 +14,7 @@ RSpec.describe Github::Persist do
         expect(Organization.count).to eq 0
         expect(GithubUser.count).to eq 0
 
-        response = Github::Persist.new(user, datetime).created_issues!
+        Github::Persist.new(user, datetime).created_issues!
 
         expect(Statistic.count).to eq 9
         expect(Repository.count).to eq 1
@@ -41,7 +41,7 @@ RSpec.describe Github::Persist do
         expect(Organization.count).to eq 0
         expect(GithubUser.count).to eq 0
 
-        response = Github::Persist.new(user, datetime).worked_issues!
+        Github::Persist.new(user, datetime).worked_issues!
 
         expect(Statistic.count).to eq 62
         expect(Repository.count).to eq 1
@@ -68,7 +68,7 @@ RSpec.describe Github::Persist do
         expect(Organization.count).to eq 0
         expect(GithubUser.count).to eq 0
 
-        response = Github::Persist.new(user, datetime).worked_pull_requests!
+        Github::Persist.new(user, datetime).worked_pull_requests!
 
         expect(Statistic.count).to eq 2
         expect(Repository.count).to eq 2
@@ -96,7 +96,7 @@ RSpec.describe Github::Persist do
         expect(Organization.count).to eq 0
         expect(GithubUser.count).to eq 0
 
-        response = Github::Persist.new(user, datetime).merged_pull_requests!
+        Github::Persist.new(user, datetime).merged_pull_requests!
 
         expect(Statistic.count).to eq 20
         expect(Repository.count).to eq 5
