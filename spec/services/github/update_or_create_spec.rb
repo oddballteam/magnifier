@@ -11,7 +11,7 @@ RSpec.describe Github::UpdateOrCreate do
       response = Github::Service.new(user, datetime).issues_created
       body     = JSON.parse response.body
 
-      body['items'].first
+      body['items'].last
     end
   end
   let(:issue_repo) { issue['repository_url'].split("#{org_name}/").last }
@@ -78,6 +78,17 @@ RSpec.describe Github::UpdateOrCreate do
         expect(statistic.source_created_at).to eq issue['created_at']
         expect(statistic.source_updated_at).to eq issue['updated_at']
         expect(statistic.source_created_by).to eq issue_user['id']
+      end
+
+      it "sets the #assignees array column to the current issue's assignee GitHub user ID's", :aggregate_failures do
+        some_assignee_id = 9999
+        stat.update! assignees: [some_assignee_id]
+        expect(stat.assignees).to match_array [some_assignee_id]
+
+        updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+
+        expect(stat.id).to eq updated_statistic.id
+        expect(updated_statistic.assignees).to match_array derive_assignees
       end
 
       context 'when the GithubUser is *not* already associated with the Statistic' do
@@ -157,6 +168,12 @@ RSpec.describe Github::UpdateOrCreate do
         expect(github_users).to be_present
         expect(github_users.first).to eq github_user
       end
+
+      it "sets the #assignees array column to the current issue's assignee GitHub user ID's" do
+        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+
+        expect(statistic.assignees).to match_array derive_assignees
+      end
     end
   end
 end
@@ -231,4 +248,12 @@ def initial_datetime
   datetime -= 1.day
 
   datetime.iso8601
+end
+
+def derive_assignees
+  assignees = []
+  assignees = assignees << issue.dig('assignee', 'id')
+  assignees = assignees << issue.dig('assignees').map { |assignee| assignee['id'] }
+
+  assignees.flatten.compact.uniq
 end
