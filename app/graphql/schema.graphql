@@ -103,6 +103,7 @@ type Statistic {
   source: String!
   sourceClosedAt: String
   sourceCreatedAt: String
+  sourceCreatedBy: Int!
   sourceId: String!
   sourceType: String!
   sourceUpdatedAt: String

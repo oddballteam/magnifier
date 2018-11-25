@@ -17,6 +17,7 @@ module Types
     field :source_created_at, String, null: true
     field :source_updated_at, String, null: true
     field :source_closed_at, String, null: true
+    field :source_created_by, Integer, null: false
     field :created_at, String, null: false
     field :updated_at, String, null: false
     field :assignees, [Integer], null: true
