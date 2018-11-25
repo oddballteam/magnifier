@@ -20,6 +20,15 @@ class Statistic < ApplicationRecord
   CLOSED = 'closed'
   MERGED = 'merged'
 
+  # ownership_types
+  ASSIGNED = 'assigned'
+  CREATED = 'created'
+
+  # datetime_types
+  CREATED_AFTER = 'created_after'
+  UPDATED_AFTER = 'updated_after'
+  CLOSED_AFTER  = 'closed_after'
+
   has_and_belongs_to_many :github_users
   belongs_to :organization
   belongs_to :repository
