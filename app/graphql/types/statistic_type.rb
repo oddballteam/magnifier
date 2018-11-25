@@ -28,5 +28,19 @@ module Types
       null: true,
       description: "This Statistic's GithubUsers, or null if this Statistic has no GithubUsers."
     )
+
+    field(
+      :repository,
+      RepositoryType,
+      null: false,
+      description: "This Statistic's Repository."
+    )
+
+    field(
+      :organization,
+      OrganizationType,
+      null: false,
+      description: "This Statistic's Organization"
+    )
   end
 end
