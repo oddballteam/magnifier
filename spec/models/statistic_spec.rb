@@ -15,6 +15,7 @@ RSpec.describe Statistic, type: :model do
     it { should validate_presence_of(:source) }
     it { should validate_presence_of(:state) }
     it { should validate_presence_of(:organization_id) }
+    it { should validate_presence_of(:repository_id) }
     it { should validate_presence_of(:url) }
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:source_created_at) }
@@ -23,6 +24,10 @@ RSpec.describe Statistic, type: :model do
 
   describe 'associations' do
     it { should have_and_belong_to_many(:github_users) }
+    it { should belong_to(:repository) }
+    it { should belong_to(:organization) }
+  end
+
   describe '#assignees' do
     it 'tracks the GithubUsers that are assigned to a given Statistic' do
       jack = create :github_user

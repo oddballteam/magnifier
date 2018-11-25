@@ -10,7 +10,7 @@ module Types
     field :source_type, String, null: false
     field :source, String, null: false
     field :state, String, null: false
-    field :repository_id, Int, null: true
+    field :repository_id, Int, null: false
     field :organization_id, Int, null: false
     field :url, String, null: false
     field :title, String, null: false

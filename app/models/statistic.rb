@@ -22,7 +22,9 @@ class Statistic < ApplicationRecord
 
   has_and_belongs_to_many :github_users
   belongs_to :organization
+  belongs_to :repository
 
   validates :source_id, :source_type, :source, :state, :organization_id,
-            :url, :title, :source_created_at, :source_updated_at, presence: true
+            :url, :title, :source_created_at, :source_updated_at,
+            :repository_id, presence: true
 end
