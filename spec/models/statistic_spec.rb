@@ -23,5 +23,13 @@ RSpec.describe Statistic, type: :model do
 
   describe 'associations' do
     it { should have_and_belong_to_many(:github_users) }
+  describe '#assignees' do
+    it 'tracks the GithubUsers that are assigned to a given Statistic' do
+      jack = create :github_user
+      jane = create :github_user
+      stat = create :statistic, assignees: [jack.github_id, jane.github_id]
+
+      expect(stat.assignees).to match_array [jack.github_id, jane.github_id]
+    end
   end
 end
