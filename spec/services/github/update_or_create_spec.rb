@@ -97,7 +97,7 @@ RSpec.describe Github::UpdateOrCreate do
 
       context 'when the GithubUser is already associated with the Statistic' do
         it 'does not duplicate the association' do
-          statistic   = Statistic.first
+          statistic = Statistic.first
 
           expect(statistic.github_users).to eq [github_user]
 

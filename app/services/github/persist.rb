@@ -54,6 +54,7 @@ module Github
       GithubUser.find_by(github_login: user.github_username)
     end
 
+    # rubocop:disable Metrics/MethodLength
     def create_github_user!
       response      = service.github_user_account
       response_user = response.parsed_response
@@ -68,6 +69,7 @@ module Github
         github_id:        response_user['id']
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     def org_id!
       return user.organization_id if user.organization_id.present?
