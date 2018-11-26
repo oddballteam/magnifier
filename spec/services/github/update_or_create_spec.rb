@@ -85,7 +85,7 @@ RSpec.describe Github::UpdateOrCreate do
         stat.update! assignees: [some_assignee_id]
         expect(stat.assignees).to match_array [some_assignee_id]
 
-        updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        updated_statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(stat.id).to eq updated_statistic.id
         expect(updated_statistic.assignees).to match_array derive_assignees
@@ -170,7 +170,7 @@ RSpec.describe Github::UpdateOrCreate do
       end
 
       it "sets the #assignees array column to the current issue's assignee GitHub user ID's" do
-        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(statistic.assignees).to match_array derive_assignees
       end
