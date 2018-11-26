@@ -332,6 +332,21 @@ RSpec.describe Github::Service do
       end
     end
   end
+
+  describe '#github_user_account' do
+    it 'fetchs the user#github_usernames GitHub user account details', :aggregate_failures do
+      VCR.use_cassette 'github/github_user_account/success' do
+        response = Github::Service.new(user, datetime).github_user_account
+        user_response = response.parsed_response
+
+        expect(user_response['login']).to eq user.github_username
+        expect(user_response['avatar_url']).to be_present
+        expect(user_response['url']).to be_present
+        expect(user_response['html_url']).to be_present
+        expect(user_response['id']).to be_present
+      end
+    end
+  end
 end
 
 def items_in(response)
