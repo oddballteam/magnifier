@@ -2,12 +2,12 @@
 
 module Github
   class UpdateOrCreate
-    attr_reader :issue, :user, :org_id, :repository_url, :repository_name, :issue_user, :issue_id, :merged
+    attr_reader :issue, :github_user, :org_id, :repository_url, :repository_name, :issue_user, :issue_id, :merged
 
-    def initialize(issue, user, merged: false)
+    def initialize(issue, github_user, org_id, merged: false)
       @issue = issue
-      @user = user
-      @org_id = org_id!(user.organization_id)
+      @github_user = github_user
+      @org_id = org_id
       @repository_url = derive_repository_url
       @repository_name = derive_repository_name
       @issue_user = issue['user']
@@ -46,12 +46,6 @@ module Github
     end
 
     private
-
-    def org_id!(organization_id)
-      return organization_id if organization_id.present?
-
-      raise Github::ServiceError, 'Missing user organization'
-    end
 
     def derive_repository_url
       issue['repository_url'].gsub('api.', '').gsub('repos/', '')

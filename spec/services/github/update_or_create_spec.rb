@@ -15,24 +15,18 @@ RSpec.describe Github::UpdateOrCreate do
     end
   end
   let(:issue_repo) { issue['repository_url'].split("#{org_name}/").last }
-  let(:issue_user) { issue['user'] }
-
-  describe '#initialize' do
-    it 'will raise an error when user.organization_id is not present' do
-      invalid_user = build :user, organization_id: nil
-
-      expect do
-        Github::UpdateOrCreate.new(issue, invalid_user)
-      end.to raise_error Github::ServiceError
-    end
+  let!(:issue_user) { issue['user'] }
+  let(:github_user) do
+    GithubUser.find_by(github_login: user.github_username) || create_github_user
   end
+  let(:org_id) { user.organization_id }
 
   describe '#repository!' do
     context 'when the repository already exists' do
       before { existing_repository }
 
       it 'returns the repository record with the response data', :aggregate_failures do
-        repository = Github::UpdateOrCreate.new(issue, user).repository!
+        repository = Github::UpdateOrCreate.new(issue, github_user, org_id).repository!
 
         expect(repository.name).to eq issue_repo
         expect(repository.url).to eq repository_url
@@ -45,7 +39,7 @@ RSpec.describe Github::UpdateOrCreate do
       it 'creates and returns a repository record with the response data', :aggregate_failures do
         expect(Repository.count).to eq 0
 
-        repository = Github::UpdateOrCreate.new(issue, user).repository!
+        repository = Github::UpdateOrCreate.new(issue, github_user, org_id).repository!
 
         expect(repository.name).to eq issue_repo
         expect(repository.url).to eq repository_url
@@ -68,7 +62,7 @@ RSpec.describe Github::UpdateOrCreate do
         expect(stat.source_created_at).to eq initial_datetime
         expect(stat.source_updated_at).to eq initial_datetime
 
-        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(Statistic.count).to eq 1
         expect(stat.id).to eq statistic.id
@@ -88,14 +82,13 @@ RSpec.describe Github::UpdateOrCreate do
 
       context 'when the GithubUser is *not* already associated with the Statistic' do
         it 'creates an association between the GithubUser and the Statistic' do
-          github_user = GithubUser.first
-          statistic   = Statistic.first
+          statistic = Statistic.first
 
           expect(statistic.github_users).to eq [github_user]
           statistic.github_users.delete github_user
           expect(statistic.github_users).to eq []
 
-          updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+          updated_statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
           expect(updated_statistic).to eq statistic
           expect(updated_statistic.github_users).to eq [github_user]
@@ -104,12 +97,11 @@ RSpec.describe Github::UpdateOrCreate do
 
       context 'when the GithubUser is already associated with the Statistic' do
         it 'does not duplicate the association' do
-          github_user = GithubUser.first
           statistic   = Statistic.first
 
           expect(statistic.github_users).to eq [github_user]
 
-          updated_statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+          updated_statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
           expect(updated_statistic).to eq statistic
           expect(updated_statistic.github_users).to eq [github_user]
@@ -121,7 +113,7 @@ RSpec.describe Github::UpdateOrCreate do
       it 'creates and returns the Statistic record with the response data', :aggregate_failures do
         expect(Statistic.count).to eq 0
 
-        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(Statistic.count).to eq 1
         expect(statistic).to be_valid
@@ -141,7 +133,7 @@ RSpec.describe Github::UpdateOrCreate do
       it 'creates the associated Githubuser record, if one does not already exist', :aggregate_failures do
         expect(GithubUser.count).to eq 0
 
-        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(GithubUser.count).to eq 1
         expect(statistic.github_users.first).to eq GithubUser.first
@@ -150,7 +142,7 @@ RSpec.describe Github::UpdateOrCreate do
       it 'creates the associated Repository record, if one does not already exist', :aggregate_failures do
         expect(Repository.count).to eq 0
 
-        statistic = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
 
         expect(Repository.count).to eq 1
         expect(statistic.repository_id).to eq Repository.first.id
@@ -159,9 +151,8 @@ RSpec.describe Github::UpdateOrCreate do
       it 'associates the Statistic with its GithubUser', :aggregate_failures do
         expect(GithubUser.count).to eq 0
 
-        statistic    = Github::UpdateOrCreate.new(issue, user).statistic!
+        statistic    = Github::UpdateOrCreate.new(issue, github_user, org_id).statistic!
         github_users = statistic.github_users
-        github_user  = GithubUser.first
 
         expect(github_users).to be_present
         expect(github_users.first).to eq github_user
@@ -179,17 +170,22 @@ def existing_repository
   )
 end
 
-def existing_github_user
-  create(
-    :github_user,
-    user_id: user.id,
-    github_login: user.github_username,
-    avatar_url: issue_user['avatar_url'],
-    api_url: issue_user['url'],
-    html_url:  issue_user['html_url'],
-    github_id: issue_user['id'],
-    oddball_employee: true
-  )
+def create_github_user
+  VCR.use_cassette 'github/github_user_account/success' do
+    response = Github::Service.new(user, datetime).github_user_account
+    user_response = response.parsed_response
+
+    create(
+      :github_user,
+      user_id: user.id,
+      github_login: user.github_username,
+      avatar_url: user_response['avatar_url'],
+      api_url: user_response['url'],
+      html_url:  user_response['html_url'],
+      github_id: user_response['id'],
+      oddball_employee: true
+    )
+  end
 end
 
 def issue_type_for(response)
@@ -223,12 +219,8 @@ def existing_statistic
     source_created_by: issue_user['id']
   )
 
-  github_user = create(
-    :github_user,
-    github_login: github_username,
-    github_id: issue_user['id'],
-    user_id: user.id
-  )
+  github_user = create_github_user
+
   statistic.github_users << github_user
   statistic
 end
