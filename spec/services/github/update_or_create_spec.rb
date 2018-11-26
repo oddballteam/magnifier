@@ -15,7 +15,7 @@ RSpec.describe Github::UpdateOrCreate do
     end
   end
   let(:issue_repo) { issue['repository_url'].split("#{org_name}/").last }
-  let!(:issue_user) { issue['user'] }
+  let(:issue_user) { issue['user'] }
   let(:github_user) do
     GithubUser.find_by(github_login: user.github_username) || create_github_user
   end
