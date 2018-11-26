@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/LineLength
+# rubocop:disable Metrics/ParameterLists
 module Queries
   module Statistics
     class StatisticsQuery < Queries::BaseQuery
@@ -11,7 +13,7 @@ module Queries
         :datetime,
         String,
         required: true,
-        description: 'The datetime, in iso8601 format, that the Statistic records will be scoped to. For example, "2018-10-06T20:31:41Z"',
+        description: 'The datetime, in iso8601 format, that the Statistic records will be scoped to. For example, "2018-10-06T20:31:41Z"'
       )
       argument(
         :datetime_type,
@@ -46,10 +48,10 @@ module Queries
 
       def resolve(datetime:, datetime_type:, github_user_id:, ownership_type:, type:, state:)
         stats = ::Statistic
-          .load_repo_and_org
-          .of_type(type)
-          .of_state(state)
-          .order(id: :desc)
+                .load_repo_and_org
+                .of_type(type)
+                .of_state(state)
+                .order(id: :desc)
 
         stats = scope_ownership_type(stats, github_user_id, ownership_type)
         stats = scope_datetime_type(stats, datetime, datetime_type)
@@ -80,3 +82,5 @@ module Queries
     end
   end
 end
+# rubocop:enable Metrics/LineLength
+# rubocop:enable Metrics/ParameterLists

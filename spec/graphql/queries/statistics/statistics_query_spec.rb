@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::Statistics::StatisticsQuery do
   let(:github_user) { create :github_user }
-  let(:january_1_2018) { "2018-01-01T01:31:41Z" }
+  let(:january_1_2018) { '2018-01-01T01:31:41Z' }
 
   before do
     create :statistic, :open_pr, source_created_by: github_user.github_id

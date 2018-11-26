@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/LineLength
 module Types
   class StatisticOwnershipEnumType < BaseEnum
     description 'During a query, defines the relationship between the Statistic and associated GithubUser.  Whether the user created the statistic, or is assigned to it.'
@@ -7,3 +8,4 @@ module Types
     value 'CREATED', 'GithubUser created the statistic', value: Statistic::CREATED
   end
 end
+# rubocop:enable Metrics/LineLength
