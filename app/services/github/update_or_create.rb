@@ -26,25 +26,9 @@ module Github
       end
     end
 
-    # Based on the initialized issue and user, finds/creates a GithubUser record
-    #
-    # @return [GithubUser]
-    #
-    def github_user!
-      GithubUser.find_or_create_by!(github_login: user.github_username) do |github_user|
-        github_user.oddball_employee = true
-        github_user.user_id          = user.id
-        github_user.avatar_url       = issue_user['avatar_url']
-        github_user.api_url          = issue_user['url']
-        github_user.html_url         = issue_user['html_url']
-        github_user.github_id        = issue_user['id']
-      end
-    end
-
     # Based on the initialized issue and user, does all of the following:
     #   - Creates/Updates a Statistic record
     #   - Finds/Creates associated Repository record
-    #   - Finds/Creates associated GithubUser record
     #   - Associates the Statistic Record with its GithubUser record
     #
     # @return [Statistic]
@@ -82,8 +66,6 @@ module Github
     end
 
     def associate_github_user_with(statistic)
-      github_user = github_user!
-
       if statistic.github_users.include? github_user
         statistic
       else

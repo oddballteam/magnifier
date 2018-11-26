@@ -55,39 +55,6 @@ RSpec.describe Github::UpdateOrCreate do
     end
   end
 
-  describe '#github_user!' do
-    context 'when the GithubUser already exists' do
-      before { existing_github_user }
-
-      it 'returns the GithubUser record with the response data', :aggregate_failures do
-        expect(GithubUser.count).to eq 1
-
-        github_user = Github::UpdateOrCreate.new(issue, user).github_user!
-
-        expect(GithubUser.count).to eq 1
-        expect(github_user.github_login). to eq user.github_username
-      end
-    end
-
-    context 'when the GithubUser does not exist' do
-      it 'creates and returns the GithubUser record with the response data', :aggregate_failures do
-        expect(GithubUser.count).to eq 0
-
-        github_user = Github::UpdateOrCreate.new(issue, user).github_user!
-
-        expect(GithubUser.count).to eq 1
-        expect(github_user).to be_valid
-        expect(github_user.github_login). to eq user.github_username
-        expect(github_user.user_id). to eq user.id
-        expect(github_user.avatar_url). to eq issue_user['avatar_url']
-        expect(github_user.api_url). to eq issue_user['url']
-        expect(github_user.html_url). to eq issue_user['html_url']
-        expect(github_user.github_id). to eq issue_user['id']
-        expect(github_user.oddball_employee). to eq true
-      end
-    end
-  end
-
   describe '#statistic!' do
     context 'when the Statistic already exists' do
       before do
