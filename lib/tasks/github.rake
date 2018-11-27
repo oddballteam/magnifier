@@ -3,7 +3,7 @@ namespace :github do
     Fetchs all of the issue and pull request activity for our users.
     It then converts this data into the appropriate db records.
 
-    By default, it will grab any acitivty since yesterday.  If you need
+    By default, it will grab any activity since yesterday.  If you need
     to go back further, you can pass in a specific datetime.  The datetime
     must be in this format:
 
