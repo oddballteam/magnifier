@@ -81,6 +81,7 @@ module Github
         title: issue['title'],
         source_created_at: issue['created_at'],
         source_updated_at: issue['updated_at'],
+        source_closed_at: issue['closed_at'],
         source_created_by: issue_user['id'],
         assignees: derive_assignees
       }
