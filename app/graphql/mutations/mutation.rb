@@ -7,7 +7,7 @@ module Mutations
   # This list is comprised of individual lists (or manifests), each
   # one containing their own assembly of available mutations.
   #
-  class RootMutation < Types::BaseObject
+  class Mutation < Types::BaseObject
     include Mutations::Statistics::MutationManifest
   end
 end

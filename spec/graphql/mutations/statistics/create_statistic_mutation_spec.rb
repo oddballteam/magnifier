@@ -11,7 +11,8 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
   let(:title) { 'Some title' }
   let(:sourceCreatedAt) { '2018-10-17T20:31:41Z' }
   let(:sourceUpdatedAt) { '2018-10-18T20:31:41Z' }
-  let(:organization) { create :organization }
+  let(:repository) { create :repository }
+  let(:organization) { repository.organization }
   let(:mutation) do
     <<-GRAPHQL
       mutation {
@@ -20,6 +21,7 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
           sourceType: "#{sourceType}",
           source: "#{source}",
           state: "#{state}",
+          repositoryId: #{repository.id},
           organizationId: #{organization.id},
           url: "#{url}",
           title: "#{title}",
@@ -31,6 +33,7 @@ RSpec.describe Mutations::Statistics::CreateStatisticMutation do
             sourceId
             sourceType
             state
+            repositoryId
             organizationId
             url
             title

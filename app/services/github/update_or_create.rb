@@ -81,7 +81,8 @@ module Github
         title: issue['title'],
         source_created_at: issue['created_at'],
         source_updated_at: issue['updated_at'],
-        source_created_by: issue_user['id']
+        source_created_by: issue_user['id'],
+        assignees: derive_assignees
       }
     end
     # rubocop:enable Metrics/MethodLength
@@ -93,6 +94,14 @@ module Github
       else
         issue['state']
       end
+    end
+
+    def derive_assignees
+      assignees = []
+      assignees = assignees << issue.dig('assignee', 'id')
+      assignees = assignees << issue.dig('assignees').map { |assignee| assignee['id'] }
+
+      assignees.flatten.compact.uniq
     end
   end
 end

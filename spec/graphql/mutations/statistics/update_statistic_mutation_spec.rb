@@ -16,6 +16,7 @@ RSpec.describe Mutations::Statistics::UpdateStatisticMutation do
             sourceType: "#{statistic.source_type}",
             source: "#{statistic.source}",
             state: "#{statistic.state}",
+            repositoryId: #{statistic.repository.id},
             organizationId: #{statistic.organization.id},
             url: "#{statistic.url}",
             title: "#{new_title}",
@@ -28,6 +29,7 @@ RSpec.describe Mutations::Statistics::UpdateStatisticMutation do
             sourceId
             sourceType
             state
+            repositoryId
             organizationId
             url
             title

@@ -8,7 +8,7 @@ module Mutations
       description 'Updates a Statistic with the passed data.'
       null true
 
-      argument :attributes, Types::StatisticAttributes, required: true
+      argument :attributes, Types::StatisticInput, required: true
       argument :id, Integer, required: true
 
       field :statistic,
