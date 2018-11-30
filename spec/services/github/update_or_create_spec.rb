@@ -77,6 +77,7 @@ RSpec.describe Github::UpdateOrCreate do
         expect(statistic.title).to eq issue['title']
         expect(statistic.source_created_at).to eq issue['created_at']
         expect(statistic.source_updated_at).to eq issue['updated_at']
+        expect(statistic.source_closed_at).to eq issue['closed_at']
         expect(statistic.source_created_by).to eq issue_user['id']
       end
 
