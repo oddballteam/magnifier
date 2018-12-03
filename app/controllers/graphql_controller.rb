@@ -12,7 +12,7 @@ class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def execute
-    variables = ensure_hash(graphql_params[:variables])
+    variables = ensure_hash(request.parameters.dig('variables'))
     query = graphql_params[:query]
     operation_name = graphql_params[:operationName]
     context = {
