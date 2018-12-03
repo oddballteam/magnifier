@@ -26,12 +26,6 @@ const FormStyled = styled.form`
 const SelectStyled = styled.select`
   border: 1px solid #DAE1E7;
   margin-right: .75rem;
-  flex: 2;
-`;
-
-const SelectButtonStyled = styled.button`
-  border: 1px solid #DAE1E7;
-  border-radius: 4px;
   flex: 1;
 `;
 
@@ -77,11 +71,6 @@ class Statistics extends React.Component {
     date: moment().startOf(WEEK).toISOString()
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.setState({ githubUserId: event.target.elements[0].value })
-  }
-
   handleChange = (event) => {
     const { name, type, value } = event.target;
     const val = type === 'number' ? parseFloat(value) : value;
@@ -94,7 +83,14 @@ class Statistics extends React.Component {
         <h1 className="hello">Statistics</h1>
         <p>Since: {moment(this.state.date).format("M/D/YY")}</p>
 
-        <FormStyled onSubmit={this.handleSubmit}>
+        <FormStyled>
+          <SelectStyled
+            name="date"
+            onChange={this.handleChange}
+            value={this.state.date}
+          >
+            <DateOptions/>
+          </SelectStyled>
           <SelectStyled
             name="githubUserId"
             onChange={this.handleChange}
@@ -103,15 +99,6 @@ class Statistics extends React.Component {
             <option value=""></option>
             <GithubUsers />
           </SelectStyled>
-          <SelectStyled
-            name="date"
-            onChange={this.handleChange}
-            value={this.state.date}
-          >
-            <DateOptions/>
-          </SelectStyled>
-
-          <SelectButtonStyled type="submit">Submit</SelectButtonStyled>
         </FormStyled>
 
         <StatisticsCollection
