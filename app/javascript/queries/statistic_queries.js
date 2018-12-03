@@ -1,5 +1,28 @@
 import gql from "graphql-tag";
 
+const StatisticFragment = gql`
+  fragment StatisticQueryFields on Statistic {
+    assignees
+    sourceType
+    state
+    source
+    title
+    sourceCreatedBy
+    sourceCreatedAt
+    sourceUpdatedAt
+    sourceClosedAt
+    url
+    repository {
+      name
+      url
+    }
+    organization {
+      name
+      url
+    }
+  }
+`;
+
 const PR_CREATED_QUERY = gql`
   query PR_CREATED_QUERY($githubUserId: Int!, $date: String!) {
     statistics(
@@ -10,26 +33,10 @@ const PR_CREATED_QUERY = gql`
       datetimeType: CREATED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 const PR_WORKED_QUERY = gql`
@@ -42,26 +49,10 @@ const PR_WORKED_QUERY = gql`
       datetimeType: UPDATED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 const PR_MERGED_QUERY = gql`
@@ -74,26 +65,10 @@ const PR_MERGED_QUERY = gql`
       datetimeType: CLOSED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 const ISSUE_CREATED_QUERY = gql`
@@ -106,26 +81,10 @@ const ISSUE_CREATED_QUERY = gql`
       datetimeType: CREATED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 const ISSUE_WORKED_QUERY = gql`
@@ -138,26 +97,10 @@ const ISSUE_WORKED_QUERY = gql`
       datetimeType: UPDATED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 const ISSUE_CLOSED_QUERY = gql`
@@ -170,26 +113,10 @@ const ISSUE_CLOSED_QUERY = gql`
       datetimeType: CLOSED_AFTER,
       datetime: $date
     ){
-      assignees
-      sourceType
-      state
-      source
-      title
-      sourceCreatedBy
-      sourceCreatedAt
-      sourceUpdatedAt
-      sourceClosedAt
-      url
-      repository {
-        name
-        url
-      }
-      organization {
-        name
-        url
-      }
+      ...StatisticQueryFields
     }
   }
+  ${StatisticFragment}
 `;
 
 export { PR_CREATED_QUERY, PR_WORKED_QUERY, PR_MERGED_QUERY, ISSUE_CREATED_QUERY, ISSUE_WORKED_QUERY, ISSUE_CLOSED_QUERY };
