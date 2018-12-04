@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
+import { startOfWeek, DateOptions, datetimeToDate } from './DateOptions';
 import StatisticsCollection from './StatisticsCollection';
 
 import { GITHUB_USERS_QUERY } from '../queries/github_user_queries';
@@ -13,10 +14,6 @@ import {
   ISSUE_WORKED_QUERY,
   ISSUE_CLOSED_QUERY
 } from '../queries/statistic_queries';
-
-// see https://github.com/moment/moment/issues/2608#issuecomment-409240140
-import moment from 'moment';
-window.moment = moment;
 
 const FormStyled = styled.form`
   display: flex;
@@ -46,29 +43,10 @@ const GithubUsers = () => (
   </Query>
 );
 
-const WEEK = 'week'
-
-/*
-@see http://momentjs.com/docs/#/manipulating/start-of/
-@example format '2018-11-25T07:00:00.000Z'
-*/
-const DateOptions = () => {
-  const options = ['day', WEEK, 'month', 'quarter', 'year'];
-
-  return options.map((dateSince) => (
-    <option
-      key={dateSince}
-      value={moment().startOf(dateSince).toISOString()}
-    >
-      {`Start of ${dateSince}`}
-    </option>
-  ))
-};
-
 class Statistics extends React.Component {
   state = {
     githubUserId: undefined,
-    date: moment().startOf(WEEK).toISOString()
+    date: startOfWeek
   }
 
   handleChange = (event) => {
@@ -81,7 +59,7 @@ class Statistics extends React.Component {
     return (
       <div className="flex-auto">
         <h1 className="hello">Statistics</h1>
-        <p>Since: {moment(this.state.date).format("M/D/YY")}</p>
+        <p>Since: {datetimeToDate(this.state.date)}</p>
 
         <FormStyled>
           <SelectStyled
