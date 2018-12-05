@@ -13,5 +13,6 @@ module Types
     field :created_at, String, null: false
     field :updated_at, String, null: false
     field :has_access_token, Boolean, null: true
+    field :org, OrganizationType, null: true
   end
 end

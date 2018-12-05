@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import {
+  UPDATE_ACCESS_TOKEN,
+  UPDATE_GITHUB_USERNAME,
+  UPDATE_GITHUB_ORG
+} from "../mutations/user_mutations";
+import { LOAD_USER_PROFILE } from "../queries/user_queries";
 
-const UPDATE_ACCESS_TOKEN = gql`
-  mutation UpdateAccessToken($accessToken: String!) {
-    updateAccessToken(accessToken: $accessToken) {
-      errors
-    }
-  }
-`;
 const Alert = () => {
   return (
     <div
@@ -39,11 +38,9 @@ const Alert = () => {
 
 const UpdateAccessToken = props => {
   let input;
-  console.log(props);
   return (
     <Mutation mutation={UPDATE_ACCESS_TOKEN}>
       {(updateAccessToken, { data, error, loading, called }) => {
-        console.log(data, error, loading, called);
         if (error) {
           return <div>{JSON.stringify(error)}</div>;
         }
@@ -51,18 +48,18 @@ const UpdateAccessToken = props => {
           return <div>Submitting...</div>;
         }
         if (called) {
-          return (
-            <div className="flex-col w-2/5 mx-auto">Access Token Updated!</div>
-          );
+          return <div>Access Token Updated!</div>;
         }
         return (
-          <div className="flex-col w-2/5 mx-auto">
+          <div>
             {props.hasAccessToken && <Alert />}
             <form
               className="w-full max-w-sm"
               onSubmit={e => {
                 e.preventDefault();
-                updateAccessToken({ variables: { accessToken: input.value } });
+                updateAccessToken({
+                  variables: { accessToken: input.value }
+                });
                 input.value = "";
               }}
             >
@@ -90,24 +87,121 @@ const UpdateAccessToken = props => {
     </Mutation>
   );
 };
+const UpdateGithubUsername = props => {
+  let input;
+  return (
+    <Mutation mutation={UPDATE_GITHUB_USERNAME}>
+      {(updateGithubUsername, { data, error, loading, called }) => {
+        if (error) {
+          return <div>{JSON.stringify(error)}</div>;
+        }
+        if (loading) {
+          return <div>Submitting...</div>;
+        }
+        if (called) {
+          return <div>Github Username Updated!</div>;
+        }
+        return (
+          <div>
+            <form
+              className="w-full max-w-sm"
+              onSubmit={e => {
+                e.preventDefault();
+                updateGithubUsername({
+                  variables: { githubUsername: input.value }
+                });
+                input.value = "";
+              }}
+            >
+              <div className="flex items-center border-b border-b-2 border-teal py-2">
+                <input
+                  className="appearance-none bg-transparent border-none w-full text-grey-darker mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  ref={node => {
+                    input = node;
+                  }}
+                  placeholder={props.githubUsername}
+                  aria-label="Github Username"
+                />
+                <button
+                  className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
+                  type="submit"
+                >
+                  Update Github Username
+                </button>
+              </div>
+            </form>
+          </div>
+        );
+      }}
+    </Mutation>
+  );
+};
+const UpdateGithubOrg = props => {
+  let input;
+  return (
+    <Mutation mutation={UPDATE_GITHUB_ORG}>
+      {(updateGithubOrg, { data, error, loading, called }) => {
+        if (error) {
+          return <div>{JSON.stringify(error)}</div>;
+        }
+        if (loading) {
+          return <div>Submitting...</div>;
+        }
+        if (called) {
+          return <div>Github Org Updated!</div>;
+        }
+        return (
+          <div>
+            <form
+              className="w-full max-w-sm"
+              onSubmit={e => {
+                e.preventDefault();
+                updateGithubOrg({
+                  variables: { githubOrg: input.value }
+                });
+                input.value = "";
+              }}
+            >
+              <div className="flex items-center border-b border-b-2 border-teal py-2">
+                <input
+                  className="appearance-none bg-transparent border-none w-full text-grey-darker mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  ref={node => {
+                    input = node;
+                  }}
+                  placeholder={props.githubOrg}
+                  aria-label="Github Organization"
+                />
+                <button
+                  className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
+                  type="submit"
+                >
+                  Update Github Organization
+                </button>
+              </div>
+            </form>
+          </div>
+        );
+      }}
+    </Mutation>
+  );
+};
 
 export default class Profile extends Component {
   render() {
     return (
-      <Query
-        query={gql`
-          {
-            me {
-              id
-              hasAccessToken
-            }
-          }
-        `}
-      >
+      <Query query={LOAD_USER_PROFILE}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error</p>;
-          return <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />;
+          return (
+            <div className="flex-col w-2/5 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
+              <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />
+              <UpdateGithubUsername githubUsername={data.me.githubUsername} />
+              <UpdateGithubOrg githubOrg={data.me.org.name} />
+            </div>
+          );
         }}
       </Query>
     );
