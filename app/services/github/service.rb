@@ -129,6 +129,19 @@ module Github
       handle! response
     end
 
+    # Fetches publicly available information for user's GitHub account.
+    #
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/users/#get-a-single-user
+    #
+    def github_user_account
+      endpoint = "/users/#{username}"
+      url      = "#{BASE_URI}#{endpoint}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
     private
 
     def search_criteria_present!

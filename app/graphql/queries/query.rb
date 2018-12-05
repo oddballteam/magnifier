@@ -7,7 +7,7 @@ module Queries
   # This list is comprised of individual lists (or manifests), each
   # one containing their own assembly of available queries.
   #
-  class RootQuery < Types::BaseObject
+  class Query < Types::BaseObject
     include Queries::GithubUsers::QueryManifest
     include Queries::Organizations::QueryManifest
     include Queries::Repositories::QueryManifest

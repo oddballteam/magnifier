@@ -20,9 +20,46 @@ class Statistic < ApplicationRecord
   CLOSED = 'closed'
   MERGED = 'merged'
 
+  # ownership_types
+  ASSIGNED = 'assigned'
+  CREATED = 'created'
+
+  # datetime_types
+  CREATED_AFTER = 'created_after'
+  UPDATED_AFTER = 'updated_after'
+  CLOSED_AFTER  = 'closed_after'
+
   has_and_belongs_to_many :github_users
   belongs_to :organization
+  belongs_to :repository
 
   validates :source_id, :source_type, :source, :state, :organization_id,
-            :url, :title, :source_created_at, :source_updated_at, presence: true
+            :url, :title, :source_created_at, :source_updated_at,
+            :repository_id, presence: true
+
+  scope :created_by, ->(github_user_id) { where(source_created_by: github_user_id) }
+  scope :of_state, ->(states) { where(state: states) }
+  scope :of_type, ->(types) { where(source_type: types) }
+
+  # @param datetime [String] Datetime in iso8601 format.
+  # For example, "2018-10-07T20:31:41Z"
+  #
+  scope :created_after, ->(datetime) { where('source_created_at > ?', datetime) }
+  scope :updated_after, ->(datetime) { where('source_updated_at > ?', datetime) }
+  scope :closed_after, ->(datetime) { where('source_closed_at > ?', datetime) }
+
+  def self.load_repo_and_org
+    eager_load(:organization, :repository)
+  end
+
+  # The Statistic#assignees db column is an array column.  This query returns
+  # all of the statistics that have the passed github_user_id in its assignees array.
+  #
+  # @param github_user_id [Integer] The GithubUser#github_id the Statistic is assigned to
+  # @see https://edgeguides.rubyonrails.org/active_record_postgresql.html#array
+  # @see https://www.postgresql.org/docs/current/arrays.html for supported Postgres versions
+  #
+  def self.assigned_to(github_user_id)
+    where('? = ANY (assignees)', github_user_id)
+  end
 end

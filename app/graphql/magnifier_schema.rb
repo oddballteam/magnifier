@@ -9,6 +9,6 @@
 # @see http://graphql-ruby.org/schema/definition.html
 #
 class MagnifierSchema < GraphQL::Schema
-  mutation(Mutations::RootMutation)
-  query(Queries::RootQuery)
+  mutation(Mutations::Mutation)
+  query(Queries::Query)
 end

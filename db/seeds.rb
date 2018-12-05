@@ -116,7 +116,7 @@ stats = [
     state: 'open',
     repository_id: Repository.first.id,
     organization_id: dova.id,
-    url: 'https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/14066',
+    url: 'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/14066',
     title: 'Clean up URL parameters in View Settings',
     source_created_at: '2018-10-08T20:31:41Z',
     source_updated_at: '2018-10-08T20:31:42Z',
@@ -129,12 +129,13 @@ stats = [
     state: 'merged',
     repository_id: Repository.first.id,
     organization_id: dova.id,
-    url: 'https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/14047',
+    url: 'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/14047',
     title: 'Link on Housing hub in yellow homeless box needs to be populated',
     source_created_at: '2018-10-07T20:31:41Z',
     source_updated_at: '2018-10-09T20:31:42Z',
     source_closed_at: '2018-10-09T50:31:42Z',
-    source_created_by: beth.github_id
+    source_created_by: beth.github_id,
+    assignees: [beth.github_id]
   }
 ]
 

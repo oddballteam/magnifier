@@ -9,12 +9,15 @@ module Queries
 
       type Types::GithubUserType, null: false
       argument :id, ID, required: false
+      argument :github_id, Integer, required: false
       argument :github_login, String, required: false
 
-      def resolve(id: nil, github_login: nil)
+      def resolve(id: nil, github_login: nil, github_id: nil)
         if id
           ::GithubUser.find_by id: id
-        else
+        elsif github_id
+          ::GithubUser.find_by github_id: github_id
+        elsif github_login
           ::GithubUser.find_by github_login: github_login
         end
       end
