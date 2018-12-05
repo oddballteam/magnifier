@@ -40,7 +40,7 @@ const PR_CREATED_QUERY = gql`
 `;
 
 const PR_WORKED_QUERY = gql`
-  query PR_WORKED_QUERY($githubUserId: Int!, $date: String!) {
+  query PrWorkedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [PR],
       state: [OPEN, MERGED],
@@ -56,7 +56,7 @@ const PR_WORKED_QUERY = gql`
 `;
 
 const PR_MERGED_QUERY = gql`
-  query PR_MERGED_QUERY($githubUserId: Int!, $date: String!) {
+  query PrMergedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [PR],
       state: [MERGED],
@@ -72,7 +72,7 @@ const PR_MERGED_QUERY = gql`
 `;
 
 const ISSUE_CREATED_QUERY = gql`
-  query ISSUE_CREATED_QUERY($githubUserId: Int!, $date: String!) {
+  query IssueCreatedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [ISSUE],
       state: [OPEN, CLOSED],
@@ -88,7 +88,7 @@ const ISSUE_CREATED_QUERY = gql`
 `;
 
 const ISSUE_WORKED_QUERY = gql`
-  query ISSUE_WORKED_QUERY($githubUserId: Int!, $date: String!) {
+  query IssueWorkedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [ISSUE],
       state: [OPEN, CLOSED],
@@ -104,7 +104,7 @@ const ISSUE_WORKED_QUERY = gql`
 `;
 
 const ISSUE_CLOSED_QUERY = gql`
-  query ISSUE_CLOSED_QUERY($githubUserId: Int!, $date: String!) {
+  query IssueClosedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [ISSUE],
       state: [CLOSED],
