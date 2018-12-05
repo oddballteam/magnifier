@@ -1,6 +1,5 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import styled from 'styled-components';
 
 import { startOfWeek, DateOptions, datetimeToDate } from './DateOptions';
 import StatisticsCollection from './StatisticsCollection';
@@ -14,17 +13,6 @@ import {
   ISSUE_WORKED_QUERY,
   ISSUE_CLOSED_QUERY
 } from '../queries/statistic_queries';
-
-const FormStyled = styled.form`
-  display: flex;
-  margin-top: 1rem;
-`;
-
-const SelectStyled = styled.select`
-  border: 1px solid #DAE1E7;
-  margin-right: .75rem;
-  flex: 1;
-`;
 
 const GithubUsers = () => (
   <Query query={GITHUB_USERS_QUERY}>
@@ -61,23 +49,25 @@ class Statistics extends React.Component {
         <h1 className="hello">Statistics</h1>
         <p>Since: {datetimeToDate(this.state.date)}</p>
 
-        <FormStyled>
-          <SelectStyled
+        <form className="flex mt-4">
+          <select
+            className="flex-1 border border-grey-light mr-3"
             name="date"
             onChange={this.handleChange}
             value={this.state.date}
           >
             <DateOptions/>
-          </SelectStyled>
-          <SelectStyled
+          </select>
+          <select
+            className="flex-1 border border-grey-light mr-3"
             name="githubUserId"
             onChange={this.handleChange}
             value={this.state.githubUserId}
           >
             <option value=""></option>
             <GithubUsers />
-          </SelectStyled>
-        </FormStyled>
+          </select>
+        </form>
 
         <StatisticsCollection
           customQuery={ISSUE_CREATED_QUERY}

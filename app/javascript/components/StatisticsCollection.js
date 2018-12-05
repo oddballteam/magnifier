@@ -1,17 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
 import Statistic from "./Statistic";
-import styled from 'styled-components';
-
-const StatisticContainerStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-`;
-
-const TitleStyled = styled.h3`
-  padding: 2rem 0;
-`;
 
 const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
   <Query
@@ -24,17 +13,17 @@ const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
       if (error) return <p>Error!</p>;
       if (data && data.statistics)
         return (
-          <div>
+          <div className="flex flex-wrap flex-col">
             {githubUserId ? (
-              <TitleStyled>{`${title} (${data.statistics.length})`}</TitleStyled>
+              <h3 className="py-8 px-0">{`${title} (${data.statistics.length})`}</h3>
             ) : (
               ""
             )}
-            <StatisticContainerStyled>
+            <div>
               {data.statistics.map(statistic => (
                 <Statistic {...statistic} key={statistic.sourceCreatedAt} />
               ))}
-            </StatisticContainerStyled>
+            </div>
           </div>
         );
 
