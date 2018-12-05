@@ -12,7 +12,7 @@ class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def execute
-    variables = ensure_hash(graphql_params[:variables])
+    variables = ensure_hash(request.parameters.dig('variables'))
     query = graphql_params[:query]
     operation_name = graphql_params[:operationName]
     context = {
@@ -35,7 +35,7 @@ class GraphqlController < ApplicationController
   private
 
   def graphql_params
-    params.permit(:query, :operationName, variables: %i[accessToken githubUsername githubOrg])
+    params.permit(:query, :operationName)
   end
 
   # Handle form data, JSON body, or a blank value

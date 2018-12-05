@@ -37,6 +37,6 @@ class User < ApplicationRecord
   end
 
   def has_access_token
-    !personal_access_token.nil?
+    personal_access_token.present?
   end
 end
