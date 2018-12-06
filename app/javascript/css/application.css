@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Proza+Libre');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:700|Proza+Libre:700');
 @tailwind preflight;
 @tailwind components;
 @tailwind utilities;
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Proza Libre', sans-serif;

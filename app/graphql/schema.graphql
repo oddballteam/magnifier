@@ -19,6 +19,7 @@ type GithubUser {
   # This GithubUser's statistics, or null if this GithubUser has no statistics.
   statistics: [Statistic!]
   updatedAt: String!
+  user: User
   userId: Int
 }
 
@@ -46,7 +47,7 @@ type Query {
   githubUser(githubId: Int, githubLogin: String, id: ID): GithubUser!
 
   # All Github Users.
-  githubUsers(limit: Int): [GithubUser!]!
+  githubUsers(hasUser: Boolean, limit: Int): [GithubUser!]!
 
   # The Logged in user
   me: User

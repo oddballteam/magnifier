@@ -9,9 +9,12 @@ module Queries
 
       type [Types::GithubUserType], null: false
       argument :limit, Integer, required: false
+      argument :has_user, Boolean, required: false
 
-      def resolve(limit: nil)
-        ::GithubUser.order(id: :asc).limit(limit)
+      def resolve(limit: nil, has_user: true)
+        github_users = ::GithubUser.order(id: :asc).limit(limit)
+        github_users = github_users.where.not(user_id: nil) if has_user
+        github_users
       end
     end
   end
