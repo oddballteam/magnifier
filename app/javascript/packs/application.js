@@ -13,13 +13,6 @@ const client = new ApolloClient({
   uri: "/graphql"
 });
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-
-const client = new ApolloClient({
-  uri: '/graphql'
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
