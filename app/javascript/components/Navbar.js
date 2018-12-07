@@ -14,6 +14,15 @@ const Navbar = () => (
     </li>
     <li className="mr-6 p5">
       <NavLink
+        activeClassName="text-teal-darker"
+        className="hover:text-teal-light no-underline"
+        to="/statistics"
+      >
+        Statistics
+      </NavLink>
+    </li>
+    <li className="mr-6 p5">
+      <NavLink
         activeClassName="text-teal-darkest"
         className="hover:text-teal-light no-underline"
         to={`goodbye`}

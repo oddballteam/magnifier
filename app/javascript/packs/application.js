@@ -13,13 +13,20 @@ const client = new ApolloClient({
   uri: "/graphql"
 });
 
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+const client = new ApolloClient({
+  uri: '/graphql'
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <Router>
-      <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Router>
         <Application>{routes}</Application>
-      </ApolloProvider>
-    </Router>,
+      </Router>
+    </ApolloProvider>,
     document.getElementById("root")
   );
 });

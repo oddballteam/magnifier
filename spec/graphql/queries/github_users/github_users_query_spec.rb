@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Queries::GithubUsers::GithubUsersQuery do
-  before { 6.times { create :github_user } }
+  before do
+    user = create :user
+    6.times { create :github_user, user_id: user.id }
+  end
 
   context 'with no arguments' do
     let(:query) do
@@ -56,6 +59,28 @@ RSpec.describe Queries::GithubUsers::GithubUsersQuery do
       results  = response.dig('data', 'githubUsers')
 
       expect(results.size).to eq(3)
+    end
+  end
+
+  context 'with an argument of "has_user"' do
+    let(:has_user_query) do
+      <<-GRAPHQL
+        query {
+          githubUsers(has_user: false) {
+            githubLogin
+            id
+            userId
+            githubId
+          }
+        }
+      GRAPHQL
+    end
+
+    it 'limits the response items where user_id is populated' do
+      response = MagnifierSchema.execute has_user_query, context: {}
+      results  = response.dig('data', 'githubUsers')
+
+      expect(results).to be_nil
     end
   end
 end

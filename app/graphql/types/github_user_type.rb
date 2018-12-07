@@ -22,5 +22,11 @@ module Types
       null: true,
       description: "This GithubUser's statistics, or null if this GithubUser has no statistics."
     )
+
+    field :user, UserType, null: true
+
+    def user
+      User.find_by(id: object.user_id)
+    end
   end
 end
