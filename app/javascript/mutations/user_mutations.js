@@ -1,21 +1,21 @@
 import gql from "graphql-tag";
 const UPDATE_ACCESS_TOKEN = gql`
   mutation UpdateAccessToken($accessToken: String) {
-    updateAccessToken(accessToken: $accessToken) {
+    updateUser(accessToken: $accessToken) {
       errors
     }
   }
 `;
 const UPDATE_GITHUB_USERNAME = gql`
   mutation UpdateGithubUsername($githubUsername: String) {
-    updateGithubUsername(githubUsername: $githubUsername) {
+    updateUser(githubUsername: $githubUsername) {
       errors
     }
   }
 `;
 const UPDATE_GITHUB_ORG = gql`
   mutation UpdateGithubOrg($githubOrg: String) {
-    updateGithubOrg(githubOrg: $githubOrg) {
+    updateUser(githubOrg: $githubOrg) {
       errors
     }
   }
