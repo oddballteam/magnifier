@@ -18,10 +18,11 @@ module Mutations
           end
           user_detail_response(current_user)
         end
-          user_detail_response
+        user_detail_response
       end
-      def user_detail_response(user = nil, errors = []) 
-        { user: user, errors: errors}
+
+      def user_detail_response(user = nil, errors = [])
+        { user: user, errors: errors }
       end
     end
   end
