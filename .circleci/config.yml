@@ -65,3 +65,8 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+      - setup_remote_docker:
+        docker_layer_caching: false
+      - run: docker build -t oddball/magnifier:$CIRCLE_BRANCH .
+
