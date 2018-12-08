@@ -1,4 +1,5 @@
 FROM ruby:2.5
+ARG RAILS_MASTER_KEY
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -18,6 +19,7 @@ WORKDIR $RAILS_ROOT
 ENV RAILS_ENV='production'
 ENV RACK_ENV='production' 
 ENV NODE_ENV='production'
+ENV RAILS_MASTER_KEY=RAILS_MASTER_KEY
 ENV RAILS_SERVE_STATIC_FILES="true"
 # Adding gems
 COPY Gemfile Gemfile
