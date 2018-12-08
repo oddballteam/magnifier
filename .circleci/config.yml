@@ -68,5 +68,5 @@ jobs:
 
       - setup_remote_docker:
           docker_layer_caching: false
-      - run: docker build -t oddball/magnifier:$CIRCLE_BRANCH .
+      - run: docker build -t oddball/magnifier:$CIRCLE_BRANCH -e RAILS_MASTER_KEY=${RAILS_MASTER_KEY} .
 
