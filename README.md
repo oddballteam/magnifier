@@ -87,3 +87,12 @@ There are currently two scripts that can be ran
 
 * `npm run eslint:fix` automatically reformats all js files
 * `npm run eslint` - for use on CI, lints all files and shows results
+
+# Deploying
+
+Application can currently be built and run with docker.
+`docker build -t magnifier .`
+`docker run -p 3000:3000 magnifier`
+
+
+Currently we are using rails to serve the static assets, long term this will probably need to change and switch to using nginx or something similar
