@@ -1,10 +1,10 @@
-import React from 'react';
-import { Query } from 'react-apollo';
+import React from "react";
+import { Query } from "react-apollo";
 
-import { startOfWeek, DateOptions, datetimeToDate } from './DateOptions';
-import StatisticsCollection from './StatisticsCollection';
+import { startOfWeek, DateOptions, datetimeToDate } from "./DateOptions";
+import StatisticsCollection from "./StatisticsCollection";
 
-import { GITHUB_USERS_QUERY } from '../queries/github_user_queries';
+import { GITHUB_USERS_QUERY } from "../queries/github_user_queries";
 import {
   PR_CREATED_QUERY,
   PR_WORKED_QUERY,
@@ -12,7 +12,7 @@ import {
   ISSUE_CREATED_QUERY,
   ISSUE_WORKED_QUERY,
   ISSUE_CLOSED_QUERY
-} from '../queries/statistic_queries';
+} from "../queries/statistic_queries";
 
 const GithubUsers = () => (
   <Query query={GITHUB_USERS_QUERY}>
@@ -20,12 +20,12 @@ const GithubUsers = () => (
       if (loading) return <option>Loading...</option>;
       if (error) return <option>Error!</option>;
 
-      return data.githubUsers.map((githubUser) => {
-        return(
+      return data.githubUsers.map(githubUser => {
+        return (
           <option value={githubUser.githubId} key={githubUser.githubId}>
             {`${githubUser.user.firstName} ${githubUser.user.lastName}`}
           </option>
-        )
+        );
       });
     }}
   </Query>
@@ -35,11 +35,11 @@ class Statistics extends React.Component {
   state = {
     githubUserId: undefined,
     date: startOfWeek
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, type, value } = event.target;
-    const val = type === 'number' ? parseFloat(value) : value;
+    const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
@@ -56,7 +56,7 @@ class Statistics extends React.Component {
             onChange={this.handleChange}
             value={this.state.date}
           >
-            <DateOptions/>
+            <DateOptions />
           </select>
           <select
             className="flex-1 border border-grey-light mr-3"
@@ -64,7 +64,7 @@ class Statistics extends React.Component {
             onChange={this.handleChange}
             value={this.state.githubUserId}
           >
-            <option value=""></option>
+            <option value="" />
             <GithubUsers />
           </select>
         </form>
