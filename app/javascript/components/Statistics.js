@@ -32,7 +32,7 @@ const GithubUsers = () => (
 );
 
 class Statistics extends React.Component {
-  static state = {
+  state = {
     githubUserId: undefined,
     date: startOfWeek
   };
