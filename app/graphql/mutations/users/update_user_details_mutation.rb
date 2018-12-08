@@ -9,8 +9,10 @@ module Mutations
       field :errors, [String], null: true
       def resolve(data)
         current_user = context[:current_user]
-        current_user.update(data.slice(:access_token, :github_username, :organization_id))
-        current_user.errors unless current_user.save!
+        current_user.update!(data.slice(:access_token, :github_username, :organization_id))
+        rescue ActiveRecord::RecordInvalid => e
+          e.record.errors.full_messages
+        end
       end
     end
   end
