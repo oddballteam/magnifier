@@ -10,7 +10,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 const client = new ApolloClient({
-  uri: '/graphql'
+  uri: "/graphql"
 });
 
 document.addEventListener("DOMContentLoaded", () => {
