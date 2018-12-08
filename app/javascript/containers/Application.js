@@ -14,9 +14,9 @@ export default class ApplicationContainer extends Component {
         id
       }
     }
-    `
-    fetch('/graphql', {
-      method: 'post',
+    `;
+    fetch("/graphql", {
+      method: "post",
       body: JSON.stringify({
         query,
         operationName: null,
@@ -27,11 +27,13 @@ export default class ApplicationContainer extends Component {
         "Content-Type": "application/json"
       },
       credentials: "same-origin"
-    }).then(resp => {
-      return resp.json()
-    }).then(data => {
-      console.log(data)
     })
+      .then(resp => {
+        return resp.json();
+      })
+      .then(data => {
+        console.log(data);
+      });
   }
   render() {
     return (

@@ -15,7 +15,9 @@ const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
         return (
           <div className="flex flex-wrap flex-col">
             {githubUserId ? (
-              <h3 className="py-8 px-0">{`${title} (${data.statistics.length})`}</h3>
+              <h3 className="py-8 px-0">{`${title} (${
+                data.statistics.length
+              })`}</h3>
             ) : (
               ""
             )}
