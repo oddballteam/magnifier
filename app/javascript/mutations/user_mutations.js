@@ -14,8 +14,8 @@ const UPDATE_GITHUB_USERNAME = gql`
   }
 `;
 const UPDATE_GITHUB_ORG = gql`
-  mutation UpdateGithubOrg($githubOrg: String) {
-    updateUser(githubOrg: $githubOrg) {
+  mutation UpdateGithubOrg($organizationId: Int) {
+    updateUser(organizationId: $organizationId) {
       errors
     }
   }

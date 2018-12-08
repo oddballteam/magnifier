@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
-import gql from "graphql-tag";
 import {
   UPDATE_ACCESS_TOKEN,
   UPDATE_GITHUB_USERNAME,
@@ -8,6 +7,18 @@ import {
 } from "../mutations/user_mutations";
 import { LOAD_USER_PROFILE } from "../queries/user_queries";
 
+const MOCK_ORGS = [
+  {
+    id: 1,
+    name: 'department-of-veterans-affairs',
+    url: 'https://github.com/department-of-veterans-affairs'
+  },
+  {
+    id: 2,
+    name: 'etsy',
+    url: 'https://github.com/etsy'
+  }
+];
 const Alert = () => {
   return (
     <div
@@ -48,13 +59,13 @@ const UpdateAccessToken = props => {
           return <div>Submitting...</div>;
         }
         if (called) {
-          return <div>Access Token Updated!</div>;
+          return <div className="text-center pt-3">Access Token Updated!</div>;
         }
         return (
           <div>
             {props.hasAccessToken && <Alert />}
             <form
-              className="w-full max-w-sm"
+              className="w-full"
               onSubmit={e => {
                 e.preventDefault();
                 updateAccessToken({
@@ -99,12 +110,12 @@ const UpdateGithubUsername = props => {
           return <div>Submitting...</div>;
         }
         if (called) {
-          return <div>Github Username Updated!</div>;
+          return <div className="text-center pt-3">Github Username Updated!</div>;
         }
         return (
           <div>
             <form
-              className="w-full max-w-sm"
+              className="w-full"
               onSubmit={e => {
                 e.preventDefault();
                 updateGithubUsername({
@@ -149,30 +160,42 @@ const UpdateGithubOrg = props => {
           return <div>Submitting...</div>;
         }
         if (called) {
-          return <div>Github Org Updated!</div>;
+          return <div className="text-center pt-3">Github Org Updated!</div>;
         }
+        const { orgs } = props
         return (
           <div>
             <form
-              className="w-full max-w-sm"
+              className="w-full"
               onSubmit={e => {
                 e.preventDefault();
                 updateGithubOrg({
-                  variables: { githubOrg: input.value }
+                  variables: { organizationId: parseInt(input.value, 10) }
                 });
                 input.value = "";
               }}
             >
               <div className="flex items-center border-b border-b-2 border-teal py-2">
-                <input
-                  className="appearance-none bg-transparent border-none w-full text-grey-darker mr-3 py-1 px-2 leading-tight focus:outline-none"
-                  type="text"
+                <select
+                  className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                  id="grid-state"
                   ref={node => {
                     input = node;
                   }}
-                  placeholder={props.githubOrg}
-                  aria-label="Github Organization"
-                />
+                >
+                  {orgs.map(org => (
+                    <option value={org.id}>{org.name}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
                 <button
                   className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
                   type="submit"
@@ -196,10 +219,12 @@ export default class Profile extends Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error</p>;
           return (
-            <div className="flex-col w-2/5 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
+            <div className="flex-col w-1/2 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
               <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />
               <UpdateGithubUsername githubUsername={data.me.githubUsername} />
-              <UpdateGithubOrg githubOrg={data.me.org.name} />
+              <UpdateGithubOrg
+                orgs={MOCK_ORGS}
+              />
             </div>
           );
         }}
