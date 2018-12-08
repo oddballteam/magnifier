@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 const UPDATE_ACCESS_TOKEN = gql`
-  mutation UpdateAccessToken($accessToken: String) {
-    updateUser(accessToken: $accessToken) {
+  mutation UpdateAccessToken($personalAccessToken: String) {
+    updateUser(personalAccessToken: $personalAccessToken) {
       errors
     }
   }

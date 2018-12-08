@@ -69,7 +69,7 @@ const UpdateAccessToken = props => {
               onSubmit={e => {
                 e.preventDefault();
                 updateAccessToken({
-                  variables: { accessToken: input.value }
+                  variables: { personalAccessToken: input.value }
                 });
                 input.value = "";
               }}
