@@ -10,15 +10,11 @@ module Mutations
       field :errors, [String], null: true
       def resolve(data)
         current_user = context[:current_user]
-        if current_user
-          begin
-            current_user.update!(data.slice(:personal_access_token, :github_username, :organization_id))
-          rescue ActiveRecord::RecordInvalid => e
-            return user_detail_response(nil, e.record.errors.full_messages)
-          end
-          user_detail_response(current_user)
-        end
-        user_detail_response
+        return user_detail_response(nil, ['No Logged In User']) if current_user.nil?
+        current_user.update!(data.slice(:personal_access_token, :github_username, :organization_id))
+        user_detail_response(current_user)
+        rescue ActiveRecord::RecordInvalid => e
+          return user_detail_response(nil, e.record.errors.full_messages)
       end
 
       def user_detail_response(user = nil, errors = [])
