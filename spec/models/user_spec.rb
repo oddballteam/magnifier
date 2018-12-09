@@ -17,6 +17,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
+    it { should have_many(:comments) }
     it { should have_many(:week_in_reviews) }
     it { should have_many(:accomplishments) }
   end
