@@ -15,6 +15,11 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email) }
     it { should validate_uniqueness_of(:github_username) }
   end
+
+  describe 'associations' do
+    it { should have_many(:week_in_reviews) }
+  end
+
   describe 'from_omniauth' do
     it 'has a method that requires an auth obj from omniauth2' do
       count = User.count
