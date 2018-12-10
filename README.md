@@ -89,10 +89,33 @@ There are currently two scripts that can be ran
 * `npm run eslint` - for use on CI, lints all files and shows results
 
 # Deploying
+## Build Docker iamge
 
 Application can currently be built and run with docker.
-`docker build -t magnifier .`
+
+To run the docker container locally, you'll need to inject the
+`RAILS_MASTER_KEY` via the environment. After ensuring the key is present in
+your current session with `env | grep RAILS_MASTER_KEY`, you can build the
+container with: 
+`docker build -t magnifier:latest --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY .`
+
+The first time building will take a few minutes, based on your internet speed. 
+
+After the container has been built, run it with: 
+
 `docker run -p 3000:3000 magnifier`
 
+
+## Interacting with Docker container locally
+
+For the following commands, first use `docker ps` to list the active containers and get the name of the container
+
+*Run a bash console*
+
+`docker exec -it <container name> /bin/bash` - to get bash shell
+
+*Run a rails console*
+
+`docker exec -it <container name> bundle exec rails c`
 
 Currently we are using rails to serve the static assets, long term this will probably need to change and switch to using nginx or something similar
