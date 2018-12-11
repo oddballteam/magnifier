@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_020711) do
+ActiveRecord::Schema.define(version: 2018_12_08_163533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accomplishments", force: :cascade do |t|
+    t.bigint "week_in_review_id"
+    t.bigint "statistic_id"
+    t.string "type"
+    t.integer "action"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["statistic_id"], name: "index_accomplishments_on_statistic_id"
+    t.index ["user_id"], name: "index_accomplishments_on_user_id"
+    t.index ["week_in_review_id"], name: "index_accomplishments_on_week_in_review_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "week_in_review_id"
+    t.text "body"
+    t.integer "type"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
+    t.index ["week_in_review_id"], name: "index_comments_on_week_in_review_id"
+  end
 
   create_table "github_users", force: :cascade do |t|
     t.integer "user_id"
@@ -90,6 +114,19 @@ ActiveRecord::Schema.define(version: 2018_11_24_020711) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
+  create_table "week_in_reviews", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_week_in_reviews_on_user_id"
+  end
+
+  add_foreign_key "accomplishments", "users"
+  add_foreign_key "comments", "users"
+  add_foreign_key "comments", "week_in_reviews"
   add_foreign_key "repositories", "organizations"
   add_foreign_key "statistics", "organizations"
+  add_foreign_key "week_in_reviews", "users"
 end

@@ -24,6 +24,8 @@ RSpec.describe Statistic, type: :model do
 
   describe 'associations' do
     it { should have_and_belong_to_many(:github_users) }
+    it { should have_many(:week_in_reviews) }
+    it { should have_many(:accomplishments) }
     it { should belong_to(:repository) }
     it { should belong_to(:organization) }
   end

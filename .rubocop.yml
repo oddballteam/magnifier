@@ -64,6 +64,7 @@ Metrics/MethodLength:
   Exclude:
     - app/controllers/graphql_controller.rb
     - spec/**/*
+    - 'db/**/*'
 
 Style/Documentation:
   Enabled: false
@@ -72,3 +73,4 @@ Metrics/AbcSize:
   Exclude:
     - app/controllers/graphql_controller.rb
     - spec/**/*
+    - 'db/**/*'
