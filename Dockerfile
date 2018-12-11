@@ -64,6 +64,11 @@ COPY --chown=magnifier:magnifier Gemfile Gemfile
 COPY --chown=magnifier:magnifier Gemfile.lock Gemfile.lock 
 RUN bundle install --jobs 20 --retry 5 --deployment --without development test
 
+# Install node-modules
+COPY --chown=magnifier:magnifier package.json package.json 
+COPY --chown=magnifier:magnifier yarn.lock yarn.lock 
+RUN bundle exec yarn
+
 # Now copy rest of app, minus what is is in .dockerignore
 COPY --chown=magnifier:magnifier . .
 

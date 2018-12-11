@@ -101,7 +101,7 @@ container with:
 
 The first time building will take a few minutes, based on your internet speed. 
 
-After the container has been built, run it with: 
+After the container has been built, run it locally with: 
 
 `docker run -p 3000:3000 -e DATABASE_URL=postgresql://$USER@host.docker.internal/github-magnifier_development magnifier`
 
