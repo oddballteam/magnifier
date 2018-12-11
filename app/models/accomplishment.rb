@@ -15,5 +15,4 @@ class Accomplishment < ApplicationRecord
   belongs_to :user
 
   validates :week_in_review_id, :statistic_id, :user_id, :type, :action, presence: true
-
 end
