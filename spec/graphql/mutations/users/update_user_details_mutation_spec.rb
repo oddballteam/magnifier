@@ -56,7 +56,7 @@ RSpec.describe Mutations::Users::UpdateUserDetailsMutation do
     GRAPHQL
     resp = MagnifierSchema.execute(mutation, context: {}).to_h
     errors = resp['data']['updateUser']['errors']
-    expect(resp['data']['updateUser']).to eql('errors' => ['No Logged In User'])
+    expect(errors).to eql(['No Logged In User'])
   end
   it "returns errors if it can't save" do
     same_github = 'john_doe'
