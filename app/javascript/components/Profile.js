@@ -10,13 +10,13 @@ import { LOAD_USER_PROFILE } from "../queries/user_queries";
 const MOCK_ORGS = [
   {
     id: 1,
-    name: 'department-of-veterans-affairs',
-    url: 'https://github.com/department-of-veterans-affairs'
+    name: "department-of-veterans-affairs",
+    url: "https://github.com/department-of-veterans-affairs"
   },
   {
     id: 2,
-    name: 'etsy',
-    url: 'https://github.com/etsy'
+    name: "etsy",
+    url: "https://github.com/etsy"
   }
 ];
 const Alert = () => {
@@ -110,7 +110,9 @@ const UpdateGithubUsername = props => {
           return <div>Submitting...</div>;
         }
         if (called) {
-          return <div className="text-center pt-3">Github Username Updated!</div>;
+          return (
+            <div className="text-center pt-3">Github Username Updated!</div>
+          );
         }
         return (
           <div>
@@ -162,7 +164,7 @@ const UpdateGithubOrg = props => {
         if (called) {
           return <div className="text-center pt-3">Github Org Updated!</div>;
         }
-        const { orgs } = props
+        const { orgs } = props;
         return (
           <div>
             <form
@@ -222,9 +224,7 @@ export default class Profile extends Component {
             <div className="flex-col w-1/2 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
               <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />
               <UpdateGithubUsername githubUsername={data.me.githubUsername} />
-              <UpdateGithubOrg
-                orgs={MOCK_ORGS}
-              />
+              <UpdateGithubOrg orgs={MOCK_ORGS} />
             </div>
           );
         }}
