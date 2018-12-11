@@ -6,6 +6,6 @@ FactoryBot.define do
     statistic { FactoryBot.create(:statistic, :open_issue) }
     user
     type { Statistic::ISSUE }
-    action { Accomplishment::WORKED }
+    action { :created }
   end
 end

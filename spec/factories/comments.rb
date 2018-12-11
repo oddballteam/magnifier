@@ -5,6 +5,6 @@ FactoryBot.define do
     week_in_review
     user
     body { 'Some comment' }
-    type { Comment::CONCERNS }
+    type { :concerns }
   end
 end

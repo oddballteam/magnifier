@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class Comment < ApplicationRecord
-  # types
-  CONCERNS = 'concerns'
-  WEEK_GO  = 'week-go'
-  ODDBALL  = 'oddball-team'
-  PROJECT  = 'project-team'
+  # @see https://api.rubyonrails.org/v5.2.1/classes/ActiveRecord/Enum.html
+  #
+  enum type: { concerns: 0, oddball_team: 1, project_team: 2, week_go: 3 }
 
   belongs_to :week_in_review
   belongs_to :user

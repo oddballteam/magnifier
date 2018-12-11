@@ -19,14 +19,15 @@ RSpec.describe Comment, type: :model do
       it 'raises an error if a duplicate is created', :aggregate_failures do
         user = create :user
         wir  = create :week_in_review, user: user
-        comment1 = create :comment, week_in_review: wir, type: Comment::ODDBALL, user: user
-        comment2 = create :comment, week_in_review: wir, type: Comment::PROJECT, user: user
+
+        comment1 = create :comment, week_in_review: wir, type: :oddball_team, user: user
+        comment2 = create :comment, week_in_review: wir, type: :project_team, user: user
 
         expect(comment1).to be_valid
         expect(comment2).to be_valid
 
         expect do
-          create :comment, week_in_review: wir, type: Comment::ODDBALL, user: user
+          create :comment, week_in_review: wir, type: :oddball_team, user: user
         end.to raise_error(
           ActiveRecord::RecordInvalid,
           'Validation failed: Type This user already has a comment of this type for this week'

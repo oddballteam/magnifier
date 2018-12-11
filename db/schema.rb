@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2018_12_08_163533) do
     t.bigint "week_in_review_id"
     t.bigint "statistic_id"
     t.string "type"
-    t.string "action"
+    t.integer "action"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2018_12_08_163533) do
   create_table "comments", force: :cascade do |t|
     t.bigint "week_in_review_id"
     t.text "body"
-    t.string "type"
+    t.integer "type"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

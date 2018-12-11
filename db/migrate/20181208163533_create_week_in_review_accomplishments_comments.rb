@@ -11,7 +11,7 @@ class CreateWeekInReviewAccomplishmentsComments < ActiveRecord::Migration[5.2]
       t.belongs_to :week_in_review, index: true
       t.belongs_to :statistic, index: true
       t.string :type
-      t.string :action
+      t.integer :action
       t.references :user, foreign_key: true
       t.timestamps
     end
@@ -19,7 +19,7 @@ class CreateWeekInReviewAccomplishmentsComments < ActiveRecord::Migration[5.2]
     create_table :comments do |t|
       t.references :week_in_review, foreign_key: true
       t.text :body
-      t.string :type
+      t.integer :type
       t.references :user, foreign_key: true
       t.timestamps
     end

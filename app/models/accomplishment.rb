@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class Accomplishment < ApplicationRecord
-  # actions
-  CREATED = 'created'
-  WORKED = 'worked'
-  CLOSED = 'closed'
-  MERGED = 'merged'
+  # @see https://api.rubyonrails.org/v5.2.1/classes/ActiveRecord/Enum.html
+  #
+  enum action: { created: 0, worked: 1, closed: 2, merged: 3 }
 
   belongs_to :week_in_review
   belongs_to :statistic
