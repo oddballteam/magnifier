@@ -16,15 +16,4 @@ class Accomplishment < ApplicationRecord
 
   validates :week_in_review_id, :statistic_id, :user_id, :type, :action, presence: true
 
-  # TODO: Need to define business case here before enforcing this.
-  # Meaning can an issue/PR appear in more than one area (i.e. same
-  # issue under 'issues worked' and 'issues closed', etc.)
-  #
-  # validates(
-  #   :statistic_id,
-  #   uniqueness: {
-  #     scope: :week_in_review_id,
-  #     message: 'This statistic is already present in this week in review'
-  #   }
-  # )
 end
