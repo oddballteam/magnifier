@@ -9,7 +9,6 @@ README.md
 .env.sample
 *.rbc
 capybara-*.html
-log
 tmp
 db/*.sqlite3
 db/*.sqlite3-journal
@@ -17,6 +16,7 @@ public/system
 coverage/
 spec/tmp
 **.orig
+config/master.key
 
 ########
 # Ruby #
@@ -27,4 +27,5 @@ spec/tmp
 ########
 # Node #
 ########
-
+node_modules/
+log/**

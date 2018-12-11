@@ -76,10 +76,7 @@ test:
 # You can use this database configuration with:
 #
 #   production:
-#     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
   <<: *default
-  database: github-magnifier_production
-  username: github-magnifier
-  password: <%= ENV['GITHUB-MAGNIFIER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
