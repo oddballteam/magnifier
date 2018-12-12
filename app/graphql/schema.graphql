@@ -93,6 +93,12 @@ type Query {
 
   # All Users.
   users(limit: Int): [User!]!
+
+  # The WeekInReview for the current user and passed date.
+  weekInReview(
+    # Date that falls in the desired WeekInReview.  Format is "YYYY-MM-DD"
+    date: String!
+  ): WeekInReview!
 }
 
 type Repository {
