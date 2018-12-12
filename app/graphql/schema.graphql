@@ -207,3 +207,24 @@ type User {
   lastName: String!
   updatedAt: String!
 }
+
+type WeekInReview {
+  createdAt: String!
+
+  # The WeekInReviews user
+  employee: User!
+  endDate: String!
+  id: Int!
+  issuesClosed: [Statistic!]
+  issuesCreated: [Statistic!]
+  issuesWorked: [Statistic!]
+  pullRequestsCreated: [Statistic!]
+  pullRequestsMerged: [Statistic!]
+  pullRequestsWorked: [Statistic!]
+  startDate: String!
+
+  # The sourceUpdateAt for the most recently updated Statistic
+  statisticsMostRecentUpdatedAt: String
+  updatedAt: String!
+  userId: Int!
+}
