@@ -17,6 +17,11 @@ module WeekInReviews
       @filter = WeekInReviews::Filter.new(validated_github_id!, start_time, end_time)
     end
 
+    # Creates a WeekInReview record and all of the week's Accomplishments,
+    # for the initialized user and date.
+    #
+    # @return [WeekInReview]
+    #
     def assemble!
       create_week_in_review!
       surface_accomplishments!
@@ -26,11 +31,10 @@ module WeekInReviews
     private
 
     def validate_date!(date)
-      if date.class == String && Date.parse(date).class == Date
-        Date.parse(date)
-      else
-        raise WeekInReviews::Error, 'Date must be a string'
-      end
+      raise WeekInReviews::Error, 'Date must be a string' if date.class != String
+      raise WeekInReviews::Error, 'Date must be a string' if Date.parse(date).class != Date
+
+      Date.parse(date)
     end
 
     def determine_start_date

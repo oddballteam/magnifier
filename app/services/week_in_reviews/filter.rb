@@ -67,11 +67,10 @@ module WeekInReviews
     private
 
     def validate_time!(time)
-      if time.class == String && Time.parse(time).class == Time
-        Time.parse(time).iso8601
-      else
-        raise WeekInReviews::Error, 'Time must be a string'
-      end
+      raise WeekInReviews::Error, 'Time must be a string' if time.class != String
+      raise WeekInReviews::Error, 'Time must be a string' if Time.parse(time).class != Time
+
+      Time.parse(time).iso8601
     end
   end
 end

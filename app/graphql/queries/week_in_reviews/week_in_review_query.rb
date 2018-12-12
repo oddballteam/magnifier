@@ -16,20 +16,18 @@ module Queries
       def resolve(date:)
         current_user = context[:current_user]
 
-        if current_user
-          find_WIR(current_user, date) || create_WIR!(current_user, date)
-        else
-          raise ::WeekInReviews::Error, 'Requires a logged in user'
-        end
+        raise ::WeekInReviews::Error, 'Requires a logged in user' if current_user.blank?
+
+        find_week_in_review(current_user, date) || create_week_in_review!(current_user, date)
       end
 
       private
 
-      def find_WIR(user, date)
+      def find_week_in_review(user, date)
         WeekInReview.for_user_and_date(user, date)
       end
 
-      def create_WIR!(user, date)
+      def create_week_in_review!(user, date)
         ::WeekInReviews::Builder.new(user, date).assemble!
       end
     end
