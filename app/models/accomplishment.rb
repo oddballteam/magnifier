@@ -15,4 +15,8 @@ class Accomplishment < ApplicationRecord
   belongs_to :user
 
   validates :week_in_review_id, :statistic_id, :user_id, :type, :action, presence: true
+
+  scope :issues, -> { where(type: Statistic::ISSUE) }
+  scope :pull_requests, -> { where(type: Statistic::PR) }
+
 end
