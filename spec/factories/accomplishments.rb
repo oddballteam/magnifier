@@ -7,5 +7,9 @@ FactoryBot.define do
     user
     type { Statistic::ISSUE }
     action { :created }
+
+    trait :created_pr do
+      type { Statistic::PR }
+    end
   end
 end
