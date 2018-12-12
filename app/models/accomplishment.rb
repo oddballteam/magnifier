@@ -19,4 +19,51 @@ class Accomplishment < ApplicationRecord
   scope :issues, -> { where(type: Statistic::ISSUE) }
   scope :pull_requests, -> { where(type: Statistic::PR) }
 
+  def self.create_created_issue!(week_in_review, statistic, user)
+    issues.created.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
+
+  def self.create_worked_issue!(week_in_review, statistic, user)
+    issues.worked.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
+
+  def self.create_closed_issue!(week_in_review, statistic, user)
+    issues.closed.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
+
+  def self.create_created_pr!(week_in_review, statistic, user)
+    pull_requests.created.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
+
+  def self.create_worked_pr!(week_in_review, statistic, user)
+    pull_requests.worked.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
+
+  def self.create_merged_pr!(week_in_review, statistic, user)
+    pull_requests.merged.create!(
+      week_in_review: week_in_review,
+      statistic: statistic,
+      user: user
+    )
+  end
 end
