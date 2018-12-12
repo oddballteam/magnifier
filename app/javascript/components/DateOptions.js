@@ -3,7 +3,6 @@ import React from "react";
 import moment from "moment";
 window.moment = moment;
 
-const today = moment().format("YYYY-MM-DD");
 const WEEK = "week";
 const startOfWeek = moment()
   .startOf(WEEK)
@@ -51,4 +50,4 @@ const DateOptions = () => {
 
 const datetimeToDate = datetime => moment(datetime).format("M/D/YY");
 
-export { startOfWeek, DateOptions, datetimeToDate, today };
+export { startOfWeek, DateOptions, datetimeToDate };

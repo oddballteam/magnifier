@@ -1,11 +1,9 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
-import { today } from "../components/DateOptions";
 import { StatisticsGroup } from "../components/StatisticsCollection";
 
 const WeekInReviewStatistics = () => (
-  <Query query={WEEK_IN_REVIEW_QUERY} variables={{ date: today }}>
     {({ data, error, loading }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error!</p>;
