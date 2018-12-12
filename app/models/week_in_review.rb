@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WeekInReview < ApplicationRecord
-  has_many :accomplishments
+  has_many :accomplishments, dependent: :destroy
   has_many :statistics, through: :accomplishments
   has_many :comments
   belongs_to :user

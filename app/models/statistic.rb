@@ -30,7 +30,7 @@ class Statistic < ApplicationRecord
   CLOSED_AFTER  = 'closed_after'
 
   has_and_belongs_to_many :github_users
-  has_many :accomplishments
+  has_many :accomplishments, dependent: :destroy
   has_many :week_in_reviews, through: :accomplishments
   belongs_to :organization
   belongs_to :repository
