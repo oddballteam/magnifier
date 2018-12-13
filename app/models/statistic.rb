@@ -30,7 +30,7 @@ class Statistic < ApplicationRecord
   CLOSED_AFTER  = 'closed_after'
 
   has_and_belongs_to_many :github_users
-  has_many :accomplishments
+  has_many :accomplishments, dependent: :destroy
   has_many :week_in_reviews, through: :accomplishments
   belongs_to :organization
   belongs_to :repository
@@ -46,9 +46,12 @@ class Statistic < ApplicationRecord
   # @param datetime [String] Datetime in iso8601 format.
   # For example, "2018-10-07T20:31:41Z"
   #
-  scope :created_after, ->(datetime) { where('source_created_at > ?', datetime) }
-  scope :updated_after, ->(datetime) { where('source_updated_at > ?', datetime) }
-  scope :closed_after, ->(datetime) { where('source_closed_at > ?', datetime) }
+  scope :created_after,  ->(datetime) { where('source_created_at >= ?', datetime) }
+  scope :updated_after,  ->(datetime) { where('source_updated_at >= ?', datetime) }
+  scope :closed_after,   ->(datetime) { where('source_closed_at >= ?', datetime) }
+  scope :created_before, ->(datetime) { where('source_created_at <= ?', datetime) }
+  scope :updated_before, ->(datetime) { where('source_updated_at <= ?', datetime) }
+  scope :closed_before,  ->(datetime) { where('source_closed_at <= ?', datetime) }
 
   def self.load_repo_and_org
     eager_load(:organization, :repository)

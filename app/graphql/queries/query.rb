@@ -13,5 +13,6 @@ module Queries
     include Queries::Repositories::QueryManifest
     include Queries::Statistics::QueryManifest
     include Queries::Users::QueryManifest
+    include Queries::WeekInReviews::QueryManifest
   end
 end
