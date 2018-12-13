@@ -4,6 +4,7 @@ import { StatisticFragment } from "./statistic_queries"
 const WEEK_IN_REVIEW_QUERY = gql`
   query WeekInReviewQuery($date: String!) {
     weekInReview(date: $date) {
+      id
       employee {
         firstName
         lastName
