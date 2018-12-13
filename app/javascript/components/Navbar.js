@@ -40,6 +40,15 @@ const Navbar = () => (
       </NavLink>
     </li>
     <li className="mr-6 p5">
+      <NavLink
+        activeClassName="text-teal-darkest"
+        className="hover:text-teal-light no-underline"
+        to={`profile`}
+      >
+        My Profile
+      </NavLink>
+    </li>
+    <li className="mr-6 p5">
       <a href="/auth/google_oauth2">Login</a>
     </li>
   </ul>

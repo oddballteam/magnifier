@@ -9,5 +9,6 @@ module Mutations
   #
   class Mutation < Types::BaseObject
     include Mutations::Statistics::MutationManifest
+    include Mutations::Users::MutationManifest
   end
 end

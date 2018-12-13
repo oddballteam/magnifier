@@ -40,4 +40,8 @@ class User < ApplicationRecord
   def org
     Organization.find_by id: organization_id
   end
+
+  def has_access_token
+    personal_access_token.present?
+  end
 end

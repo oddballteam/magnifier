@@ -35,7 +35,7 @@ class GraphqlController < ApplicationController
   private
 
   def graphql_params
-    params.permit(:query, :variables, :operationName)
+    params.permit(:query, :operationName)
   end
 
   # Handle form data, JSON body, or a blank value
