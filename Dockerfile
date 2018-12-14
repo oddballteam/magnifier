@@ -6,8 +6,6 @@ ENV REPO_DIR /home/magnifier/src
 ENV GEM_DIR /home/magnifier/gems
 
 # Set application specific environment variables
-# Eventually this can be migrated to something like: 
-# ENV ENV_FILE /home/magnifier/.env
 ENV PORT=3000
 ENV RAILS_ENV='production'
 ENV RACK_ENV='production'
@@ -19,27 +17,31 @@ ENV PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
+# We don't need documentashun
+RUN echo "gem: --no-ri --no-rdoc" | tee /etc/gemrc
+
 # Install curl so we can install yarn (ruby-slim doesn't have curl)
 RUN apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends curl gnupg2
+    apt-get install -yqq --no-install-recommends curl gnupg2 && \
+    curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# Install Node and Yarn
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-# Update local packages and install dependencies, then clean up
+# Update local packages and install dependencies, clean up to keep image small
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends \
       build-essential \
       libpq-dev \
       nodejs \
       yarn \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# We don't need documentashun
-RUN echo "gem: --no-ri --no-rdoc" | tee /etc/gemrc
+      git && \
+    apt-get clean autoclean && \
+    apt-get autoremove -y &&\
+    rm -rf \
+     /var/lib/apt \
+     /var/lib/dpkg \
+     /var/lib/cache \
+     /var/lib/log
 
 # Create user and group, freeze GID/UID to avoid permission issues w/ shared
 # data folders mounted across multiple machines
@@ -49,14 +51,12 @@ RUN groupadd magnifier --gid 8411 && \
 # Run stuff as magnifier 
 USER magnifier
 
-# Create app folder
-RUN mkdir -p $GEM_DIR $REPO_DIR $REPO_DIR/tmp
-
-# Symlink a persisted gem folder, so we don't have to d/l again on each release
-RUN ln -sn /home/magnifier/src/vendor/bundle $GEM_DIR 
+# Create app folde, symlink a persisted gem folder
+RUN mkdir -p $GEM_DIR $REPO_DIR $REPO_DIR/tmp && \
+    ln -sn /home/magnifier/src/vendor/bundle $GEM_DIR && \
+    mkdir -p $REPO_DIR
 
 # Change Working dir
-RUN mkdir -p $REPO_DIR
 WORKDIR $REPO_DIR
 
 # Install gems
@@ -75,12 +75,15 @@ COPY --chown=magnifier:magnifier . .
 # Compile static assets
 RUN bundle exec rake webpacker:compile
 
-# Expose service ports
-EXPOSE 3000
-
 # Provide a Healthcheck for Docker risk mitigation
 HEALTHCHECK --interval=3600s \ 
   CMD curl -f http://localhost:3000 || exit 1
 
-# Default command, running app as service
-CMD ["bundle", "exec", "foreman", "start"]
+# Expose port
+EXPOSE $PORT
+
+# Entrypoint for running commands, like: `docker-compose run web rake db:setup`
+ENTRYPOINT ["bundle", "exec"]
+
+# Default command
+CMD bundle exec rails s -p $PORT -b 0.0.0.0

@@ -9,7 +9,6 @@ gem 'rails', '~> 5.2.1'
 gem 'attr_encrypted', '~> 3.0.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'coffee-rails', '~> 4.2'
-gem 'foreman'
 gem 'graphql', '~> 1.8', '>= 1.8.10'
 gem 'httparty', '~> 0.16.2'
 gem 'jbuilder', '~> 2.5'
