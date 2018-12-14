@@ -1,4 +1,4 @@
-# Magnifier
+# Magnifier  [![CircleCI](https://circleci.com/gh/oddballio/magnifier.svg?style=svg)](https://circleci.com/gh/oddballio/magnifier)
 
 A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
 
