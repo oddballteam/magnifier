@@ -40,7 +40,7 @@ module WeekInReviews
     def created_pull_requests
       Statistic
         .of_type(Statistic::PR)
-        .of_state([Statistic::OPEN, Statistic::MERGED])
+        .of_state([Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED])
         .created_by(github_user_id)
         .created_after(start_time)
         .created_before(end_time)
@@ -49,7 +49,7 @@ module WeekInReviews
     def worked_pull_requests
       Statistic
         .of_type(Statistic::PR)
-        .of_state([Statistic::OPEN, Statistic::MERGED])
+        .of_state([Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED])
         .created_by(github_user_id)
         .updated_after(start_time)
         .updated_before(end_time)
