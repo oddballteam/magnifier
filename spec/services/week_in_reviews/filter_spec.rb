@@ -12,6 +12,7 @@ RSpec.describe WeekInReviews::Filter do
 
   before do
     create :statistic, :open_pr, source_created_by: hub_id
+    create :statistic, :closed_pr, source_created_by: hub_id
     create :statistic, :merged_pr, source_created_by: hub_id
     create :statistic, :open_issue, source_created_by: hub_id
     create :statistic, :closed_issue, source_created_by: hub_id
@@ -136,15 +137,15 @@ RSpec.describe WeekInReviews::Filter do
     let(:statistics) { filter.created_pull_requests }
 
     it 'finds and returns the expected number of Statistics' do
-      expect(statistics.count).to eq 2
+      expect(statistics.count).to eq 3
     end
 
     it 'only returns pull requests' do
       expect(statistics.pluck(:source_type).uniq).to eq [Statistic::PR]
     end
 
-    it 'returns both open and merged pull requests' do
-      expect(statistics.pluck(:state)).to include Statistic::OPEN, Statistic::MERGED
+    it 'returns open, closed and merged pull requests' do
+      expect(statistics.pluck(:state)).to include Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED
     end
 
     it 'only returns Statistics created by the passed github_user_id' do
@@ -168,15 +169,15 @@ RSpec.describe WeekInReviews::Filter do
     let(:statistics) { filter.worked_pull_requests }
 
     it 'finds and returns the expected number of Statistics' do
-      expect(statistics.count).to eq 2
+      expect(statistics.count).to eq 3
     end
 
     it 'only returns pull requests' do
       expect(statistics.pluck(:source_type).uniq).to eq [Statistic::PR]
     end
 
-    it 'returns both open and merged pull requests' do
-      expect(statistics.pluck(:state)).to include Statistic::OPEN, Statistic::MERGED
+    it 'returns open, closed and merged pull requests' do
+      expect(statistics.pluck(:state)).to include Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED
     end
 
     it 'only returns Statistics created by the passed github_user_id' do

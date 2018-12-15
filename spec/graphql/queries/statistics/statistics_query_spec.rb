@@ -8,6 +8,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
 
   before do
     create :statistic, :open_pr, source_created_by: github_user.github_id
+    create :statistic, :closed_pr, source_created_by: github_user.github_id
     create :statistic, :merged_pr, source_created_by: github_user.github_id
     create :statistic, :open_issue, source_created_by: github_user.github_id
     create :statistic, :closed_issue, source_created_by: github_user.github_id
@@ -206,7 +207,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             ownershipType: CREATED,
             githubUserId: #{github_user.github_id},
             type: [PR],
-            state: [OPEN, MERGED],
+            state: [OPEN, CLOSED, MERGED],
             datetimeType: CREATED_AFTER,
             datetime: "#{january_1_2018}"
           ) {
@@ -222,12 +223,12 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
     let(:response) { MagnifierSchema.execute(query, context: {}) }
     let(:results) { response.dig('data', 'statistics') }
 
-    it 'returns open and merged pull requests', :aggregated_failures do
+    it 'returns open, closed and merged pull requests', :aggregated_failures do
       source_types = isolated_values_for(results, 'sourceType')
       states       = isolated_values_for(results, 'state')
 
       expect(source_types).to eq [Statistic::PR]
-      expect(states).to match_array [Statistic::OPEN, Statistic::MERGED]
+      expect(states).to match_array [Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED]
     end
 
     it 'only returns pull requests created by the passed GithubUser#github_id' do
@@ -239,7 +240,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
     it 'only returns pull requests that were created after the passed datetime' do
       stats_created_after_datetime = stats_after_passed_datetime(results, 'sourceCreatedAt')
 
-      expect(stats_created_after_datetime).to eq(2)
+      expect(stats_created_after_datetime).to eq(3)
     end
   end
 
@@ -251,7 +252,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             ownershipType: CREATED,
             githubUserId: #{github_user.github_id},
             type: [PR],
-            state: [OPEN, MERGED],
+            state: [OPEN, CLOSED, MERGED],
             datetimeType: UPDATED_AFTER,
             datetime: "#{january_1_2018}"
           ) {
@@ -267,12 +268,12 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
     let(:response) { MagnifierSchema.execute(query, context: {}) }
     let(:results) { response.dig('data', 'statistics') }
 
-    it 'returns open and merged pull requests', :aggregated_failures do
+    it 'returns open, closed and merged pull requests', :aggregated_failures do
       source_types = isolated_values_for(results, 'sourceType')
       states       = isolated_values_for(results, 'state')
 
       expect(source_types).to eq [Statistic::PR]
-      expect(states).to match_array [Statistic::OPEN, Statistic::MERGED]
+      expect(states).to match_array [Statistic::OPEN, Statistic::CLOSED, Statistic::MERGED]
     end
 
     it 'only returns pull requests created by the passed GithubUser#github_id' do
@@ -284,7 +285,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
     it 'only returns pull requests that were updated after the passed datetime' do
       stats_updated_after_datetime = stats_after_passed_datetime(results, 'sourceUpdatedAt')
 
-      expect(stats_updated_after_datetime).to eq(2)
+      expect(stats_updated_after_datetime).to eq(3)
     end
   end
 

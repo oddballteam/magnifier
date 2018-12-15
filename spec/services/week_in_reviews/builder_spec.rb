@@ -31,6 +31,7 @@ RSpec.describe WeekInReviews::Builder do
   describe '#assemble!' do
     before do
       create :statistic, :open_pr, source_created_by: hub_id
+      create :statistic, :closed_pr, source_created_by: hub_id
       create :statistic, :merged_pr, source_created_by: hub_id
       create :statistic, :open_issue, source_created_by: hub_id
       create :statistic, :closed_issue, source_created_by: hub_id
@@ -64,8 +65,8 @@ RSpec.describe WeekInReviews::Builder do
       expect(week_in_review.accomplishments.issues.created.count).to eq 2
       expect(week_in_review.accomplishments.issues.worked.count).to eq 2
       expect(week_in_review.accomplishments.issues.closed.count).to eq 1
-      expect(week_in_review.accomplishments.pull_requests.created.count).to eq 2
-      expect(week_in_review.accomplishments.pull_requests.worked.count).to eq 2
+      expect(week_in_review.accomplishments.pull_requests.created.count).to eq 3
+      expect(week_in_review.accomplishments.pull_requests.worked.count).to eq 3
       expect(week_in_review.accomplishments.pull_requests.merged.count).to eq 1
     end
   end
