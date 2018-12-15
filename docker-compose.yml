@@ -1,0 +1,18 @@
+version: '3'
+volumes:
+  postgres_data: {}
+
+services:
+  db:
+    image: postgres:10-alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      args:
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+    ports:
+      - 3000:3000
+    depends_on:
+      - db 
