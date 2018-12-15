@@ -31,6 +31,9 @@ const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error!</p>;
       if (data && data.statistics) {
+        console.table(data.statistics.map(stat => (
+          { type: title, url: stat.url }
+        )))
         return StatisticsGroup(data.statistics, githubUserId, title);
       }
       return <div />;
