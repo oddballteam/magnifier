@@ -12,8 +12,9 @@ jobs:
           PGHOST: localhost
           PGUSER: magnifier
       - image: postgres:9.5
+        name: db
         environment:
-          POSTGRES_USER: magnifier
+          POSTGRES_USER: postgres
           POSTGRES_DB: github-magnifier_test 
           POSTGRES_PASSWORD: ""
     working_directory: ~/repo
