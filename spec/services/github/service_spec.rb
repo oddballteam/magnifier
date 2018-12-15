@@ -213,7 +213,7 @@ RSpec.describe Github::Service do
         response = Github::Service.new(user, datetime).pull_requests_worked
         states   = items_in(response).map { |item| item['state'] }
 
-        expect(states.uniq).to match_array ['open', 'closed']
+        expect(states.uniq).to match_array %w[open closed]
       end
     end
 

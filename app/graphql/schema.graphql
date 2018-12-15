@@ -214,11 +214,11 @@ type UpdateUserDetailsMutationPayload {
 }
 
 type User {
+  accessToken: Boolean
   createdAt: String!
   email: String!
   firstName: String!
   githubUsername: String!
-  hasAccessToken: Boolean
   id: Int!
   lastName: String!
   org: Organization

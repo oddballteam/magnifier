@@ -3,7 +3,7 @@ const LOAD_USER_PROFILE = gql`
   {
     me {
       id
-      hasAccessToken
+      accessToken
       githubUsername
       org {
         name
