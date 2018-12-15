@@ -9,6 +9,11 @@ const LOAD_USER_PROFILE = gql`
         name
       }
     }
+    organizations {
+      id
+      name
+      url
+    }
   }
 `;
 

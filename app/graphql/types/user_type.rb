@@ -9,7 +9,7 @@ module Types
     field :first_name, String, null: false
     field :last_name, String, null: false
     field :email, String, null: false
-    field :github_username, String, null: false
+    field :github_username, String, null: true
     field :created_at, String, null: false
     field :updated_at, String, null: false
     field :has_access_token, Boolean, null: true
