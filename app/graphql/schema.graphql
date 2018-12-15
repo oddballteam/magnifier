@@ -217,7 +217,7 @@ type User {
   createdAt: String!
   email: String!
   firstName: String!
-  githubUsername: String!
+  githubUsername: String
   hasAccessToken: Boolean
   id: Int!
   lastName: String!
