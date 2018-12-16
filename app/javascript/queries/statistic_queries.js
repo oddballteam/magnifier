@@ -27,7 +27,7 @@ const PR_CREATED_QUERY = gql`
   query PR_CREATED_QUERY($githubUserId: Int!, $date: String!) {
     statistics(
       type: [PR]
-      state: [OPEN, MERGED]
+      state: [OPEN, CLOSED, MERGED]
       ownershipType: CREATED
       githubUserId: $githubUserId
       datetimeType: CREATED_AFTER
@@ -43,7 +43,7 @@ const PR_WORKED_QUERY = gql`
   query PrWorkedQuery($githubUserId: Int!, $date: String!) {
     statistics(
       type: [PR]
-      state: [OPEN, MERGED]
+      state: [OPEN, CLOSED, MERGED]
       ownershipType: CREATED
       githubUserId: $githubUserId
       datetimeType: UPDATED_AFTER

@@ -63,7 +63,7 @@ const UpdateAccessToken = props => {
         }
         return (
           <div>
-            {props.hasAccessToken && <Alert />}
+            {props.accessToken && <Alert />}
             <form
               className="w-full"
               onSubmit={e => {
@@ -222,7 +222,7 @@ export default class Profile extends Component {
           if (error) return <p>Error</p>;
           return (
             <div className="flex-col w-1/2 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
-              <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />
+              <UpdateAccessToken accessToken={data.me.accessToken} />
               <UpdateGithubUsername githubUsername={data.me.githubUsername} />
               <UpdateGithubOrg orgs={MOCK_ORGS} />
             </div>

@@ -65,7 +65,7 @@ module Github
     #   - the user created
     #   - stem from any of the repositories in the user's organization
     #   - have an updated datetime >= the passed datetime
-    #   - have a state of open
+    #   - have a state of open or closed
     #
     # @return [HTTParty::Response]
     # @see https://developer.github.com/v3/search/#search-issues
@@ -74,7 +74,7 @@ module Github
     def pull_requests_worked
       search_criteria_present!
 
-      query    = "q=type:pr+state:open+org:#{org}+author:#{username}+updated:>=#{datetime}"
+      query    = "q=type:pr+org:#{org}+author:#{username}+updated:>=#{datetime}"
       url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
       response = HTTParty.get url, options
 

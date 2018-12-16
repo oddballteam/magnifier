@@ -95,18 +95,18 @@ RSpec.describe Github::Persist do
 
         Github::Persist.new(user, datetime).worked_pull_requests!
 
-        expect(Statistic.count).to eq 2
-        expect(Repository.count).to eq 2
+        expect(Statistic.count).to eq 23
+        expect(Repository.count).to eq 5
       end
     end
 
-    it 'returns open, pull request Statistic records', :aggregate_failures do
+    it 'returns open or closed pull request Statistic records', :aggregate_failures do
       VCR.use_cassette 'github/pull_requests_worked/success' do
         response = Github::Persist.new(user, datetime).worked_pull_requests!
 
         expect(response.map { |stat| stat.class.to_s }.uniq).to eq ['Statistic']
         expect(response.map(&:source_type).uniq).to eq [Statistic::PR]
-        expect(response.map(&:state).uniq).to eq [Statistic::OPEN]
+        expect(response.map(&:state).uniq).to match_array [Statistic::OPEN, Statistic::CLOSED]
       end
     end
   end

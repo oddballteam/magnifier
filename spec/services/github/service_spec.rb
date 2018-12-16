@@ -208,12 +208,12 @@ RSpec.describe Github::Service do
       end
     end
 
-    it 'only returns open pull requests', :aggregate_failures do
+    it 'returns open and closed pull requests', :aggregate_failures do
       VCR.use_cassette 'github/pull_requests_worked/success' do
         response = Github::Service.new(user, datetime).pull_requests_worked
         states   = items_in(response).map { |item| item['state'] }
 
-        expect(states.uniq).to eq ['open']
+        expect(states.uniq).to match_array %w[open closed]
       end
     end
 
