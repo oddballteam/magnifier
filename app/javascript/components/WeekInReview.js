@@ -17,26 +17,38 @@ const WeekInReviewStatistics = ({ date }) => (
             <StatisticsGroup
               statistics={data.weekInReview.issuesCreated}
               title={`Issues | Created`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
             <StatisticsGroup
               statistics={data.weekInReview.issuesWorked}
               title={`Issues | Worked`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
             <StatisticsGroup
               statistics={data.weekInReview.issuesClosed}
               title={`Issues | Closed`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
             <StatisticsGroup
               statistics={data.weekInReview.pullRequestsCreated}
               title={`Pull Requests | Created`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
             <StatisticsGroup
               statistics={data.weekInReview.pullRequestsWorked}
               title={`Pull Requests | Worked`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
             <StatisticsGroup
               statistics={data.weekInReview.pullRequestsMerged}
               title={`Pull Requests | Merged`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
             />
           </div>
         );

@@ -6,6 +6,8 @@ const StatisticsGroup = ({
   statistics,
   showHeader = true,
   title,
+  showRemove = false,
+  weekInReviewId
 }) => {
   return (
     <div className="flex flex-wrap flex-col">
@@ -20,6 +22,8 @@ const StatisticsGroup = ({
               <Statistic
                 {...statistic}
                 key={statistic.sourceCreatedAt}
+                showRemove={showRemove}
+                weekInReviewId={weekInReviewId}
               />
             ))
           : ""}
@@ -41,7 +45,13 @@ const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
         console.table(
           data.statistics.map(stat => ({ type: title, url: stat.url }))
         );
-        return StatisticsGroup(data.statistics, githubUserId, title);
+        return (
+          <StatisticsGroup
+            statistics={data.statistics}
+            showHeader={githubUserId}
+            title={title}
+          />
+        );
       }
       return <div />;
     }}

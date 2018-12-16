@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 const StatisticFragment = gql`
   fragment StatisticQueryFields on Statistic {
+    id
     assignees
     sourceType
     state
