@@ -70,14 +70,14 @@ RSpec.describe Mutations::Accomplishments::DeleteAccomplishmentMutation do
   context 'when the passed Accomplishment does not exist' do
     before { Accomplishment.delete_all }
 
-    it 'responds the deleted: false' do
+    it 'responds with deleted: false' do
       response = MagnifierSchema.execute(mutation, context: {})
       deleted  = response.dig('data', 'deleteAccomplishment', 'deleted')
 
       expect(deleted).to eq false
     end
 
-    it 'responds the errors present' do
+    it 'responds with errors present' do
       response = MagnifierSchema.execute(mutation, context: {})
       errors   = response.dig('data', 'deleteAccomplishment', 'errors')
 
