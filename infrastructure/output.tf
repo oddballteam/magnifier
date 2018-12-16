@@ -5,3 +5,7 @@ output "registry_url" {
 output "alb_dns_name" {
   value = "${aws_alb.magnifier.dns_name}"
 }
+
+output "db_address" {
+  value = "${aws_db_instance.default.endpoint}"
+}

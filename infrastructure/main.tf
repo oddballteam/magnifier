@@ -124,7 +124,7 @@ module "base_vpc" {
 
   tags = {
     Terraform   = "true"
-    Environment = "dev"
+    Application = "magnifier"
   }
 }
 
@@ -177,9 +177,14 @@ data "template_file" "magnifier" {
   template = "${file("magnifier.json.tpl")}"
 
   vars {
-    REPOSITORY_URL = "${aws_ecr_repository.magnifier.repository_url}"
-    AWS_REGION     = "${var.AWS_REGION}"
-    LOGS_GROUP     = "${aws_cloudwatch_log_group.magnifier.name}"
+    REPOSITORY_URL    = "${aws_ecr_repository.magnifier.repository_url}"
+    AWS_REGION        = "${var.AWS_REGION}"
+    LOGS_GROUP        = "${aws_cloudwatch_log_group.magnifier.name}"
+    DATABASE_URL      = "${aws_db_instance.default.endpoint}"
+    DATABASE_HOST     = "${aws_db_instance.default.address}"
+    DATABASE_USER     = "${var.db_user}"
+    DATABASE_PORT     = "${aws_db_instance.default.port}"
+    DATABASE_PASSWORD = "${var.db_pass}"
   }
 }
 
@@ -191,6 +196,11 @@ resource "aws_ecs_task_definition" "magnifier" {
   memory                   = 512
   container_definitions    = "${data.template_file.magnifier.rendered}"
   execution_role_arn       = "${aws_iam_role.ecs_task_assume.arn}"
+
+  tags = {
+    Terraform   = "true"
+    Application = "magnifier"
+  }
 }
 
 resource "aws_ecs_service" "magnifier" {
@@ -218,6 +228,11 @@ resource "aws_ecs_service" "magnifier" {
 
 resource "aws_ecs_cluster" "fargate" {
   name = "fargate"
+
+  tags = {
+    Terraform   = "true"
+    Application = "magnifier"
+  }
 }
 
 resource "aws_ecr_repository" "magnifier" {
@@ -229,6 +244,60 @@ resource "aws_cloudwatch_log_group" "magnifier" {
   retention_in_days = 30
 
   tags {
-    Name = "magnifier"
+    Name        = "magnifier"
+    Application = "magnifier"
+    Terraform   = "true"
+  }
+}
+
+resource "aws_security_group" "allow_postgres" {
+  name        = "allow_postgres"
+  description = "Allow postgres traffic inbound"
+  vpc_id      = "${module.base_vpc.vpc_id}"
+
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.ecs.id}"]
+  }
+
+  tags {
+    Application = "magnifier"
+    Terraform   = "true"
+  }
+}
+
+resource "aws_db_instance" "default" {
+  allocated_storage          = 10
+  storage_type               = "gp2"
+  engine                     = "postgres"
+  engine_version             = "10.4"
+  instance_class             = "db.t2.micro"
+  name                       = "${var.db_name}"
+  username                   = "${var.db_user}"
+  password                   = "${var.db_pass}"
+  vpc_security_group_ids     = ["${aws_security_group.allow_postgres.id}"]
+  skip_final_snapshot        = "true"
+  db_subnet_group_name       = "${aws_db_subnet_group.magnifier_db.name}"
+  auto_minor_version_upgrade = "true"
+
+  tags {
+    Application = "magnifier"
+    Terraform   = "true"
+  }
+}
+
+resource "aws_db_subnet_group" "magnifier_db" {
+  name = "magnifier-db-subnet"
+
+  subnet_ids = [
+    "${module.base_vpc.public_subnets[0]}",
+    "${module.base_vpc.public_subnets[1]}",
+  ]
+
+  tags {
+    Application = "magnifier"
+    Terraform   = "true"
   }
 }
