@@ -2,7 +2,11 @@ import React from "react";
 import { Query } from "react-apollo";
 import Statistic from "./Statistic";
 
-const StatisticsGroup = (statistics, showHeader, title) => {
+const StatisticsGroup = ({
+  statistics,
+  showHeader = true,
+  title,
+}) => {
   return (
     <div className="flex flex-wrap flex-col">
       {showHeader ? (
@@ -13,7 +17,10 @@ const StatisticsGroup = (statistics, showHeader, title) => {
       <div>
         {statistics
           ? statistics.map(statistic => (
-              <Statistic {...statistic} key={statistic.sourceCreatedAt} />
+              <Statistic
+                {...statistic}
+                key={statistic.sourceCreatedAt}
+              />
             ))
           : ""}
       </div>
