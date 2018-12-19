@@ -4,9 +4,9 @@ import Statistic from "./Statistic";
 
 const StatisticsGroup = ({
   statistics,
-  showHeader = true,
+  showHeader,
   title,
-  showRemove = false,
+  showRemove,
   weekInReviewId
 }) => {
   return (
@@ -30,6 +30,11 @@ const StatisticsGroup = ({
       </div>
     </div>
   );
+};
+
+StatisticsGroup.defaultProps = {
+  showHeader: true,
+  showRemove: false
 };
 
 const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
