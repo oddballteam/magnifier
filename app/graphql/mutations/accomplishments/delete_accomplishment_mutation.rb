@@ -9,7 +9,7 @@ module Mutations
       argument :statistic_id, Integer, required: true
       argument :week_in_review_id, Integer, required: true
 
-      field :deleted, Boolean, null: true
+      field :success, Boolean, null: true
       field :errors, [String], null: true
 
       def resolve(statistic_id:, week_in_review_id:)
@@ -31,9 +31,9 @@ module Mutations
 
       private
 
-      def accomplishment_response(deleted = true, error_messages = [])
+      def accomplishment_response(success = true, error_messages = [])
         {
-          deleted: deleted,
+          success: success,
           errors: error_messages
         }
       end

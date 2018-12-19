@@ -22,7 +22,7 @@ RSpec.describe Mutations::Accomplishments::DeleteAccomplishmentMutation do
           statisticId: #{statistic.id},
           weekInReviewId: #{week_in_review.id}
         ) {
-          deleted
+          success
           errors
         }
       }
@@ -50,7 +50,7 @@ RSpec.describe Mutations::Accomplishments::DeleteAccomplishmentMutation do
   it 'yields the expected response shape and values' do
     expected_response = {
       "deleteAccomplishment" => {
-        "deleted" => true,
+        "success" => true,
         "errors" => []
       }
     }
@@ -70,11 +70,11 @@ RSpec.describe Mutations::Accomplishments::DeleteAccomplishmentMutation do
   context 'when the passed Accomplishment does not exist' do
     before { Accomplishment.delete_all }
 
-    it 'responds with deleted: false' do
+    it 'responds with success: false' do
       response = MagnifierSchema.execute(mutation, context: {})
-      deleted  = response.dig('data', 'deleteAccomplishment', 'deleted')
+      success  = response.dig('data', 'deleteAccomplishment', 'success')
 
-      expect(deleted).to eq false
+      expect(success).to eq false
     end
 
     it 'responds with errors present' do

@@ -9,7 +9,7 @@ const DELETE_ACCOMPLISHMENT_MUTATION = gql`
       statisticId: $statisticId
       weekInReviewId: $weekInReviewId
     ) {
-      deleted
+      success
       errors
     }
   }
