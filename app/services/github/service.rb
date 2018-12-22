@@ -11,6 +11,9 @@ module Github
 
     attr_reader :configuration, :options, :results_size, :user, :datetime, :username, :org
 
+    # @param user [User] A User record
+    # @param datetime [String] Datetime string in the iso8601 format: '2018-11-26T00:00:00Z'
+    #
     def initialize(user, datetime = nil)
       @configuration = Github::Configuration.new(user)
       @options = configuration.set_options!

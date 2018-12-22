@@ -2,7 +2,13 @@ import React from "react";
 import { Query } from "react-apollo";
 import Statistic from "./Statistic";
 
-const StatisticsGroup = (statistics, showHeader, title) => {
+const StatisticsGroup = ({
+  statistics,
+  showHeader,
+  title,
+  showRemove,
+  weekInReviewId
+}) => {
   return (
     <div className="flex flex-wrap flex-col">
       {showHeader ? (
@@ -13,12 +19,22 @@ const StatisticsGroup = (statistics, showHeader, title) => {
       <div>
         {statistics
           ? statistics.map(statistic => (
-              <Statistic {...statistic} key={statistic.sourceCreatedAt} />
+              <Statistic
+                {...statistic}
+                key={statistic.sourceCreatedAt}
+                showRemove={showRemove}
+                weekInReviewId={weekInReviewId}
+              />
             ))
           : ""}
       </div>
     </div>
   );
+};
+
+StatisticsGroup.defaultProps = {
+  showHeader: true,
+  showRemove: false
 };
 
 const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
@@ -34,7 +50,13 @@ const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
         console.table(
           data.statistics.map(stat => ({ type: title, url: stat.url }))
         );
-        return StatisticsGroup(data.statistics, githubUserId, title);
+        return (
+          <StatisticsGroup
+            statistics={data.statistics}
+            showHeader={githubUserId}
+            title={title}
+          />
+        );
       }
       return <div />;
     }}

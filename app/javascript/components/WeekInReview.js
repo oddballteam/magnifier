@@ -14,36 +14,42 @@ const WeekInReviewStatistics = ({ date }) => (
         return (
           <div className="flex-1">
             <h2>Current</h2>
-            {StatisticsGroup(
-              data.weekInReview.issuesCreated,
-              true,
-              `Issues | Created`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.issuesWorked,
-              true,
-              `Issues | Worked`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.issuesClosed,
-              true,
-              `Issues | Closed`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsCreated,
-              true,
-              `Pull Requests | Created`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsWorked,
-              true,
-              `Pull Requests | Worked`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsMerged,
-              true,
-              `Pull Requests | Merged`
-            )}
+            <StatisticsGroup
+              statistics={data.weekInReview.issuesCreated}
+              title={`Issues | Created`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
+            <StatisticsGroup
+              statistics={data.weekInReview.issuesWorked}
+              title={`Issues | Worked`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
+            <StatisticsGroup
+              statistics={data.weekInReview.issuesClosed}
+              title={`Issues | Closed`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
+            <StatisticsGroup
+              statistics={data.weekInReview.pullRequestsCreated}
+              title={`Pull Requests | Created`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
+            <StatisticsGroup
+              statistics={data.weekInReview.pullRequestsWorked}
+              title={`Pull Requests | Worked`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
+            <StatisticsGroup
+              statistics={data.weekInReview.pullRequestsMerged}
+              title={`Pull Requests | Merged`}
+              showRemove={true}
+              weekInReviewId={data.weekInReview.id}
+            />
           </div>
         );
       }
