@@ -333,6 +333,43 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
       expect(stats_merged_after_datetime).to eq(1)
     end
   end
+
+  context 'when for_week is true' do
+    let(:january_1_2015) { '2015-01-01T01:31:41Z' }
+    let(:query) do
+      <<-GRAPHQL
+        query {
+          statistics(
+            ownershipType: ASSIGNED,
+            githubUserId: #{github_user.github_id},
+            type: [ISSUE],
+            state: [OPEN CLOSED],
+            datetimeType: CLOSED,
+            datetime: "#{january_1_2015}"
+            forWeek: true
+          ) {
+            sourceType
+            state
+            sourceClosedAt
+          }
+        }
+      GRAPHQL
+    end
+
+    before do
+      create :statistic, :closed_issue, assignees: [github_user.github_id], source_closed_at: january_1_2015
+    end
+
+    let(:response) { MagnifierSchema.execute(query, context: {}) }
+    let(:results) { response.dig('data', 'statistics') }
+
+    it 'only returns the associated statistics for the passed week', :aggregated_failures do
+      closed_at = isolated_values_for(results, 'sourceClosedAt')
+
+      expect(results.size).to eq 1
+      expect(closed_at).to eq [january_1_2015]
+    end
+  end
 end
 
 def isolated_values_for(results, field)
