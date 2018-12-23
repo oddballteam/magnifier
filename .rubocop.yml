@@ -50,6 +50,7 @@ Metrics/BlockLength:
     - 'db/schema.rb'
     - spec/**/*
     - lib/tasks/**/*
+    - Guardfile
 
 Style/NumericLiterals:
   Exclude:
