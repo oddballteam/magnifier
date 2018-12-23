@@ -25,7 +25,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [ISSUE],
             state: [OPEN],
-            datetimeType: CREATED_AFTER,
+            datetimeType: CREATED,
             datetime: "#{january_1_2018}"
           ) {
             source
@@ -73,7 +73,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [ISSUE],
             state: [OPEN, CLOSED],
-            datetimeType: CREATED_AFTER,
+            datetimeType: CREATED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType
@@ -118,7 +118,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [ISSUE],
             state: [OPEN, CLOSED],
-            datetimeType: UPDATED_AFTER,
+            datetimeType: UPDATED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType
@@ -163,7 +163,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [ISSUE],
             state: [CLOSED],
-            datetimeType: CLOSED_AFTER,
+            datetimeType: CLOSED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType
@@ -208,7 +208,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [PR],
             state: [OPEN, CLOSED, MERGED],
-            datetimeType: CREATED_AFTER,
+            datetimeType: CREATED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType
@@ -253,7 +253,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [PR],
             state: [OPEN, CLOSED, MERGED],
-            datetimeType: UPDATED_AFTER,
+            datetimeType: UPDATED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType
@@ -298,7 +298,7 @@ RSpec.describe Queries::Statistics::StatisticsQuery do
             githubUserId: #{github_user.github_id},
             type: [PR],
             state: [MERGED],
-            datetimeType: CLOSED_AFTER,
+            datetimeType: CLOSED,
             datetime: "#{january_1_2018}"
           ) {
             sourceType

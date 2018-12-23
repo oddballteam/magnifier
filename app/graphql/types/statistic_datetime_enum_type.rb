@@ -4,19 +4,19 @@ module Types
   class StatisticDatetimeEnumType < BaseEnum
     description 'During a query, defines the datetime attribute the statistics will be scoped to.'
     value(
-      'CREATED_AFTER',
+      'CREATED',
       'Statistics created after the passed datetime',
-      value: Statistic::CREATED_AFTER
+      value: Statistic::CREATED
     )
     value(
-      'UPDATED_AFTER',
+      'UPDATED',
       'Statistics updated after the passed datetime',
-      value: Statistic::UPDATED_AFTER
+      value: Statistic::UPDATED
     )
     value(
-      'CLOSED_AFTER',
+      'CLOSED',
       'Statistics closed after the passed datetime',
-      value: Statistic::CLOSED_AFTER
+      value: Statistic::CLOSED
     )
   end
 end
