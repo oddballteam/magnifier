@@ -1,7 +1,6 @@
 import React from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
-import Article from "./components/Article";
 import Goodbye from "./components/Goodbye";
 import Hello from "./components/Hello";
 import NotFoundPage from "./components/NotFoundPage";
