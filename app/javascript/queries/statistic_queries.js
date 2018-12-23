@@ -25,7 +25,7 @@ const StatisticFragment = gql`
 `;
 
 const PR_CREATED_QUERY = gql`
-  query PR_CREATED_QUERY($githubUserId: Int!, $date: String!) {
+  query PR_CREATED_QUERY($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [PR]
       state: [OPEN, CLOSED, MERGED]
@@ -33,6 +33,7 @@ const PR_CREATED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: CREATED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
@@ -41,7 +42,7 @@ const PR_CREATED_QUERY = gql`
 `;
 
 const PR_WORKED_QUERY = gql`
-  query PrWorkedQuery($githubUserId: Int!, $date: String!) {
+  query PrWorkedQuery($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [PR]
       state: [OPEN, CLOSED, MERGED]
@@ -49,6 +50,7 @@ const PR_WORKED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: UPDATED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
@@ -57,7 +59,7 @@ const PR_WORKED_QUERY = gql`
 `;
 
 const PR_MERGED_QUERY = gql`
-  query PrMergedQuery($githubUserId: Int!, $date: String!) {
+  query PrMergedQuery($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [PR]
       state: [MERGED]
@@ -65,6 +67,7 @@ const PR_MERGED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: CLOSED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
@@ -73,7 +76,7 @@ const PR_MERGED_QUERY = gql`
 `;
 
 const ISSUE_CREATED_QUERY = gql`
-  query IssueCreatedQuery($githubUserId: Int!, $date: String!) {
+  query IssueCreatedQuery($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [ISSUE]
       state: [OPEN, CLOSED]
@@ -81,6 +84,7 @@ const ISSUE_CREATED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: CREATED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
@@ -89,7 +93,7 @@ const ISSUE_CREATED_QUERY = gql`
 `;
 
 const ISSUE_WORKED_QUERY = gql`
-  query IssueWorkedQuery($githubUserId: Int!, $date: String!) {
+  query IssueWorkedQuery($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [ISSUE]
       state: [OPEN, CLOSED]
@@ -97,6 +101,7 @@ const ISSUE_WORKED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: UPDATED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
@@ -105,7 +110,7 @@ const ISSUE_WORKED_QUERY = gql`
 `;
 
 const ISSUE_CLOSED_QUERY = gql`
-  query IssueClosedQuery($githubUserId: Int!, $date: String!) {
+  query IssueClosedQuery($githubUserId: Int!, $date: String!, $forWeek: Boolean!) {
     statistics(
       type: [ISSUE]
       state: [CLOSED]
@@ -113,6 +118,7 @@ const ISSUE_CLOSED_QUERY = gql`
       githubUserId: $githubUserId
       datetimeType: CLOSED_AFTER
       datetime: $date
+      forWeek: $forWeek
     ) {
       ...StatisticQueryFields
     }
