@@ -37,11 +37,21 @@ StatisticsGroup.defaultProps = {
   showRemove: false
 };
 
-const StatisticsCollection = ({ customQuery, githubUserId, date, title }) => (
+const StatisticsCollection = ({
+  customQuery,
+  githubUserId,
+  date,
+  title,
+  forWeek = false
+}) => (
   <Query
     query={customQuery}
     skip={!githubUserId}
-    variables={{ githubUserId: parseInt(githubUserId), date: date }}
+    variables={{
+      githubUserId: parseInt(githubUserId),
+      date: date,
+      forWeek: forWeek
+    }}
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;

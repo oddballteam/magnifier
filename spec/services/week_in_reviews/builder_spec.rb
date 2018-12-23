@@ -8,16 +8,7 @@ RSpec.describe WeekInReviews::Builder do
   let(:github_user) { create :github_user, user_id: user.id }
   let(:hub_id) { github_user.github_id }
 
-  describe '.initialize' do
-    it 'raises an error if an invalid date format is passed' do
-      invalid_date = Date.today
-
-      expect { WeekInReviews::Builder.new(user, invalid_date) }.to raise_error(
-        WeekInReviews::Error,
-        'Date must be a string'
-      )
-    end
-
+  describe '#initialize' do
     it 'raises an error if the passed User does not have a GithubUser record' do
       invalid_user = create :user
 

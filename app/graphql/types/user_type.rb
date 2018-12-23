@@ -14,5 +14,6 @@ module Types
     field :updated_at, String, null: false
     field :access_token, Boolean, null: true
     field :org, OrganizationType, null: true
+    field :github_user, GithubUserType, null: true
   end
 end

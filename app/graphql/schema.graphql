@@ -87,6 +87,9 @@ type Query {
     # Enum of choices that will define the datetime attribute the statistics will be scoped to.
     datetimeType: StatisticDatetimeEnum!
 
+    # If true will return statistics for the passed datetime's week only
+    forWeek: Boolean
+
     # The GithubUser#github_id that the Statistics are scoped to.
     githubUserId: Int!
 
@@ -153,13 +156,13 @@ type Statistic {
 # During a query, defines the datetime attribute the statistics will be scoped to.
 enum StatisticDatetimeEnum {
   # Statistics closed after the passed datetime
-  CLOSED_AFTER
+  CLOSED
 
   # Statistics created after the passed datetime
-  CREATED_AFTER
+  CREATED
 
   # Statistics updated after the passed datetime
-  UPDATED_AFTER
+  UPDATED
 }
 
 # Attributes for creating or updating a Statistic.
@@ -227,6 +230,7 @@ type User {
   createdAt: String!
   email: String!
   firstName: String!
+  githubUser: GithubUser
   githubUsername: String!
   id: Int!
   lastName: String!

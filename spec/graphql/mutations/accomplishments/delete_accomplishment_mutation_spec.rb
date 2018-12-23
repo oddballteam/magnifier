@@ -49,9 +49,9 @@ RSpec.describe Mutations::Accomplishments::DeleteAccomplishmentMutation do
 
   it 'yields the expected response shape and values' do
     expected_response = {
-      "deleteAccomplishment" => {
-        "success" => true,
-        "errors" => []
+      'deleteAccomplishment' => {
+        'success' => true,
+        'errors' => []
       }
     }
 

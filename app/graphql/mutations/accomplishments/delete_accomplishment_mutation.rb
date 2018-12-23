@@ -13,10 +13,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(statistic_id:, week_in_review_id:)
-        accomplishment = Accomplishment.find_by(
-          statistic_id: statistic_id,
-          week_in_review_id: week_in_review_id
-        )
+        accomplishment = fetch_accomplishment(statistic_id, week_in_review_id)
 
         return accomplishment_response(false, ['Could not find that accomplishment']) if accomplishment.blank?
 
@@ -30,6 +27,13 @@ module Mutations
       end
 
       private
+
+      def fetch_accomplishment(statistic_id, week_in_review_id)
+        Accomplishment.find_by(
+          statistic_id: statistic_id,
+          week_in_review_id: week_in_review_id
+        )
+      end
 
       def accomplishment_response(success = true, error_messages = [])
         {
