@@ -31,7 +31,7 @@ const PR_CREATED_QUERY = gql`
       state: [OPEN, CLOSED, MERGED]
       ownershipType: CREATED
       githubUserId: $githubUserId
-      datetimeType: CREATED_AFTER
+      datetimeType: CREATED
       datetime: $date
       forWeek: $forWeek
     ) {
@@ -48,7 +48,7 @@ const PR_WORKED_QUERY = gql`
       state: [OPEN, CLOSED, MERGED]
       ownershipType: CREATED
       githubUserId: $githubUserId
-      datetimeType: UPDATED_AFTER
+      datetimeType: UPDATED
       datetime: $date
       forWeek: $forWeek
     ) {
@@ -65,7 +65,7 @@ const PR_MERGED_QUERY = gql`
       state: [MERGED]
       ownershipType: CREATED
       githubUserId: $githubUserId
-      datetimeType: CLOSED_AFTER
+      datetimeType: CLOSED
       datetime: $date
       forWeek: $forWeek
     ) {
@@ -82,7 +82,7 @@ const ISSUE_CREATED_QUERY = gql`
       state: [OPEN, CLOSED]
       ownershipType: CREATED
       githubUserId: $githubUserId
-      datetimeType: CREATED_AFTER
+      datetimeType: CREATED
       datetime: $date
       forWeek: $forWeek
     ) {
@@ -99,7 +99,7 @@ const ISSUE_WORKED_QUERY = gql`
       state: [OPEN, CLOSED]
       ownershipType: ASSIGNED
       githubUserId: $githubUserId
-      datetimeType: UPDATED_AFTER
+      datetimeType: UPDATED
       datetime: $date
       forWeek: $forWeek
     ) {
@@ -116,7 +116,7 @@ const ISSUE_CLOSED_QUERY = gql`
       state: [CLOSED]
       ownershipType: ASSIGNED
       githubUserId: $githubUserId
-      datetimeType: CLOSED_AFTER
+      datetimeType: CLOSED
       datetime: $date
       forWeek: $forWeek
     ) {
