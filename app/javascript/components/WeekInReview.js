@@ -1,6 +1,5 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
 import StatisticsCollection from "./StatisticsCollection";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
