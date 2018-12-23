@@ -1,60 +1,81 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
-import { StatisticsGroup } from "../components/StatisticsCollection";
+import StatisticsCollection from "./StatisticsCollection";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { DateToWeek } from "./DateOptions";
+import { LOAD_USER_PROFILE } from "../queries/user_queries";
+import {
+  PR_CREATED_QUERY,
+  PR_WORKED_QUERY,
+  PR_MERGED_QUERY,
+  ISSUE_CREATED_QUERY,
+  ISSUE_WORKED_QUERY,
+  ISSUE_CLOSED_QUERY
+} from "../queries/statistic_queries";
 
 const WeekInReviewStatistics = ({ date }) => (
-  <Query query={WEEK_IN_REVIEW_QUERY} variables={{ date: date }}>
+  <Query query={LOAD_USER_PROFILE}>
     {({ data, error, loading }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error!</p>;
-      if (data && data.weekInReview) {
-        return (
-          <div className="flex-1">
-            <h2>Current</h2>
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesCreated}
-              title={`Issues | Created`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesWorked}
-              title={`Issues | Worked`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesClosed}
-              title={`Issues | Closed`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsCreated}
-              title={`Pull Requests | Created`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsWorked}
-              title={`Pull Requests | Worked`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsMerged}
-              title={`Pull Requests | Merged`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-          </div>
-        );
-      }
+      if (loading) return <p> Loading... </p>;
+      if (error) return <p> Error! </p>;
+      const { githubId } = data.me.githubUser;
 
-      return <div />;
+      return (
+        <div>
+          <div className="flex pb-8">
+            <h3 className="pr-8"> Statistics For: </h3>{" "}
+            <div> {DateToWeek(date)} </div>
+          </div>
+          <div className="flex">
+            <h3 className="pr-8">Employee:</h3>
+            <div>{`${data.me.firstName} ${data.me.lastName}`}</div>
+          </div>
+          <StatisticsCollection
+            customQuery={ISSUE_CREATED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Created`}
+          />
+          <StatisticsCollection
+            customQuery={ISSUE_WORKED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Worked`}
+          />
+          <StatisticsCollection
+            customQuery={ISSUE_CLOSED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Closed`}
+          />
+          <StatisticsCollection
+            customQuery={PR_CREATED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Created`}
+          />
+          <StatisticsCollection
+            customQuery={PR_WORKED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Worked`}
+          />
+          <StatisticsCollection
+            customQuery={PR_MERGED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Merged`}
+          />
+        </div>
+      );
     }}
   </Query>
 );
@@ -73,7 +94,7 @@ class WeekInReview extends React.Component {
       <div className="flex-auto">
         <h1 className="hello">Week In Review</h1>
         <div className="flex pb-8">
-          <h3 className="pr-8">Select a Week</h3>
+          <h3 className="pr-8">Select a Week:</h3>
           <DatePicker
             onChange={this.handleChange}
             maxDate={new Date()}
@@ -81,12 +102,8 @@ class WeekInReview extends React.Component {
             todayButton={`Today`}
           />
         </div>
-        <div className="flex flex-row">
+        <div>
           <WeekInReviewStatistics date={this.state.date.toISOString()} />
-          <div className="flex-1">
-            <h2>Available</h2>
-            <p>Available stats that are not in week in review will go here</p>
-          </div>
         </div>
       </div>
     );
