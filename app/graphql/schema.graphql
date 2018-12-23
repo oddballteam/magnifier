@@ -227,6 +227,7 @@ type User {
   createdAt: String!
   email: String!
   firstName: String!
+  githubUser: GithubUser
   githubUsername: String!
   id: Int!
   lastName: String!
