@@ -2,7 +2,7 @@
 
 module WeekInReviews
   class Builder
-    attr_reader :user, :date, :start_date, :end_date, :filter, :week_in_review
+    attr_reader :user, :filter, :boundries, :week_in_review
 
     # @param user [User] A User record
     # @param date [String] A date that will define the WeekInReview's
@@ -11,10 +11,8 @@ module WeekInReviews
     #
     def initialize(user, date)
       @user = user
-      @date = validate_date!(date)
-      @start_date = determine_start_date
-      @end_date = determine_end_date
-      @filter = WeekInReviews::Filter.new(validated_github_id!, start_time, end_time)
+      @boundries = WeekInReviews::Boundries.new(date)
+      @filter = WeekInReviews::Filter.new(validated_github_id!, date)
     end
 
     # Creates a WeekInReview record and all of the week's Accomplishments,
@@ -30,21 +28,6 @@ module WeekInReviews
 
     private
 
-    def validate_date!(date)
-      raise WeekInReviews::Error, 'Date must be a string' if date.class != String
-      raise WeekInReviews::Error, 'Date must be a string' if Date.parse(date).class != Date
-
-      Date.parse(date)
-    end
-
-    def determine_start_date
-      date.beginning_of_week
-    end
-
-    def determine_end_date
-      date.end_of_week
-    end
-
     def validated_github_id!
       github_user = GithubUser.find_by(user_id: user.id)
 
@@ -53,19 +36,11 @@ module WeekInReviews
       github_user.github_id
     end
 
-    def start_time
-      start_date.beginning_of_day.iso8601
-    end
-
-    def end_time
-      end_date.end_of_day.iso8601
-    end
-
     def create_week_in_review!
       @week_in_review = WeekInReview.create!(
         user: user,
-        start_date: start_date,
-        end_date: end_date
+        start_date: boundries.start_date,
+        end_date: boundries.end_date
       )
     end
 

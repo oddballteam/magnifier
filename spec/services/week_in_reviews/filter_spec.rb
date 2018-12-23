@@ -3,12 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe WeekInReviews::Filter do
+  let(:date) { '2018-10-11' }
   let(:start_time) { '2018-10-08T00:00:00Z' }
   let(:end_time) { '2018-10-14T23:59:59Z' }
   let(:github_user) { create :github_user }
   let(:hub_id) { github_user.github_id }
   let(:non_user) { create :github_user }
-  let(:filter) { WeekInReviews::Filter.new(hub_id, start_time, end_time) }
+  let(:filter) { WeekInReviews::Filter.new(hub_id, date) }
 
   before do
     create :statistic, :open_pr, source_created_by: hub_id
@@ -22,23 +23,8 @@ RSpec.describe WeekInReviews::Filter do
     create :statistic, assignees: [non_user.github_id]
   end
 
-  describe '.initialize' do
-    it 'raises an error if an invalid time format is passed' do
-      invalid_time = Time.now
-
-      expect { WeekInReviews::Filter.new(hub_id, invalid_time, end_time) }.to raise_error(
-        WeekInReviews::Error,
-        'Time must be a string'
-      )
-    end
-  end
-
   describe '#created_issues' do
     let(:statistics) { filter.created_issues }
-
-    it 'finds and returns the expected number of Statistics' do
-      expect(statistics.count).to eq 2
-    end
 
     it 'only returns issues' do
       expect(statistics.pluck(:source_type).uniq).to eq [Statistic::ISSUE]
