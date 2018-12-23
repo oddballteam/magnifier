@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module WeekInReviews
+  # This class takes in a date, and determines the week that the date falls in.
+  # It then creates methods for that week's boundries, specifically its:
+  #   - start_date
+  #   - end_date
+  #   - start_time (beginning of start_date)
+  #   - end_time (end of end_date)
+  #
   class Boundries
     attr_reader :date, :start_date, :end_date, :start_time, :end_time
 
