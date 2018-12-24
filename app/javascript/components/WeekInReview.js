@@ -1,9 +1,11 @@
 import React from "react";
 import { Query } from "react-apollo";
-import StatisticsCollection from "./StatisticsCollection";
+import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { DateToWeek } from "./DateOptions";
+
+import StatisticsCollection from "./StatisticsCollection";
+import { DateToWeek, datetimeToParams, datetimeToDate } from "./DateOptions";
 import { LOAD_USER_PROFILE } from "../queries/user_queries";
 import {
   PR_CREATED_QUERY,
@@ -13,6 +15,7 @@ import {
   ISSUE_WORKED_QUERY,
   ISSUE_CLOSED_QUERY
 } from "../queries/statistic_queries";
+import { buttonClasses } from "../css/sharedTailwindClasses";
 
 const WeekInReviewStatistics = ({ date }) => (
   <Query query={LOAD_USER_PROFILE}>
@@ -88,10 +91,34 @@ class WeekInReview extends React.Component {
     this.setState({ date: e });
   };
 
+  handleSubmit = () => {
+    Swal({
+      type: "warning",
+      title: "Week in Review",
+      text: `Begin submittal process for week of ${datetimeToDate(
+        this.state.date
+      )}?`,
+      showCancelButton: true
+    }).then(saidOk => {
+      if (saidOk.value) {
+        this.props.history.push(
+          `/week-in-review-submittal?date=${datetimeToParams(this.state.date)}`
+        );
+      }
+    });
+  };
+
   render() {
     return (
       <div className="flex-auto">
         <h1 className="hello">Week In Review</h1>
+        <button
+          className={`${buttonClasses} float-right `}
+          onClick={this.handleSubmit}
+          type="submit"
+        >
+          Submit Week In Review
+        </button>
         <div className="flex pb-8">
           <h3 className="pr-8">Select a Week:</h3>
           <DatePicker
