@@ -49,6 +49,7 @@ const DateOptions = () => {
 };
 
 const datetimeToDate = datetime => moment(datetime).format("M/D/YY");
+const datetimeToParams = datetime => moment(datetime).format("YYYY-MM-DD");
 const dateToDayOfMonth = date => moment(date).format("dddd, M/D");
 
 const DateToWeek = date => {
@@ -67,5 +68,6 @@ export {
   DateOptions,
   datetimeToDate,
   dateToDayOfMonth,
-  DateToWeek
+  DateToWeek,
+  datetimeToParams
 };
