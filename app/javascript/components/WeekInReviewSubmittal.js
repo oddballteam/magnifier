@@ -1,15 +1,25 @@
 import React from "react";
 import { Query } from "react-apollo";
-import Textarea from "react-textarea-autosize";
 import Swal from "sweetalert2"; // https://sweetalert2.github.io/
 
+import { CommentTexarea } from "./CommentTextarea";
 import { getDateFromUrl } from "./DateOptions";
 import { WeekInReviewStatistics } from "./WeekInReviewStatistics";
+import { WEEK_IN_REVIEW_COMMENTS_QUERY } from "../queries/week_in_review_queries";
 import { buttonClasses, inputClasses } from "../css/sharedTailwindClasses";
 
 class WeekInReviewSubmittal extends React.Component {
   state = {
     date: getDateFromUrl(this.props.location.search)
+  };
+
+  handleChange = e => {
+    const { name, type, value } = e.target;
+    const val = type === "number" ? parseFloat(value) : value;
+
+    this.setState({
+      [name]: val
+    });
   };
 
   handleAddIssuePrSubmit = e => {
@@ -34,6 +44,11 @@ class WeekInReviewSubmittal extends React.Component {
   };
 
   render() {
+    const CONCERNS = "concerns";
+    const ODDBALL_TEAM = "oddball_team";
+    const PROJECT_TEAM = "project_team";
+    const WEEK_GO = "week_go";
+
     return (
       <div className="flex-auto">
         <h1 className="hello"> Week In Review </h1>
@@ -54,49 +69,67 @@ class WeekInReviewSubmittal extends React.Component {
               </div>
             </form>
             <h3 className="pb-8">Comments</h3>
-            <div className="flex pb-8">
-              <form className="w-full" onSubmit={this.handleCommentsSubmit}>
-                <label className={labelClasses}>How did your week go?</label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="week_go"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>Any concerns?</label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="concerns"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>
-                  How is your Oddball team?
-                </label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="oddball_team"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>
-                  How is your Project team?
-                </label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="project_team"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <button className={`${buttonClasses} float-right`}>
-                  Save Comments
-                </button>
-              </form>
-            </div>
+
+            <Query
+              query={WEEK_IN_REVIEW_COMMENTS_QUERY}
+              variables={{
+                date: this.state.date
+              }}
+            >
+              {({ data, error, loading }) => {
+                if (loading)
+                  return <div className="flex pb-8"> Loading... </div>;
+                if (error) return <div className="flex pb-8">Error!</div>;
+                if (data && data.weekInReview) {
+                  const { comments, id: weekInReviewId } = data.weekInReview;
+
+                  return (
+                    <div className="flex pb-8">
+                      <form
+                        className="w-full"
+                        onSubmit={this.handleCommentsSubmit}
+                      >
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={WEEK_GO}
+                          labelContent={`How did your week go?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={CONCERNS}
+                          labelContent={`Any concerns?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={ODDBALL_TEAM}
+                          labelContent={`How is your Oddball team?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={PROJECT_TEAM}
+                          labelContent={`How is your Project team?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                      </form>
+                    </div>
+                  );
+                }
+
+                return <div className="flex pb-8" />;
+              }}
+            </Query>
+
             <button
               className={`bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full`}
               onClick={this.handleWeekInReviewSubmit}
