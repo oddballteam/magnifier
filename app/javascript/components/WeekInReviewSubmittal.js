@@ -6,7 +6,6 @@ import Swal from "sweetalert2"; // https://sweetalert2.github.io/
 import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
 import { StatisticsGroup } from "../components/StatisticsCollection";
 import { DateToWeek } from "./DateOptions";
-import { buttonClasses } from "../css/sharedTailwindClasses";
 
 const WeekInReviewStatistics = ({ date }) => (
   <Query
@@ -77,12 +76,8 @@ const WeekInReviewStatistics = ({ date }) => (
 );
 
 
-const labelClasses =
-  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2";
-const inputClasses =
-  "appearance-none block bg-grey-lighter text-grey-darker border border-grey-light rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
-const textAreaClasses = `h-48 w-full ${inputClasses}`;
 import { getDateFromUrl } from "./DateOptions";
+import { buttonClasses, inputClasses } from "../css/sharedTailwindClasses";
 
 class WeekInReviewSubmittal extends React.Component {
   state = {
