@@ -16,6 +16,13 @@ RSpec.describe Queries::WeekInReviews::WeekInReviewQuery do
           startDate
           endDate
           userId
+          comments {
+            id
+            body
+            type
+            userId
+            weekInReviewId
+          }
           employee {
             firstName
             lastName
@@ -129,6 +136,21 @@ RSpec.describe Queries::WeekInReviews::WeekInReviewQuery do
 
     it 'does not create a new WeekInReview' do
       expect(WeekInReview.count).to eq 1
+    end
+
+    context 'when the existing WeekInReview has Comments' do
+      let!(:comment) { create :comment, user: user, week_in_review: week_in_review }
+      let(:response) { MagnifierSchema.execute(query, context: { current_user: user }) }
+      let(:returned_week_in_review) { response.dig('data', 'weekInReview') }
+
+      it 'returns an array of its Comments', :aggregate_failures do
+        comments = returned_week_in_review.dig('comments')
+
+        expect(comments.class).to eq Array
+        expect(comments.first.dig('id')).to eq comment.id
+        expect(comments.first.dig('weekInReviewId')).to eq week_in_review.id
+        expect(comments.first.dig('userId')).to eq user.id
+      end
     end
   end
 
