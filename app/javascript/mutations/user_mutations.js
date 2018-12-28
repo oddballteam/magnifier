@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 const UPDATE_ACCESS_TOKEN = gql`
   mutation UpdateAccessToken($personalAccessToken: String) {
     updateUser(personalAccessToken: $personalAccessToken) {
