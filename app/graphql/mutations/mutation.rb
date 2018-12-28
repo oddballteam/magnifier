@@ -9,6 +9,7 @@ module Mutations
   #
   class Mutation < Types::BaseObject
     include Mutations::Accomplishments::MutationManifest
+    include Mutations::Comments::MutationManifest
     include Mutations::Statistics::MutationManifest
     include Mutations::Users::MutationManifest
   end
