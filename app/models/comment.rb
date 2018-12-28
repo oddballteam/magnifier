@@ -10,6 +10,8 @@ class Comment < ApplicationRecord
   #
   enum type: { concerns: 0, oddball_team: 1, project_team: 2, week_go: 3 }
 
+  before_validation :strip_body
+
   belongs_to :week_in_review
   belongs_to :user
 
@@ -21,4 +23,10 @@ class Comment < ApplicationRecord
       message: 'This user already has a comment of this type for this week'
     }
   )
+
+  private
+
+  def strip_body
+    self.body = body&.strip
+  end
 end
