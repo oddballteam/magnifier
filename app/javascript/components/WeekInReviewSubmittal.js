@@ -76,22 +76,17 @@ const WeekInReviewStatistics = ({ date }) => (
   </Query>
 );
 
-const getDate = urlParams => {
-  const params = urlParams.split("?date=");
-  const date = params[params.length - 1];
-
-  return date;
-};
 
 const labelClasses =
   "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2";
 const inputClasses =
   "appearance-none block bg-grey-lighter text-grey-darker border border-grey-light rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
 const textAreaClasses = `h-48 w-full ${inputClasses}`;
+import { getDateFromUrl } from "./DateOptions";
 
 class WeekInReviewSubmittal extends React.Component {
   state = {
-    date: getDate(this.props.location.search)
+    date: getDateFromUrl(this.props.location.search)
   };
 
   handleAddIssuePrSubmit = e => {
