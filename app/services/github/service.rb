@@ -145,6 +145,40 @@ module Github
       handle! response
     end
 
+    # Gets a single GitHub issue with the passed URL. GitHub API endpoint is:
+    # GET /repos/:owner/:repo/issues/:number
+    #
+    # @param github_url [String] The GitHub URL for the issue, i.e.
+    #   'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/15836'
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/issues/#get-a-single-issue
+    #
+    def issue(github_url)
+      parsed   = Github::UrlParser.new(github_url)
+      endpoint = "/repos/#{parsed.owner}/#{parsed.repo}/issues/#{parsed.number}"
+      url      = "#{BASE_URI}#{endpoint}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Gets a single GitHub pull request with the passed URL. GitHub API endpoint is:
+    # GET /repos/:owner/:repo/pulls/:number
+    #
+    # @param github_url [String] The GitHub URL for the pull request, i.e.
+    #   'https://github.com/department-of-veterans-affairs/vets-api/pull/2682'
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/pulls/#get-a-single-pull-request
+    #
+    def pull_request(github_url)
+      parsed   = Github::UrlParser.new(github_url)
+      endpoint = "/repos/#{parsed.owner}/#{parsed.repo}/pulls/#{parsed.number}"
+      url      = "#{BASE_URI}#{endpoint}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
     private
 
     def search_criteria_present!
