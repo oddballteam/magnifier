@@ -155,15 +155,10 @@ smitty.statistics << issue
 beth.statistics << pr
 
 
-#################  WeekInReviews  ##################
+#################  WeekInReviews & Accomplishments ##################
 
 date = pr.source_updated_at
 week_in_review = ::WeekInReviews::Builder.new(suzy, date).assemble!
-
-
-#################  Accomplishments  ##################
-
-week_in_review.accomplishments
 
 
 #################  Comments  ##################
