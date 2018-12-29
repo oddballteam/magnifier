@@ -1,97 +1,25 @@
 import React from "react";
 import { Query } from "react-apollo";
-import Textarea from "react-textarea-autosize";
 import Swal from "sweetalert2"; // https://sweetalert2.github.io/
 
-import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
-import { StatisticsGroup } from "../components/StatisticsCollection";
-import { DateToWeek } from "./DateOptions";
-import { buttonClasses } from "../css/sharedTailwindClasses";
-
-const WeekInReviewStatistics = ({ date }) => (
-  <Query
-    query={WEEK_IN_REVIEW_QUERY}
-    variables={{
-      date: date
-    }}
-  >
-    {({ data, error, loading }) => {
-      if (loading) {
-        return (
-          <div className="text-grey-darkest p-3 ml-0 w-1/2">Loading...</div>
-        );
-      }
-      if (error) {
-        return <div className="text-grey-darkest p-3 ml-0 w-1/2">Error!</div>;
-      }
-      if (data && data.weekInReview) {
-        return (
-          <div className="flex-1 pb-8">
-            <div className="flex">
-              <h3 className="pr-8"> Week in Review for: </h3>
-              <div> {DateToWeek(date)} </div>
-            </div>
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesCreated}
-              title={`Issues | Created`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesWorked}
-              title={`Issues | Worked`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.issuesClosed}
-              title={`Issues | Closed`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsCreated}
-              title={`Pull Requests | Created`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsWorked}
-              title={`Pull Requests | Worked`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-            <StatisticsGroup
-              statistics={data.weekInReview.pullRequestsMerged}
-              title={`Pull Requests | Merged`}
-              showRemove={true}
-              weekInReviewId={data.weekInReview.id}
-            />
-          </div>
-        );
-      }
-
-      return <div />;
-    }}
-  </Query>
-);
-
-const getDate = urlParams => {
-  const params = urlParams.split("?date=");
-  const date = params[params.length - 1];
-
-  return date;
-};
-
-const labelClasses =
-  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2";
-const inputClasses =
-  "appearance-none block bg-grey-lighter text-grey-darker border border-grey-light rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
-const textAreaClasses = `h-48 w-full ${inputClasses}`;
+import { CommentTexarea } from "./CommentTextarea";
+import { getDateFromUrl } from "./DateOptions";
+import { WeekInReviewStatistics } from "./WeekInReviewStatistics";
+import { WEEK_IN_REVIEW_COMMENTS_QUERY } from "../queries/week_in_review_queries";
+import { buttonClasses, inputClasses } from "../css/sharedTailwindClasses";
 
 class WeekInReviewSubmittal extends React.Component {
   state = {
-    date: getDate(this.props.location.search)
+    date: getDateFromUrl(this.props.location.search)
+  };
+
+  handleChange = e => {
+    const { name, type, value } = e.target;
+    const val = type === "number" ? parseFloat(value) : value;
+
+    this.setState({
+      [name]: val
+    });
   };
 
   handleAddIssuePrSubmit = e => {
@@ -116,6 +44,11 @@ class WeekInReviewSubmittal extends React.Component {
   };
 
   render() {
+    const CONCERNS = "concerns";
+    const ODDBALL_TEAM = "oddball_team";
+    const PROJECT_TEAM = "project_team";
+    const WEEK_GO = "week_go";
+
     return (
       <div className="flex-auto">
         <h1 className="hello"> Week In Review </h1>
@@ -136,49 +69,67 @@ class WeekInReviewSubmittal extends React.Component {
               </div>
             </form>
             <h3 className="pb-8">Comments</h3>
-            <div className="flex pb-8">
-              <form className="w-full" onSubmit={this.handleCommentsSubmit}>
-                <label className={labelClasses}>How did your week go?</label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="week_go"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>Any concerns?</label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="concerns"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>
-                  How is your Oddball team?
-                </label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="oddball_team"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <label className={labelClasses}>
-                  How is your Project team?
-                </label>
-                <Textarea
-                  className={textAreaClasses}
-                  minRows={3}
-                  name="project_team"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-                />
-                <button className={`${buttonClasses} float-right`}>
-                  Save Comments
-                </button>
-              </form>
-            </div>
+
+            <Query
+              query={WEEK_IN_REVIEW_COMMENTS_QUERY}
+              variables={{
+                date: this.state.date
+              }}
+            >
+              {({ data, error, loading }) => {
+                if (loading)
+                  return <div className="flex pb-8"> Loading... </div>;
+                if (error) return <div className="flex pb-8">Error!</div>;
+                if (data && data.weekInReview) {
+                  const { comments, id: weekInReviewId } = data.weekInReview;
+
+                  return (
+                    <div className="flex pb-8">
+                      <form
+                        className="w-full"
+                        onSubmit={this.handleCommentsSubmit}
+                      >
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={WEEK_GO}
+                          labelContent={`How did your week go?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={CONCERNS}
+                          labelContent={`Any concerns?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={ODDBALL_TEAM}
+                          labelContent={`How is your Oddball team?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                        <CommentTexarea
+                          date={this.state.date}
+                          comments={comments}
+                          type={PROJECT_TEAM}
+                          labelContent={`How is your Project team?`}
+                          onChange={this.handleChange}
+                          weekInReviewId={weekInReviewId}
+                        />
+                      </form>
+                    </div>
+                  );
+                }
+
+                return <div className="flex pb-8" />;
+              }}
+            </Query>
+
             <button
               className={`bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full`}
               onClick={this.handleWeekInReviewSubmit}

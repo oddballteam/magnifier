@@ -63,11 +63,19 @@ const DateToWeek = date => {
   );
 };
 
+const getDateFromUrl = urlParams => {
+  const params = urlParams.split("?date=");
+  const date = params[params.length - 1];
+
+  return date;
+};
+
 export {
   startOfWeek,
   DateOptions,
   datetimeToDate,
   dateToDayOfMonth,
   DateToWeek,
-  datetimeToParams
+  datetimeToParams,
+  getDateFromUrl
 };
