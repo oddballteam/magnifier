@@ -45,7 +45,7 @@ const handleCommentBlur = async (
   persistMutation
 ) => {
   const { value: body, name: type } = e.target;
-  const comment = findComment(comments, e.target.name);
+  const comment = findComment(comments, type);
   const variables = createOrUpdateVariables(
     comment,
     weekInReviewId,
