@@ -48,7 +48,11 @@ module Github
     private
 
     def derive_repository_url
-      issue['repository_url'].gsub('api.', '').gsub('repos/', '')
+      if issue['repository_url']
+        issue['repository_url'].gsub('api.', '').gsub('repos/', '')
+      else
+        issue.dig('base', 'repo', 'html_url')
+      end
     end
 
     def derive_repository_name
