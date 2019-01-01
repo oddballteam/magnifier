@@ -57,7 +57,7 @@ module WeekInReviews
       statistics = filter.send(filter_method)
 
       statistics.each do |statistic|
-        Accomplishment.send(accomplishment_method, week_in_review, statistic, user)
+        Accomplishment.send(accomplishment_method, week_in_review.id, statistic.id, user.id)
       end
     end
   end
