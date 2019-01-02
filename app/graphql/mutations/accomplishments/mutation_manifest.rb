@@ -11,6 +11,7 @@ module Mutations
       extend ActiveSupport::Concern
 
       included do
+        field :accomplishments_create_for_statistic, resolver: Mutations::Accomplishments::AccomplishmentsCreateForStatisticMutation
         field :delete_accomplishment, resolver: Mutations::Accomplishments::DeleteAccomplishmentMutation
       end
     end
