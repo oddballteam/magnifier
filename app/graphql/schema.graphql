@@ -1,3 +1,14 @@
+type Accomplishment {
+  action: String!
+  createdAt: String!
+  id: Int!
+  statistic: Statistic!
+  type: String!
+  updatedAt: String!
+  user: User!
+  weekInReview: WeekInReview!
+}
+
 type Comment {
   body: String!
   createdAt: String!
