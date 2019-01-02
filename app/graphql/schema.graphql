@@ -37,6 +37,11 @@ type DeleteAccomplishmentMutationPayload {
   success: Boolean
 }
 
+type Error {
+  message: [String!]
+  type: String
+}
+
 type GithubUser {
   apiUrl: String
   avatarUrl: String
