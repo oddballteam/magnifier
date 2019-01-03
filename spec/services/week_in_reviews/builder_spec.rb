@@ -8,16 +8,7 @@ RSpec.describe WeekInReviews::Builder do
   let(:github_user) { create :github_user, user_id: user.id }
   let(:hub_id) { github_user.github_id }
 
-  describe '.initialize' do
-    it 'raises an error if an invalid date format is passed' do
-      invalid_date = Date.today
-
-      expect { WeekInReviews::Builder.new(user, invalid_date) }.to raise_error(
-        WeekInReviews::Error,
-        'Date must be a string'
-      )
-    end
-
+  describe '#initialize' do
     it 'raises an error if the passed User does not have a GithubUser record' do
       invalid_user = create :user
 
@@ -31,6 +22,7 @@ RSpec.describe WeekInReviews::Builder do
   describe '#assemble!' do
     before do
       create :statistic, :open_pr, source_created_by: hub_id
+      create :statistic, :closed_pr, source_created_by: hub_id
       create :statistic, :merged_pr, source_created_by: hub_id
       create :statistic, :open_issue, source_created_by: hub_id
       create :statistic, :closed_issue, source_created_by: hub_id
@@ -64,8 +56,8 @@ RSpec.describe WeekInReviews::Builder do
       expect(week_in_review.accomplishments.issues.created.count).to eq 2
       expect(week_in_review.accomplishments.issues.worked.count).to eq 2
       expect(week_in_review.accomplishments.issues.closed.count).to eq 1
-      expect(week_in_review.accomplishments.pull_requests.created.count).to eq 2
-      expect(week_in_review.accomplishments.pull_requests.worked.count).to eq 2
+      expect(week_in_review.accomplishments.pull_requests.created.count).to eq 3
+      expect(week_in_review.accomplishments.pull_requests.worked.count).to eq 3
       expect(week_in_review.accomplishments.pull_requests.merged.count).to eq 1
     end
   end

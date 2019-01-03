@@ -9,6 +9,7 @@ module Types
     field :created_at, String, null: false
     field :updated_at, String, null: false
 
+    field :comments, [CommentType], null: true
     field :employee, UserType, null: false, description: 'The WeekInReviews user'
     field :issues_created, [StatisticType], null: true
     field :issues_worked, [StatisticType], null: true

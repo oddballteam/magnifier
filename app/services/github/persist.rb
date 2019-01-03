@@ -2,13 +2,14 @@
 
 module Github
   class Persist
-    attr_reader :user, :datetime, :service, :github_user, :org_id
+    attr_reader :user, :datetime, :service, :github_user, :github_url, :org_id
 
-    def initialize(user, datetime)
+    def initialize(user, datetime = nil, github_url: nil)
       @user = user
       @datetime = datetime
       @service = Github::Service.new(user, datetime)
       @github_user = find_github_user || create_github_user!
+      @github_url = github_url
       @org_id = org_id!
     end
 
@@ -48,6 +49,19 @@ module Github
       update_or_create_stats!('pull_requests_merged', merged: true)
     end
 
+    def issue!
+      response = service.issue(github_url)
+
+      UpdateOrCreate.new(response.parsed_response, github_user, org_id).statistic!
+    end
+
+    def pull_request!
+      response = service.pull_request(github_url)
+      merged   = response.parsed_response['merged']
+
+      UpdateOrCreate.new(response.parsed_response, github_user, org_id, merged: merged).statistic!
+    end
+
     private
 
     def find_github_user
@@ -72,9 +86,22 @@ module Github
     # rubocop:enable Metrics/MethodLength
 
     def org_id!
+      return find_or_create_org!.id if github_url.present?
       return user.organization_id if user.organization_id.present?
 
       raise Github::ServiceError, 'Missing user organization'
+    end
+
+    # Based on the initialized github_url, finds/creates an Organization record
+    #
+    # @return [Organization]
+    #
+    def find_or_create_org!
+      parsed = Github::UrlParser.new(github_url)
+
+      Organization.find_or_create_by!(name: parsed.owner) do |org|
+        org.url = "https://github.com/#{parsed.owner}"
+      end
     end
 
     def update_or_create_stats!(service_type, merged: false)

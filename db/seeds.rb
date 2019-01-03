@@ -2,7 +2,8 @@
 
 #################  Reset Database  ##################
 
-Statistic.delete_all
+WeekInReview.destroy_all
+Statistic.destroy_all
 GithubUser.delete_all
 User.delete_all
 Repository.delete_all
@@ -74,6 +75,7 @@ people.each do |person|
 end
 
 john = User.find_by(github_username: 'jsmith')
+suzy = User.find_by(github_username: 'suzy')
 
 
 #################  GithubUsers  ##################
@@ -153,6 +155,31 @@ smitty.statistics << issue
 beth.statistics << pr
 
 
+#################  WeekInReviews & Accomplishments ##################
+
+date = pr.source_updated_at
+week_in_review = ::WeekInReviews::Builder.new(suzy, date).assemble!
+
+
+#################  Comments  ##################
+
+comments = [
+  { type: :concerns, body: 'some concern' },
+  { type: :oddball_team, body: 'some oddball team thing' },
+  { type: :project_team, body: 'some project team thing' },
+  { type: :week_go, body: 'some week go thing' }
+]
+
+comments.each do |comment|
+  Comment.create!(
+    week_in_review_id: week_in_review.id,
+    user_id: suzy.id,
+    body: comment[:body],
+    type: comment[:type]
+  )
+end
+
+
 #################  Reporting  ##################
 
 p 'Seeding complete. Created:'
@@ -161,5 +188,8 @@ p "#{Repository.count} Repositories"
 p "#{User.count} Users"
 p "#{GithubUser.count} GithubUsers"
 p "#{Statistic.count} Statistics"
+p "#{WeekInReview.count} WeekInReviews"
+p "#{Accomplishment.count} Accomplishments"
+p "#{Comment.count} Comments"
 
 # rubocop:enable Layout/EmptyLines

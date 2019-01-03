@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import Hello from "../components/Hello";
-import Article from "../components/Article";
 import Navbar from "../components/Navbar";
 
 // any application wide elements can be added in this component

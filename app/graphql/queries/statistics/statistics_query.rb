@@ -45,8 +45,14 @@ module Queries
         required: true,
         description: 'The Statistic#source_type'
       )
+      argument(
+        :for_week,
+        Boolean,
+        required: false,
+        description: "If true will return statistics for the passed datetime's week only"
+      )
 
-      def resolve(datetime:, datetime_type:, github_user_id:, ownership_type:, type:, state:)
+      def resolve(datetime:, datetime_type:, github_user_id:, ownership_type:, type:, state:, for_week: false)
         stats = ::Statistic
                 .load_repo_and_org
                 .of_type(type)
@@ -54,7 +60,8 @@ module Queries
                 .order(id: :desc)
 
         stats = scope_ownership_type(stats, github_user_id, ownership_type)
-        stats = scope_datetime_type(stats, datetime, datetime_type)
+        stats = scope_start_time(stats, datetime, datetime_type, for_week)
+        stats = scope_end_time(stats, datetime, datetime_type, for_week)
         stats
       end
 
@@ -69,14 +76,31 @@ module Queries
         end
       end
 
-      def scope_datetime_type(stats, datetime, datetime_type)
+      def scope_start_time(stats, datetime, datetime_type, for_week)
+        start_time = datetime
+        start_time = ::WeekInReviews::Boundries.new(datetime).start_time if for_week.present?
+
         case datetime_type
-        when ::Statistic::CREATED_AFTER
-          stats.created_after(datetime)
-        when ::Statistic::UPDATED_AFTER
-          stats.updated_after(datetime)
-        when ::Statistic::CLOSED_AFTER
-          stats.closed_after(datetime)
+        when ::Statistic::CREATED
+          stats.created_after(start_time)
+        when ::Statistic::UPDATED
+          stats.updated_after(start_time)
+        when ::Statistic::CLOSED
+          stats.closed_after(start_time)
+        end
+      end
+
+      def scope_end_time(stats, datetime, datetime_type, for_week)
+        end_time = Time.current.iso8601
+        end_time = ::WeekInReviews::Boundries.new(datetime).end_time if for_week.present?
+
+        case datetime_type
+        when ::Statistic::CREATED
+          stats.created_before(end_time)
+        when ::Statistic::UPDATED
+          stats.updated_before(end_time)
+        when ::Statistic::CLOSED
+          stats.closed_before(end_time)
         end
       end
     end
