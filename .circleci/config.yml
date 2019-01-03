@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
@@ -67,9 +67,27 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
+  build:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: magnifier
+      - image: postgres:9.5
+        name: db
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: github-magnifier_test 
+          POSTGRES_PASSWORD: ""
+    working_directory: ~/repo
+
+    steps:
+      - checkout
       - setup_remote_docker:
-          docker_layer_caching: true
+        docker_layer_caching: true
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build --build-arg ENV=production --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t robawilkinson/magnifier:$CIRCLE_BRANCH  .
       - run: docker push robawilkinson/magnifier:$CIRCLE_BRANCH
+
 
