@@ -6,6 +6,7 @@ import {
   UPDATE_GITHUB_ORG
 } from "../mutations/user_mutations";
 import { LOAD_USER_PROFILE } from "../queries/user_queries";
+import { buttonClasses } from "../css/sharedTailwindClasses";
 
 const MOCK_ORGS = [
   {
@@ -63,7 +64,7 @@ const UpdateAccessToken = props => {
         }
         return (
           <div>
-            {props.hasAccessToken && <Alert />}
+            {props.accessToken && <Alert />}
             <form
               className="w-full"
               onSubmit={e => {
@@ -84,10 +85,7 @@ const UpdateAccessToken = props => {
                   placeholder="Personal Access Token"
                   aria-label="Access Token"
                 />
-                <button
-                  className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
-                  type="submit"
-                >
+                <button className={buttonClasses} type="submit">
                   Update Token
                 </button>
               </div>
@@ -136,10 +134,7 @@ const UpdateGithubUsername = props => {
                   placeholder={props.githubUsername}
                   aria-label="Github Username"
                 />
-                <button
-                  className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
-                  type="submit"
-                >
+                <button className={buttonClasses} type="submit">
                   Update Github Username
                 </button>
               </div>
@@ -198,10 +193,7 @@ const UpdateGithubOrg = props => {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </div>
-                <button
-                  className="flex-no-shrink bg-teal hover:bg-teal-dark border-teal hover:border-teal-dark text-sm border-4 text-white py-1 px-2 rounded"
-                  type="submit"
-                >
+                <button className={buttonClasses} type="submit">
                   Update Github Organization
                 </button>
               </div>
@@ -222,7 +214,7 @@ export default class Profile extends Component {
           if (error) return <p>Error</p>;
           return (
             <div className="flex-col w-1/2 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
-              <UpdateAccessToken hasAccessToken={data.me.hasAccessToken} />
+              <UpdateAccessToken accessToken={data.me.accessToken} />
               <UpdateGithubUsername githubUsername={data.me.githubUsername} />
               <UpdateGithubOrg orgs={MOCK_ORGS} />
             </div>

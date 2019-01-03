@@ -88,7 +88,26 @@ There are currently two scripts that can be ran
 * `npm run eslint:fix` automatically reformats all js files
 * `npm run eslint` - for use on CI, lints all files and shows results
 
+## Test Suite
+
+Magnifier uses RSpec for its backend test suite.  
+
+#### Run the specs
+
+```
+$ rspec
+```
+
+#### Run specs with Guard
+
+Magnifier uses the [Guard::RSpec gem](https://github.com/guard/guard-rspec) to automatically run your specs.  To use it run:
+
+```
+$ bundle exec guard
+```
+
 # Deploying
+
 ## Build Docker iamge
 
 Application can currently be built and run with docker.
@@ -118,3 +137,6 @@ For the following commands, first use `docker ps` to list the active containers 
 `docker exec -it <container name> bundle exec rails c`
 
 Currently we are using rails to serve the static assets, long term this will probably need to change and switch to using nginx or something similar
+
+
+

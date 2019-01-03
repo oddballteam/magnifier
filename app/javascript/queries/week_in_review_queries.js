@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { StatisticFragment } from "./statistic_queries"
+import { StatisticFragment } from "./statistic_queries";
 
 const WEEK_IN_REVIEW_QUERY = gql`
   query WeekInReviewQuery($date: String!) {
@@ -35,4 +35,19 @@ const WEEK_IN_REVIEW_QUERY = gql`
   ${StatisticFragment}
 `;
 
-export { WEEK_IN_REVIEW_QUERY };
+const WEEK_IN_REVIEW_COMMENTS_QUERY = gql`
+  query WeekInReviewCommentsQuery($date: String!) {
+    weekInReview(date: $date) {
+      id
+      comments {
+        id
+        body
+        type
+        userId
+        weekInReviewId
+      }
+    }
+  }
+`;
+
+export { WEEK_IN_REVIEW_QUERY, WEEK_IN_REVIEW_COMMENTS_QUERY };

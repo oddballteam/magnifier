@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/oddballio/magnifier/issues/92
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accepts:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Oddball
+      Authorization:
+      - Basic OsomeencryptestringofcharsdlOWQ5MmNiZGQzMzNmYmZiMmUyZDI=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 30 Dec 2018 03:35:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '4060'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4950'
+      X-Ratelimit-Reset:
+      - '1546141841'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      Etag:
+      - '"904fcf47a2c1bb95880d33b1c4a2a657"'
+      Last-Modified:
+      - Sat, 29 Dec 2018 18:20:11 GMT
+      X-Oauth-Scopes:
+      - repo
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      X-Github-Request-Id:
+      - CE51:2AFA:2537135:638FC4F:5C283CF2
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://api.github.com/repos/oddballio/magnifier/issues/92","repository_url":"https://api.github.com/repos/oddballio/magnifier","labels_url":"https://api.github.com/repos/oddballio/magnifier/issues/92/labels{/name}","comments_url":"https://api.github.com/repos/oddballio/magnifier/issues/92/comments","events_url":"https://api.github.com/repos/oddballio/magnifier/issues/92/events","html_url":"https://github.com/oddballio/magnifier/issues/92","id":394814985,"node_id":"MDU6SXNzdWUzOTQ4MTQ5ODU=","number":92,"title":"GitHub
+        service objects for getting an issue or PR based on its URL","user":{"login":"hpjaj","id":7482329,"node_id":"MDQ6VXNlcjc0ODIzMjk=","avatar_url":"https://avatars0.githubusercontent.com/u/7482329?v=4","gravatar_id":"","url":"https://api.github.com/users/hpjaj","html_url":"https://github.com/hpjaj","followers_url":"https://api.github.com/users/hpjaj/followers","following_url":"https://api.github.com/users/hpjaj/following{/other_user}","gists_url":"https://api.github.com/users/hpjaj/gists{/gist_id}","starred_url":"https://api.github.com/users/hpjaj/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/hpjaj/subscriptions","organizations_url":"https://api.github.com/users/hpjaj/orgs","repos_url":"https://api.github.com/users/hpjaj/repos","events_url":"https://api.github.com/users/hpjaj/events{/privacy}","received_events_url":"https://api.github.com/users/hpjaj/received_events","type":"User","site_admin":false},"labels":[{"id":1085483040,"node_id":"MDU6TGFiZWwxMDg1NDgzMDQw","url":"https://api.github.com/repos/oddballio/magnifier/labels/backend","name":"backend","color":"000000","default":false}],"state":"open","locked":false,"assignee":{"login":"hpjaj","id":7482329,"node_id":"MDQ6VXNlcjc0ODIzMjk=","avatar_url":"https://avatars0.githubusercontent.com/u/7482329?v=4","gravatar_id":"","url":"https://api.github.com/users/hpjaj","html_url":"https://github.com/hpjaj","followers_url":"https://api.github.com/users/hpjaj/followers","following_url":"https://api.github.com/users/hpjaj/following{/other_user}","gists_url":"https://api.github.com/users/hpjaj/gists{/gist_id}","starred_url":"https://api.github.com/users/hpjaj/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/hpjaj/subscriptions","organizations_url":"https://api.github.com/users/hpjaj/orgs","repos_url":"https://api.github.com/users/hpjaj/repos","events_url":"https://api.github.com/users/hpjaj/events{/privacy}","received_events_url":"https://api.github.com/users/hpjaj/received_events","type":"User","site_admin":false},"assignees":[{"login":"hpjaj","id":7482329,"node_id":"MDQ6VXNlcjc0ODIzMjk=","avatar_url":"https://avatars0.githubusercontent.com/u/7482329?v=4","gravatar_id":"","url":"https://api.github.com/users/hpjaj","html_url":"https://github.com/hpjaj","followers_url":"https://api.github.com/users/hpjaj/followers","following_url":"https://api.github.com/users/hpjaj/following{/other_user}","gists_url":"https://api.github.com/users/hpjaj/gists{/gist_id}","starred_url":"https://api.github.com/users/hpjaj/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/hpjaj/subscriptions","organizations_url":"https://api.github.com/users/hpjaj/orgs","repos_url":"https://api.github.com/users/hpjaj/repos","events_url":"https://api.github.com/users/hpjaj/events{/privacy}","received_events_url":"https://api.github.com/users/hpjaj/received_events","type":"User","site_admin":false}],"milestone":null,"comments":0,"created_at":"2018-12-29T18:20:11Z","updated_at":"2018-12-29T18:20:11Z","closed_at":null,"author_association":"MEMBER","body":"##
+        Background\r\n\r\nThere will be times when a user needs to manually add in
+        an issue or pull request into their week in review, that is not showing up
+        already.\r\n\r\nIf it does not already exist in our db, we''ll need to fetch
+        it from GitHub''s API.\r\n\r\n## Definition of Done\r\n \r\n- [ ] GitHub service
+        object to find an issue based on its HTML URL\r\n- [ ] GitHub service object
+        to find a PR based on its HTML URL\r\n\r\n","closed_by":null}'
+    http_version:
+  recorded_at: Sun, 30 Dec 2018 03:35:16 GMT
+recorded_with: VCR 4.0.0

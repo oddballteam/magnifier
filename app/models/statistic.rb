@@ -25,9 +25,7 @@ class Statistic < ApplicationRecord
   CREATED = 'created'
 
   # datetime_types
-  CREATED_AFTER = 'created_after'
-  UPDATED_AFTER = 'updated_after'
-  CLOSED_AFTER  = 'closed_after'
+  UPDATED = 'updated'
 
   has_and_belongs_to_many :github_users
   has_many :accomplishments, dependent: :destroy
