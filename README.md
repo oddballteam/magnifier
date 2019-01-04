@@ -77,6 +77,13 @@ RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run web rake db:schema:
 RAILS_MASTER_KEY=$(cat config/master.key) docker-compose up
 ```
 
+#### 4. Run the specs with guard
+
+In a terminal in the same directory
+```bash
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose exec web guard
+```
+
 ## Front end
 
 React-rails is configured, without react router currently
