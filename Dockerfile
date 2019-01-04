@@ -73,6 +73,14 @@ COPY --chown=magnifier:magnifier . .
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
+ARG database_host
+ENV DATABASE_HOST=$database_host
+
+ARG database_user
+ENV DATABASE_USER=$database_user
+
+ARG database_password
+ENV DATABASE_PASSWORD=$database_password
 # Compile static assets
 RUN bundle exec rake webpacker:compile
 

@@ -18,6 +18,6 @@ production:
   <<: *default
   host: <%= ENV.fetch("DATABASE_HOST") %>
   user: <%= ENV.fetch("DATABASE_USER") %>
-  port: <%= ENV.fetch("DATABASE_PORT") %>
+  port: 5432
   password: <%= ENV.fetch("DATABASE_PASSWORD") %>
   database: magnifier_production

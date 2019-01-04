@@ -74,6 +74,7 @@ jobs:
           RAILS_ENV: test
           PGHOST: localhost
           PGUSER: magnifier
+          PGPASS: newpass
       - image: postgres:9.5
         name: db
         environment:
@@ -87,7 +88,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build --build-arg ENV=production --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t robawilkinson/magnifier:$CIRCLE_BRANCH  .
+      - run: 
+          name: build container
+          command: |
+            docker build \
+              --build-arg ENV=production \
+              --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY \
+              --build-arg database_host=localhost \
+              --build-arg database_user=magnifier \
+              --build-arg database_password=newpass \
+              -t robawilkinson/magnifier:$CIRCLE_BRANCH  .
       - run: docker push robawilkinson/magnifier:$CIRCLE_BRANCH
-
-
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test

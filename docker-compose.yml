@@ -14,5 +14,10 @@ services:
         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     ports:
       - 3000:3000
-    depends_on:
+    links:
       - db 
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: postgres
+      DATABASE_PORT: 5432
+      DATABASE_PASSWORD: newpass
