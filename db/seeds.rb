@@ -18,8 +18,12 @@ orgs = [
     url: 'https://github.com/department-of-veterans-affairs'
   },
   {
-    name: 'etsy',
-    url: 'https://github.com/etsy'
+    name: 'adhocteam',
+    url: 'https://github.com/adhocteam'
+  },
+  {
+    name: 'oddballio',
+    url: 'https://github.com/oddballio'
   }
 ]
 
@@ -28,7 +32,7 @@ orgs.each do |org|
 end
 
 dova = Organization.find_by(name: 'department-of-veterans-affairs')
-etsy = Organization.find_by(name: 'etsy')
+oddball = Organization.find_by(name: 'oddballio')
 
 
 #################  Repositories  ##################
@@ -40,9 +44,14 @@ repos = [
     organization_id: dova.id
   },
   {
-    name: 'statsd',
-    url: 'https://github.com/etsy/statsd',
-    organization_id: etsy.id
+    name: 'vets-website',
+    url: 'https://github.com/department-of-veterans-affairs/vets-website',
+    organization_id: dova.id
+  },
+  {
+    name: 'magnifier',
+    url: 'https://github.com/oddballio/magnifier',
+    organization_id: oddball.id
   }
 ]
 
@@ -60,13 +69,6 @@ people = [
     email: 'john@example.com',
     github_username: 'jsmith',
     organization_id: dova.id
-  },
-  {
-    first_name: 'Susan',
-    last_name: 'Williams',
-    email: 'susan@example.com',
-    github_username: 'suzy',
-    organization_id: etsy.id
   }
 ]
 

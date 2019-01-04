@@ -17,6 +17,11 @@ const LOAD_USER_PROFILE = gql`
         htmlUrl
       }
     }
+    organizations {
+      id
+      name
+      url
+    }
   }
 `;
 

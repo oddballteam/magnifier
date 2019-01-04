@@ -216,7 +216,7 @@ export default class Profile extends Component {
             <div className="flex-col w-1/2 mt-10 p-5 bg-gray m-auto bg-grey-lightest border border-grey rounded">
               <UpdateAccessToken accessToken={data.me.accessToken} />
               <UpdateGithubUsername githubUsername={data.me.githubUsername} />
-              <UpdateGithubOrg orgs={MOCK_ORGS} />
+              <UpdateGithubOrg orgs={data.organizations} />
             </div>
           );
         }}

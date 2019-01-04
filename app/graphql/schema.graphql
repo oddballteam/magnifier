@@ -269,7 +269,7 @@ type User {
   email: String!
   firstName: String!
   githubUser: GithubUser
-  githubUsername: String!
+  githubUsername: String
   id: Int!
   lastName: String!
   org: Organization
