@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/15305
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accepts:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Oddball
+      Authorization:
+      - Basic OsomeencryptestringofcharsdlOWQ5MmNiZGQzMzNmYmZiMmUyZDI=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 29 Dec 2018 21:41:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '3633'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4986'
+      X-Ratelimit-Reset:
+      - '1546122724'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      Etag:
+      - '"c013e469815fed1cb8286168e2500323"'
+      Last-Modified:
+      - Thu, 13 Dec 2018 18:36:50 GMT
+      X-Oauth-Scopes:
+      - repo
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      X-Github-Request-Id:
+      - C5C9:2AFA:24E36D6:62B1349:5C27EA1F
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/15305","repository_url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team","labels_url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/15305/labels{/name}","comments_url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/15305/comments","events_url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/issues/15305/events","html_url":"https://github.com/department-of-veterans-affairs/vets.gov-team/issues/15305","id":384496185,"node_id":"MDU6SXNzdWUzODQ0OTYxODU=","number":15305,"title":"Update
+        FE recommendations PR","user":{"login":"BBarone1","id":21130918,"node_id":"MDQ6VXNlcjIxMTMwOTE4","avatar_url":"https://avatars3.githubusercontent.com/u/21130918?v=4","gravatar_id":"","url":"https://api.github.com/users/BBarone1","html_url":"https://github.com/BBarone1","followers_url":"https://api.github.com/users/BBarone1/followers","following_url":"https://api.github.com/users/BBarone1/following{/other_user}","gists_url":"https://api.github.com/users/BBarone1/gists{/gist_id}","starred_url":"https://api.github.com/users/BBarone1/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/BBarone1/subscriptions","organizations_url":"https://api.github.com/users/BBarone1/orgs","repos_url":"https://api.github.com/users/BBarone1/repos","events_url":"https://api.github.com/users/BBarone1/events{/privacy}","received_events_url":"https://api.github.com/users/BBarone1/received_events","type":"User","site_admin":false},"labels":[{"id":821555482,"node_id":"MDU6TGFiZWw4MjE1NTU0ODI=","url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/labels/dragons","name":"dragons","color":"000000","default":false},{"id":516113767,"node_id":"MDU6TGFiZWw1MTYxMTM3Njc=","url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/labels/front%20end","name":"front
+        end","color":"ededed","default":false},{"id":895910029,"node_id":"MDU6TGFiZWw4OTU5MTAwMjk=","url":"https://api.github.com/repos/department-of-veterans-affairs/vets.gov-team/labels/recommendations","name":"recommendations","color":"cc2090","default":false}],"state":"closed","locked":false,"assignee":null,"assignees":[],"milestone":null,"comments":0,"created_at":"2018-11-26T20:24:44Z","updated_at":"2018-11-29T23:34:12Z","closed_at":"2018-11-29T23:33:52Z","author_association":"CONTRIBUTOR","body":"##
+        Background\nWe need to update the recommendations FE PR that was up before
+        WBC side-tracked personalization work.\n\n\n@cehsu and @erikphansen to sync
+        with @bshyong on the current state of this PR and what needs to be updated","closed_by":{"login":"cehsu","id":16051172,"node_id":"MDQ6VXNlcjE2MDUxMTcy","avatar_url":"https://avatars1.githubusercontent.com/u/16051172?v=4","gravatar_id":"","url":"https://api.github.com/users/cehsu","html_url":"https://github.com/cehsu","followers_url":"https://api.github.com/users/cehsu/followers","following_url":"https://api.github.com/users/cehsu/following{/other_user}","gists_url":"https://api.github.com/users/cehsu/gists{/gist_id}","starred_url":"https://api.github.com/users/cehsu/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/cehsu/subscriptions","organizations_url":"https://api.github.com/users/cehsu/orgs","repos_url":"https://api.github.com/users/cehsu/repos","events_url":"https://api.github.com/users/cehsu/events{/privacy}","received_events_url":"https://api.github.com/users/cehsu/received_events","type":"User","site_admin":false}}'
+    http_version:
+  recorded_at: Sat, 29 Dec 2018 21:41:51 GMT
+recorded_with: VCR 4.0.0

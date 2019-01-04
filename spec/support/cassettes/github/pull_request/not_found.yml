@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/department-of-veterans-affairs/vets-api/pulls/2682555
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accepts:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Oddball
+      Authorization:
+      - Basic OsomeencryptestringofcharsdlOWQ5MmNiZGQzMzNmYmZiMmUyZDI=
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 29 Dec 2018 22:13:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '110'
+      Status:
+      - 404 Not Found
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4950'
+      X-Ratelimit-Reset:
+      - '1546122724'
+      X-Oauth-Scopes:
+      - repo
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      X-Github-Request-Id:
+      - C7BB:2AFB:4380F98:9A8408C:5C27F17A
+    body:
+      encoding: UTF-8
+      string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3/pulls/#get-a-single-pull-request"}'
+    http_version:
+  recorded_at: Sat, 29 Dec 2018 22:13:14 GMT
+recorded_with: VCR 4.0.0

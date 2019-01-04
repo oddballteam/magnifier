@@ -8,6 +8,8 @@ module Mutations
   # one containing their own assembly of available mutations.
   #
   class Mutation < Types::BaseObject
+    include Mutations::Accomplishments::MutationManifest
+    include Mutations::Comments::MutationManifest
     include Mutations::Statistics::MutationManifest
     include Mutations::Users::MutationManifest
   end

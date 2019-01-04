@@ -32,6 +32,7 @@ end
 
 group :development do
   gem 'graphiql-rails', '~> 1.4', '>= 1.4.11'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
   gem 'highline', require: false
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'

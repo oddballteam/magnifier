@@ -2,6 +2,19 @@
 
 A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
 
+### Master Key
+
+**You will need our master key** to work with the application.  More details can be found on our [Encrypted Credentials wiki page](https://github.com/oddballio/magnifier/wiki/Encrypted-Credentials). 
+
+Here's how to get your master key setup:
+
+1. To maintain security around this key, it will be shared via the [Keybase app](https://keybase.io/)
+2. Ping our Slack `#oddball-tools` room, and request for someone to send you the key via Keybase
+3. Create a file `config/master.key` file in your local Magnifier repo (this file is already part of our [`.gitignore` file](https://github.com/oddballio/magnifier/blob/master/.gitignore))
+4. Add the `master` key to the file
+
+Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+
 ## Native Installation 
 
 At its core, Magnifier is comprised of a Rails backend, and a React frontend.  Here are the associated dependencies you'll need:
@@ -23,39 +36,53 @@ You will need our **master key** to run the app. See the [Master Key](#master-ke
 
 #### 3. Install JS dependencies
 
-```
-$ yarn install
+```bash
+yarn install
 ```
 
 #### 4. Setup Rails
 
-```
-$ bin/setup
+```bash
+bin/setup
 ```
 
 #### 5. Start the Rails server
 
-```
-$ rails s
+```bash
+rails s
 ```
 
 #### 6. Open the app
 
 Visit http://localhost:3000/
 
-### Master Key
+## Docker Installation
 
-**You will need our master key** to work with the application.  More details can be found on our [Encrypted Credentials wiki page](https://github.com/oddballio/magnifier/wiki/Encrypted-Credentials). 
+#### 1. Initial Docker build
 
-Here's how to get your master key setup:
+```bash
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose build
+```
 
-1. To maintain security around this key, it will be shared via the [Keybase app](https://keybase.io/)
-2. Ping our Slack `#oddball-tools` room, and request for someone to send you the key via Keybase
-3. Create a file `config/master.key` file in your local Magnifier repo (this file is already part of our [`.gitignore` file](https://github.com/oddballio/magnifier/blob/master/.gitignore))
-4. Add the `master` key to the file
+#### 2. Setup DB
 
+```bash
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run web rake db:create
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run web rake db:schema:load
+```
 
-Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+#### 3. Develop
+
+```bash
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose up
+```
+
+#### 4. Run the specs with guard
+
+In a terminal in the same directory
+```bash
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose exec web guard
+```
 
 ## Front end
 
@@ -88,7 +115,26 @@ There are currently two scripts that can be ran
 * `npm run eslint:fix` automatically reformats all js files
 * `npm run eslint` - for use on CI, lints all files and shows results
 
+## Test Suite
+
+Magnifier uses RSpec for its backend test suite.  
+
+#### Run the specs
+
+```
+$ rspec
+```
+
+#### Run specs with Guard
+
+Magnifier uses the [Guard::RSpec gem](https://github.com/guard/guard-rspec) to automatically run your specs.  To use it run:
+
+```
+$ bundle exec guard
+```
+
 # Deploying
+
 ## Build Docker iamge
 
 Application can currently be built and run with docker.
@@ -118,3 +164,6 @@ For the following commands, first use `docker ps` to list the active containers 
 `docker exec -it <container name> bundle exec rails c`
 
 Currently we are using rails to serve the static assets, long term this will probably need to change and switch to using nginx or something similar
+
+
+

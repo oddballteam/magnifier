@@ -208,12 +208,12 @@ RSpec.describe Github::Service do
       end
     end
 
-    it 'only returns open pull requests', :aggregate_failures do
+    it 'returns open and closed pull requests', :aggregate_failures do
       VCR.use_cassette 'github/pull_requests_worked/success' do
         response = Github::Service.new(user, datetime).pull_requests_worked
         states   = items_in(response).map { |item| item['state'] }
 
-        expect(states.uniq).to eq ['open']
+        expect(states.uniq).to match_array %w[open closed]
       end
     end
 
@@ -344,6 +344,64 @@ RSpec.describe Github::Service do
         expect(user_response['url']).to be_present
         expect(user_response['html_url']).to be_present
         expect(user_response['id']).to be_present
+      end
+    end
+  end
+
+  describe '#issue' do
+    let(:github_url) { 'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/15305' }
+
+    it 'fetches the GitHub issue for the passed GitHub URL', :aggregate_failures do
+      VCR.use_cassette 'github/issue/success' do
+        response = Github::Service.new(user).issue(github_url)
+
+        expect(response.code).to eq 200
+        expect(response.parsed_response['html_url']).to eq github_url
+      end
+    end
+
+    context 'when the passed URL cannot be found' do
+      let(:bad_url) { 'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/15305888' }
+
+      it 'raises a 404 not found', :aggregate_failures do
+        VCR.use_cassette 'github/issue/not_found' do
+          expect { Github::Service.new(user).issue(bad_url) }.to raise_error do |error|
+            message = JSON.parse(error.message)
+
+            expect(error.class).to eq Github::ServiceError
+            expect(message.dig('status')).to eq 404
+            expect(message.dig('body', 'message')).to eq 'Not Found'
+          end
+        end
+      end
+    end
+  end
+
+  describe '#pull_request' do
+    let(:github_url) { 'https://github.com/department-of-veterans-affairs/vets-api/pull/2682' }
+
+    it 'fetches the GitHub pull request for the passed GitHub URL', :aggregate_failures do
+      VCR.use_cassette 'github/pull_request/success' do
+        response = Github::Service.new(user).pull_request(github_url)
+
+        expect(response.code).to eq 200
+        expect(response.parsed_response['html_url']).to eq github_url
+      end
+    end
+
+    context 'when the passed URL cannot be found' do
+      let(:bad_url) { 'https://github.com/department-of-veterans-affairs/vets-api/pull/2682555' }
+
+      it 'raises a 404 not found', :aggregate_failures do
+        VCR.use_cassette 'github/pull_request/not_found' do
+          expect { Github::Service.new(user).pull_request(bad_url) }.to raise_error do |error|
+            message = JSON.parse(error.message)
+
+            expect(error.class).to eq Github::ServiceError
+            expect(message.dig('status')).to eq 404
+            expect(message.dig('body', 'message')).to eq 'Not Found'
+          end
+        end
       end
     end
   end

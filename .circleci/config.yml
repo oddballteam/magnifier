@@ -4,19 +4,20 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
           RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: magnifier
+          DATABASE_HOST: db
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: newpass
       - image: postgres:9.5
         name: db
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: github-magnifier_test 
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: newpass
     working_directory: ~/repo
 
     steps:
@@ -67,9 +68,41 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
+  build:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          RAILS_ENV: production
+          DATABASE_HOST: db
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: newpass
+      - image: postgres:9.5
+        name: db
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: github-magnifier_test 
+          POSTGRES_PASSWORD: newpass
+    working_directory: ~/repo
+
+    steps:
+      - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build --build-arg ENV=production --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t robawilkinson/magnifier:$CIRCLE_BRANCH  .
+      - run: 
+          name: build container
+          command: |
+            docker build \
+              --build-arg ENV=production \
+              --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY \
+              --build-arg database_host=localhost \
+              --build-arg database_user=magnifier \
+              --build-arg database_password=newpass \
+              -t robawilkinson/magnifier:$CIRCLE_BRANCH  .
       - run: docker push robawilkinson/magnifier:$CIRCLE_BRANCH
-
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test

@@ -41,7 +41,13 @@ class User < ApplicationRecord
     Organization.find_by id: organization_id
   end
 
-  def has_access_token
+  def access_token
     personal_access_token.present?
+  end
+
+  def github_user
+    return unless github_username
+
+    GithubUser.find_by(github_login: github_username)
   end
 end
