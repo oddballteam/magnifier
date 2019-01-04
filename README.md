@@ -49,7 +49,7 @@ bin/setup
 #### 5. Start the Rails server
 
 ```bash
-DATABASE_HOST=localhost DATABASE_USER=$USER rails s
+rails s
 ```
 
 #### 6. Open the app
