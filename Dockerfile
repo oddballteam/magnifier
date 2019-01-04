@@ -49,9 +49,7 @@ RUN groupadd magnifier --gid 8411 && \
 USER magnifier
 
 # Create app folde, symlink a persisted gem folder
-RUN mkdir -p $GEM_DIR $REPO_DIR $REPO_DIR/tmp && \
-  ln -sn /home/magnifier/src/vendor/bundle $GEM_DIR && \
-  mkdir -p $REPO_DIR
+RUN mkdir -p $REPO_DIR $REPO_DIR/tmp
 
 # Change Working dir
 WORKDIR $REPO_DIR
@@ -59,7 +57,7 @@ WORKDIR $REPO_DIR
 # Install gems
 COPY --chown=magnifier:magnifier Gemfile Gemfile 
 COPY --chown=magnifier:magnifier Gemfile.lock Gemfile.lock 
-RUN bundle install --jobs 20 --retry 5 --deployment --without development test
+RUN bundle install --jobs 20 --retry 5 --deployment
 
 # Install node-modules
 COPY --chown=magnifier:magnifier package.json package.json 
