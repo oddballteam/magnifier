@@ -1,0 +1,31 @@
+version: '3'
+volumes:
+  postgres_data: {}
+
+services:
+  db:
+    image: postgres:10-alpine
+    environment:
+      DATABASE_PASSWORD: newpass
+  web:
+    build:
+      context: .
+      args:
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+        DATABASE_HOST: db
+        DATABASE_USER: postgres
+        DATABASE_PORT: 5432
+        DATABASE_PASSWORD: newpass
+    ports:
+      - 3000:3000
+    links:
+      - db 
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: postgres
+      DATABASE_PORT: 5432
+      DATABASE_PASSWORD: newpass
+      RAILS_ENV: development
+      RACK_ENV: development
+    volumes:
+      - ./:/home/magnifier/src
