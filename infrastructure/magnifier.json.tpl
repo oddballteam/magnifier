@@ -18,7 +18,7 @@
         "hostPort": 22
       },
       {
-        "containerPort": 80,
+        "containerPort": 3000,
         "hostPort": 80
       }
     ],
