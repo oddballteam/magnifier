@@ -1,7 +1,7 @@
 [
   {
     "name": "magnifier",
-    "image": "nginx",
+    "image": "nginx:latest",
     "networkMode": "awsvpc",
     "essential": true,
     "logConfiguration": {
