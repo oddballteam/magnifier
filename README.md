@@ -67,8 +67,8 @@ RAILS_MASTER_KEY=$(cat config/master.key) docker-compose build
 #### 2. Setup DB
 
 ```bash
-RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:create
-RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:schema:load
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run web rake db:create
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run web rake db:schema:load
 ```
 
 #### 3. Develop
