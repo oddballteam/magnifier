@@ -1,7 +1,7 @@
 [
   {
     "name": "magnifier",
-    "image": "magnifier:latest",
+    "image": "nginx",
     "networkMode": "awsvpc",
     "essential": true,
     "logConfiguration": {
@@ -18,7 +18,7 @@
         "hostPort": 22
       },
       {
-        "containerPort": 3000,
+        "containerPort": 80,
         "hostPort": 80
       }
     ],
