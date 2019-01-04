@@ -9,9 +9,7 @@ jobs:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
           RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: magnifier
-          DATABASE_HOST: localhost
+          DATABASE_HOST: db
           DATABASE_USER: postgres
           DATABASE_PASSWORD: newpass
       - image: postgres:9.5
@@ -75,7 +73,7 @@ jobs:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
           RAILS_ENV: production
-          DATABASE_HOST: localhost
+          DATABASE_HOST: db
           DATABASE_USER: postgres
           DATABASE_PASSWORD: newpass
       - image: postgres:9.5
