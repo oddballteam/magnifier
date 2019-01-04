@@ -87,3 +87,21 @@ There are currently two scripts that can be ran
 
 * `npm run eslint:fix` automatically reformats all js files
 * `npm run eslint` - for use on CI, lints all files and shows results
+
+## Test Suite
+
+Magnifier uses RSpec for its backend test suite.  
+
+#### Run the specs
+
+```
+$ rspec
+```
+
+#### Run specs with Guard
+
+Magnifier uses the [Guard::RSpec gem](https://github.com/guard/guard-rspec) to automatically run your specs.  To use it run:
+
+```
+$ bundle exec guard
+```

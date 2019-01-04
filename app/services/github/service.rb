@@ -11,6 +11,9 @@ module Github
 
     attr_reader :configuration, :options, :results_size, :user, :datetime, :username, :org
 
+    # @param user [User] A User record
+    # @param datetime [String] Datetime string in the iso8601 format: '2018-11-26T00:00:00Z'
+    #
     def initialize(user, datetime = nil)
       @configuration = Github::Configuration.new(user)
       @options = configuration.set_options!
@@ -65,7 +68,7 @@ module Github
     #   - the user created
     #   - stem from any of the repositories in the user's organization
     #   - have an updated datetime >= the passed datetime
-    #   - have a state of open
+    #   - have a state of open or closed
     #
     # @return [HTTParty::Response]
     # @see https://developer.github.com/v3/search/#search-issues
@@ -74,7 +77,7 @@ module Github
     def pull_requests_worked
       search_criteria_present!
 
-      query    = "q=type:pr+state:open+org:#{org}+author:#{username}+updated:>=#{datetime}"
+      query    = "q=type:pr+org:#{org}+author:#{username}+updated:>=#{datetime}"
       url      = "#{SEARCH_ENDPOINT}?#{results_size}&#{query}"
       response = HTTParty.get url, options
 
@@ -136,6 +139,40 @@ module Github
     #
     def github_user_account
       endpoint = "/users/#{username}"
+      url      = "#{BASE_URI}#{endpoint}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Gets a single GitHub issue with the passed URL. GitHub API endpoint is:
+    # GET /repos/:owner/:repo/issues/:number
+    #
+    # @param github_url [String] The GitHub URL for the issue, i.e.
+    #   'https://github.com/department-of-veterans-affairs/vets.gov-team/issues/15836'
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/issues/#get-a-single-issue
+    #
+    def issue(github_url)
+      parsed   = Github::UrlParser.new(github_url)
+      endpoint = "/repos/#{parsed.owner}/#{parsed.repo}/issues/#{parsed.number}"
+      url      = "#{BASE_URI}#{endpoint}"
+      response = HTTParty.get url, options
+
+      handle! response
+    end
+
+    # Gets a single GitHub pull request with the passed URL. GitHub API endpoint is:
+    # GET /repos/:owner/:repo/pulls/:number
+    #
+    # @param github_url [String] The GitHub URL for the pull request, i.e.
+    #   'https://github.com/department-of-veterans-affairs/vets-api/pull/2682'
+    # @return [HTTParty::Response]
+    # @see https://developer.github.com/v3/pulls/#get-a-single-pull-request
+    #
+    def pull_request(github_url)
+      parsed   = Github::UrlParser.new(github_url)
+      endpoint = "/repos/#{parsed.owner}/#{parsed.repo}/pulls/#{parsed.number}"
       url      = "#{BASE_URI}#{endpoint}"
       response = HTTParty.get url, options
 

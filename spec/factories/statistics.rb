@@ -27,6 +27,11 @@ FactoryBot.define do
       state { Statistic::OPEN }
     end
 
+    trait :closed_pr do
+      source_type { Statistic::PR }
+      state { Statistic::CLOSED }
+    end
+
     trait :merged_pr do
       source_type { Statistic::PR }
       state { Statistic::MERGED }

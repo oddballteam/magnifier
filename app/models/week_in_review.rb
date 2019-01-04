@@ -3,7 +3,7 @@
 class WeekInReview < ApplicationRecord
   has_many :accomplishments, dependent: :destroy
   has_many :statistics, through: :accomplishments
-  has_many :comments
+  has_many :comments, dependent: :destroy
   belongs_to :user
 
   validates :start_date, :end_date, :user_id, presence: true

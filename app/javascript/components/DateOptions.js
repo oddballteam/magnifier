@@ -49,5 +49,33 @@ const DateOptions = () => {
 };
 
 const datetimeToDate = datetime => moment(datetime).format("M/D/YY");
+const datetimeToParams = datetime => moment(datetime).format("YYYY-MM-DD");
+const dateToDayOfMonth = date => moment(date).format("dddd, M/D");
 
-export { startOfWeek, DateOptions, datetimeToDate };
+const DateToWeek = date => {
+  const startDate = moment(date).startOf("isoWeek");
+  const endDate = moment(date).endOf("isoWeek");
+
+  return (
+    <span>{`${dateToDayOfMonth(startDate)} - ${dateToDayOfMonth(
+      endDate
+    )}`}</span>
+  );
+};
+
+const getDateFromUrl = urlParams => {
+  const params = urlParams.split("?date=");
+  const date = params[params.length - 1];
+
+  return date;
+};
+
+export {
+  startOfWeek,
+  DateOptions,
+  datetimeToDate,
+  dateToDayOfMonth,
+  DateToWeek,
+  datetimeToParams,
+  getDateFromUrl
+};

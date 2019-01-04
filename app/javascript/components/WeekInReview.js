@@ -1,54 +1,83 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { WEEK_IN_REVIEW_QUERY } from "../queries/week_in_review_queries";
-import { StatisticsGroup } from "../components/StatisticsCollection";
+import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const WeekInReviewStatistics = ({ date }) => (
-  <Query query={WEEK_IN_REVIEW_QUERY} variables={{ date: date }}>
-    {({ data, error, loading }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error!</p>;
-      if (data && data.weekInReview) {
-        return (
-          <div className="flex-1">
-            <h2>Current</h2>
-            {StatisticsGroup(
-              data.weekInReview.issuesCreated,
-              true,
-              `Issues | Created`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.issuesWorked,
-              true,
-              `Issues | Worked`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.issuesClosed,
-              true,
-              `Issues | Closed`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsCreated,
-              true,
-              `Pull Requests | Created`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsWorked,
-              true,
-              `Pull Requests | Worked`
-            )}
-            {StatisticsGroup(
-              data.weekInReview.pullRequestsMerged,
-              true,
-              `Pull Requests | Merged`
-            )}
-          </div>
-        );
-      }
+import StatisticsCollection from "./StatisticsCollection";
+import { DateToWeek, datetimeToParams, datetimeToDate } from "./DateOptions";
+import { LOAD_USER_PROFILE } from "../queries/user_queries";
+import {
+  PR_CREATED_QUERY,
+  PR_WORKED_QUERY,
+  PR_MERGED_QUERY,
+  ISSUE_CREATED_QUERY,
+  ISSUE_WORKED_QUERY,
+  ISSUE_CLOSED_QUERY
+} from "../queries/statistic_queries";
+import { buttonClasses } from "../css/sharedTailwindClasses";
 
-      return <div />;
+const WeekInReviewStatistics = ({ date }) => (
+  <Query query={LOAD_USER_PROFILE}>
+    {({ data, error, loading }) => {
+      if (loading) return <p> Loading... </p>;
+      if (error) return <p> Error! </p>;
+      const { githubId } = data.me.githubUser;
+
+      return (
+        <div>
+          <div className="flex pb-8">
+            <h3 className="pr-8"> Statistics For: </h3>{" "}
+            <div> {DateToWeek(date)} </div>
+          </div>
+          <div className="flex">
+            <h3 className="pr-8">Employee:</h3>
+            <div>{`${data.me.firstName} ${data.me.lastName}`}</div>
+          </div>
+          <StatisticsCollection
+            customQuery={ISSUE_CREATED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Created`}
+          />
+          <StatisticsCollection
+            customQuery={ISSUE_WORKED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Worked`}
+          />
+          <StatisticsCollection
+            customQuery={ISSUE_CLOSED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Issues | Closed`}
+          />
+          <StatisticsCollection
+            customQuery={PR_CREATED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Created`}
+          />
+          <StatisticsCollection
+            customQuery={PR_WORKED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Worked`}
+          />
+          <StatisticsCollection
+            customQuery={PR_MERGED_QUERY}
+            date={date}
+            forWeek
+            githubUserId={githubId}
+            title={`Pull Requests | Merged`}
+          />
+        </div>
+      );
     }}
   </Query>
 );
@@ -62,12 +91,36 @@ class WeekInReview extends React.Component {
     this.setState({ date: e });
   };
 
+  handleSubmit = () => {
+    Swal({
+      type: "warning",
+      title: "Week in Review",
+      text: `Begin submittal process for week of ${datetimeToDate(
+        this.state.date
+      )}?`,
+      showCancelButton: true
+    }).then(saidOk => {
+      if (saidOk.value) {
+        this.props.history.push(
+          `/week-in-review-submittal?date=${datetimeToParams(this.state.date)}`
+        );
+      }
+    });
+  };
+
   render() {
     return (
       <div className="flex-auto">
         <h1 className="hello">Week In Review</h1>
+        <button
+          className={`${buttonClasses} float-right `}
+          onClick={this.handleSubmit}
+          type="submit"
+        >
+          Submit Week In Review
+        </button>
         <div className="flex pb-8">
-          <h3 className="pr-8">Select a Week</h3>
+          <h3 className="pr-8">Select a Week:</h3>
           <DatePicker
             onChange={this.handleChange}
             maxDate={new Date()}
@@ -75,12 +128,8 @@ class WeekInReview extends React.Component {
             todayButton={`Today`}
           />
         </div>
-        <div className="flex flex-row">
+        <div>
           <WeekInReviewStatistics date={this.state.date.toISOString()} />
-          <div className="flex-1">
-            <h2>Available</h2>
-            <p>Available stats that are not in week in review will go here</p>
-          </div>
         </div>
       </div>
     );

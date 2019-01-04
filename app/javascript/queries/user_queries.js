@@ -3,10 +3,18 @@ const LOAD_USER_PROFILE = gql`
   {
     me {
       id
-      hasAccessToken
+      accessToken
+      firstName
+      lastName
       githubUsername
       org {
         name
+      }
+      githubUser {
+        apiUrl
+        avatarUrl
+        githubId
+        htmlUrl
       }
     }
     organizations {
