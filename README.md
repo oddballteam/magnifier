@@ -2,6 +2,19 @@
 
 A spike for a tool to reveal the individual and team contributions that employees have made to its projects.
 
+### Master Key
+
+**You will need our master key** to work with the application.  More details can be found on our [Encrypted Credentials wiki page](https://github.com/oddballio/magnifier/wiki/Encrypted-Credentials). 
+
+Here's how to get your master key setup:
+
+1. To maintain security around this key, it will be shared via the [Keybase app](https://keybase.io/)
+2. Ping our Slack `#oddball-tools` room, and request for someone to send you the key via Keybase
+3. Create a file `config/master.key` file in your local Magnifier repo (this file is already part of our [`.gitignore` file](https://github.com/oddballio/magnifier/blob/master/.gitignore))
+4. Add the `master` key to the file
+
+Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+
 ## Native Installation 
 
 At its core, Magnifier is comprised of a Rails backend, and a React frontend.  Here are the associated dependencies you'll need:
@@ -36,26 +49,38 @@ $ bin/setup
 #### 5. Start the Rails server
 
 ```
-$ rails s
+$ DATABASE_HOST=localhost DATABASE_USER=$USER rails s
 ```
 
 #### 6. Open the app
 
 Visit http://localhost:3000/
 
-### Master Key
 
-**You will need our master key** to work with the application.  More details can be found on our [Encrypted Credentials wiki page](https://github.com/oddballio/magnifier/wiki/Encrypted-Credentials). 
+## Docker Installation
 
-Here's how to get your master key setup:
+#### 1. Initial Docker build
 
-1. To maintain security around this key, it will be shared via the [Keybase app](https://keybase.io/)
-2. Ping our Slack `#oddball-tools` room, and request for someone to send you the key via Keybase
-3. Create a file `config/master.key` file in your local Magnifier repo (this file is already part of our [`.gitignore` file](https://github.com/oddballio/magnifier/blob/master/.gitignore))
-4. Add the `master` key to the file
+```
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose build
+```
+
+#### 2. Setup DB
+
+```
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:create
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:schema:load
+```
+
+#### 3. Develop
+
+```
+RAILS_MASTER_KEY=$(cat config/master.key) docker-compose up
+```
 
 
-Run `bin/setup` to install dependencies, copy git hooks and bootstrap local development db.
+
+
 
 ## Front end
 

@@ -49,7 +49,7 @@ RUN groupadd magnifier --gid 8411 && \
 USER magnifier
 
 # Create app folde, symlink a persisted gem folder
-RUN mkdir -p $REPO_DIR $REPO_DIR/tmp
+RUN mkdir -p $REPO_DIR $REPO_DIR/tmp ${GEM_DIR}
 
 # Change Working dir
 WORKDIR $REPO_DIR
@@ -57,7 +57,7 @@ WORKDIR $REPO_DIR
 # Install gems
 COPY --chown=magnifier:magnifier Gemfile Gemfile 
 COPY --chown=magnifier:magnifier Gemfile.lock Gemfile.lock 
-RUN bundle install --jobs 20 --retry 5 --deployment
+RUN bundle install --jobs 20 --retry 5 --deployment --path ${GEM_DIR}
 
 # Install node-modules
 COPY --chown=magnifier:magnifier package.json package.json 
@@ -90,7 +90,8 @@ HEALTHCHECK --interval=30s --start-period=5s \
 EXPOSE $PORT
 
 # Entrypoint for running commands, like: `docker-compose run web rake db:setup`
-ENTRYPOINT ["bundle", "exec"]
+ENTRYPOINT ["/home/magnifier/src/docker-entrypoint.sh"]
+
 
 # Default command
-CMD bundle exec rails s -p $PORT -b 0.0.0.0
+CMD rails s -p $PORT -b 0.0.0.0
