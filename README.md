@@ -36,51 +36,46 @@ You will need our **master key** to run the app. See the [Master Key](#master-ke
 
 #### 3. Install JS dependencies
 
-```
-$ yarn install
+```bash
+yarn install
 ```
 
 #### 4. Setup Rails
 
-```
-$ bin/setup
+```bash
+bin/setup
 ```
 
 #### 5. Start the Rails server
 
-```
-$ DATABASE_HOST=localhost DATABASE_USER=$USER rails s
+```bash
+DATABASE_HOST=localhost DATABASE_USER=$USER rails s
 ```
 
 #### 6. Open the app
 
 Visit http://localhost:3000/
 
-
 ## Docker Installation
 
 #### 1. Initial Docker build
 
-```
+```bash
 RAILS_MASTER_KEY=$(cat config/master.key) docker-compose build
 ```
 
 #### 2. Setup DB
 
-```
+```bash
 RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:create
 RAILS_MASTER_KEY=$(cat config/master.key) docker-compose run rake db:schema:load
 ```
 
 #### 3. Develop
 
-```
+```bash
 RAILS_MASTER_KEY=$(cat config/master.key) docker-compose up
 ```
-
-
-
-
 
 ## Front end
 
