@@ -35,7 +35,8 @@ module WeekInReviews
       accomplishments << create('created_issue!') if user_created? && created_during_wir?
       accomplishments << create('worked_issue!') if updated_during_wir?
       accomplishments << create('closed_issue!') if closed_during_wir?
-      accomplishments
+
+      raise_if_empty!(accomplishments)
     end
 
     def create_pull_request_accomplishments!
@@ -43,7 +44,8 @@ module WeekInReviews
       accomplishments << create('created_pr!') if created_during_wir?
       accomplishments << create('worked_pr!') if updated_during_wir?
       accomplishments << create('merged_pr!') if closed_during_wir? && merged?
-      accomplishments
+
+      raise_if_empty!(accomplishments)
     end
 
     def create(accomplishment_method)
@@ -80,6 +82,12 @@ module WeekInReviews
 
     def merged?
       statistic.state == Statistic::MERGED
+    end
+
+    def raise_if_empty!(accomplishments)
+      raise WeekInReviews::Error, 'Statistic was not worked on during this Week in Review' if accomplishments.empty?
+
+      accomplishments
     end
   end
 end

@@ -20,7 +20,7 @@ class Accomplishment < ApplicationRecord
   scope :pull_requests, -> { where(type: Statistic::PR) }
 
   def self.create_created_issue!(week_in_review_id, statistic_id, user_id)
-    issues.created.create!(
+    issues.created.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
@@ -28,7 +28,7 @@ class Accomplishment < ApplicationRecord
   end
 
   def self.create_worked_issue!(week_in_review_id, statistic_id, user_id)
-    issues.worked.create!(
+    issues.worked.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
@@ -36,7 +36,7 @@ class Accomplishment < ApplicationRecord
   end
 
   def self.create_closed_issue!(week_in_review_id, statistic_id, user_id)
-    issues.closed.create!(
+    issues.closed.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
@@ -44,7 +44,7 @@ class Accomplishment < ApplicationRecord
   end
 
   def self.create_created_pr!(week_in_review_id, statistic_id, user_id)
-    pull_requests.created.create!(
+    pull_requests.created.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
@@ -52,7 +52,7 @@ class Accomplishment < ApplicationRecord
   end
 
   def self.create_worked_pr!(week_in_review_id, statistic_id, user_id)
-    pull_requests.worked.create!(
+    pull_requests.worked.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
@@ -60,7 +60,7 @@ class Accomplishment < ApplicationRecord
   end
 
   def self.create_merged_pr!(week_in_review_id, statistic_id, user_id)
-    pull_requests.merged.create!(
+    pull_requests.merged.find_or_create_by!(
       week_in_review_id: week_in_review_id,
       statistic_id: statistic_id,
       user_id: user_id
