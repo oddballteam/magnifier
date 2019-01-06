@@ -48,3 +48,11 @@ variable "db_user" {
 variable "db_name" {
   default = "magnifier"
 }
+
+variable "container_port" {
+  default = "80"
+}
+
+variable "ecs_key_pair_name" {
+  default = "rob-key-pair-useast"
+}

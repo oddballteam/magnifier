@@ -18,10 +18,6 @@ locals {
   azs = "${var.AWS_REGION}a,${var.AWS_REGION}b"
 }
 
-variable "container_port" {
-  default = "80"
-}
-
 resource "aws_alb" "magnifier" {
   name     = "magnifier"
   internal = false
