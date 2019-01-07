@@ -19,8 +19,9 @@ locals {
 }
 
 resource "aws_alb" "magnifier" {
-  name     = "magnifier"
-  internal = false
+  name         = "magnifier"
+  internal     = false
+  idle_timeout = 90
 
   security_groups = [
     "${aws_security_group.ecs.id}",
@@ -181,6 +182,7 @@ data "template_file" "magnifier" {
     DATABASE_USER     = "${var.db_user}"
     DATABASE_PORT     = "${aws_db_instance.default.port}"
     DATABASE_PASSWORD = "${var.db_pass}"
+    registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
 }
 

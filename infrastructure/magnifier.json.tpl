@@ -1,7 +1,7 @@
 [
   {
     "name": "magnifier",
-    "image": "nginx:latest",
+    "image": "${registry_url}:latest",
     "networkMode": "awsvpc",
     "essential": true,
     "logConfiguration": {
@@ -20,6 +20,10 @@
       {
         "containerPort": 80,
         "hostPort": 80
+      },
+      {
+        "containerPort": 3000,
+        "hostPort": 3000
       }
     ],
     "environment": [
@@ -38,6 +42,10 @@
       {
         "name": "DATABASE_PASSWORD",
         "value": "${DATABASE_PASSWORD}"
+      },
+      {
+        "name": "RAILS_LOG_TO_STDOUT",
+        "value": "true"
       }
     ]
   }

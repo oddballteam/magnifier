@@ -50,7 +50,7 @@ variable "db_name" {
 }
 
 variable "container_port" {
-  default = "80"
+  default = "3000"
 }
 
 variable "ecs_key_pair_name" {
