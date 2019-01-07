@@ -184,6 +184,8 @@ data "template_file" "magnifier" {
     DATABASE_PASSWORD = "${var.db_pass}"
     registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
+
+  depends_on = ["aws_ecr_repository.magnifier"]
 }
 
 resource "aws_ecs_task_definition" "magnifier" {
