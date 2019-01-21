@@ -210,5 +210,26 @@ RSpec.describe WeekInReviews::Append do
         end
       end
     end
+
+    context 'when the initialized Statistic is not updated during the initialized WeekInReview' do
+      let(:statistic) do
+        create(
+          :statistic,
+          :merged_pr,
+          source_created_at: before_week_in_review,
+          source_updated_at: before_week_in_review,
+          source_closed_at: before_week_in_review
+        )
+      end
+
+      it 'raises an error' do
+        expect do
+          WeekInReviews::Append.new(statistic, week_in_review, user).new_accomplishments!
+        end.to raise_error(
+          WeekInReviews::Error,
+          'Statistic was not worked on during this Week in Review'
+        )
+      end
+    end
   end
 end

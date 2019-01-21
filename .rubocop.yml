@@ -39,6 +39,7 @@ Metrics/LineLength:
   - 'db/schema.rb'
   - spec/rails_helper.rb
   - 'spec/factories/*'
+  - app/graphql/mutations/accomplishments/mutation_manifest.rb
 
 Style/FrozenStringLiteralComment:
   Enabled: false

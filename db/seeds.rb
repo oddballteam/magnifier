@@ -67,6 +67,13 @@ people = [
     email: 'susan@example.com',
     github_username: 'suzy',
     organization_id: etsy.id
+  },
+  {
+    first_name: 'Beth',
+    last_name: 'Potts',
+    email: 'beth@example.com',
+    github_username: 'bethpotts',
+    organization_id: dova.id
   }
 ]
 
@@ -75,7 +82,7 @@ people.each do |person|
 end
 
 john = User.find_by(github_username: 'jsmith')
-suzy = User.find_by(github_username: 'suzy')
+beth = User.find_by(github_username: 'bethpotts')
 
 
 #################  GithubUsers  ##################
@@ -91,6 +98,7 @@ gh_users = [
     oddball_employee: true
   },
   {
+    user_id: beth.id,
     github_login: 'bethpotts',
     avatar_url: 'https://avatars1.githubusercontent.com/u/14881910?v=4',
     api_url: 'https://api.github.com/users/bethpotts',
@@ -105,7 +113,7 @@ gh_users.each do |user|
 end
 
 smitty = GithubUser.find_by(github_login: 'jsmith')
-beth   = GithubUser.find_by(github_login: 'bethpotts')
+beth_gh_user = GithubUser.find_by(github_login: 'bethpotts')
 
 
 #################  Statistics  ##################
@@ -136,8 +144,8 @@ stats = [
     source_created_at: '2018-10-07T20:31:41Z',
     source_updated_at: '2018-10-09T20:31:42Z',
     source_closed_at: '2018-10-09T50:31:42Z',
-    source_created_by: beth.github_id,
-    assignees: [beth.github_id]
+    source_created_by: beth_gh_user.github_id,
+    assignees: [beth_gh_user.github_id]
   }
 ]
 
@@ -152,13 +160,13 @@ pr = Statistic.last
 #################  GithubUsersStatistics  ##################
 
 smitty.statistics << issue
-beth.statistics << pr
+beth_gh_user.statistics << pr
 
 
 #################  WeekInReviews & Accomplishments ##################
 
 date = pr.source_updated_at
-week_in_review = ::WeekInReviews::Builder.new(suzy, date).assemble!
+week_in_review = ::WeekInReviews::Builder.new(beth, date).assemble!
 
 
 #################  Comments  ##################
@@ -173,7 +181,7 @@ comments = [
 comments.each do |comment|
   Comment.create!(
     week_in_review_id: week_in_review.id,
-    user_id: suzy.id,
+    user_id: beth.id,
     body: comment[:body],
     type: comment[:type]
   )
