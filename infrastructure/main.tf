@@ -301,3 +301,49 @@ resource "aws_db_subnet_group" "magnifier_db" {
     Terraform   = "true"
   }
 }
+
+data "template_file" "magnifier_single_task" {
+  template = "${file("magnifier-single-task.json.tpl")}"
+
+  vars {
+    REPOSITORY_URL    = "${aws_ecr_repository.magnifier.repository_url}"
+    AWS_REGION        = "${var.AWS_REGION}"
+    LOGS_GROUP        = "${aws_cloudwatch_log_group.magnifier.name}"
+    DATABASE_URL      = "${aws_db_instance.default.endpoint}"
+    DATABASE_HOST     = "${aws_db_instance.default.address}"
+    DATABASE_USER     = "${var.db_user}"
+    DATABASE_PORT     = "${aws_db_instance.default.port}"
+    DATABASE_PASSWORD = "${var.db_pass}"
+    registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
+  }
+
+  depends_on = ["aws_ecr_repository.magnifier"]
+}
+
+resource "aws_ecs_task_definition" "magnifier_single_task" {
+  family                   = "magnifier-single-task"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = 256
+  memory                   = 512
+  container_definitions    = "${data.template_file.magnifier_single_task.rendered}"
+  execution_role_arn       = "${aws_iam_role.ecs_task_assume.arn}"
+
+  tags = {
+    Terraform   = "true"
+    Application = "magnifier"
+  }
+}
+
+resource "aws_ecs_service" "magnifier_single_task" {
+  name            = "magnifier-single-task"
+  cluster         = "${aws_ecs_cluster.fargate.id}"
+  launch_type     = "FARGATE"
+  task_definition = "${aws_ecs_task_definition.magnifier_single_task.arn}"
+  desired_count   = 1
+
+  network_configuration = {
+    subnets         = ["${module.base_vpc.private_subnets[0]}"]
+    security_groups = ["${aws_security_group.ecs.id}"]
+  }
+}
