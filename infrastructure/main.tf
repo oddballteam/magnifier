@@ -185,7 +185,7 @@ data "template_file" "magnifier" {
     registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
 
-  depends_on = ["aws_ecr_repository.magnifier"]
+  depends_on = ["aws_ecr_repository.magnifier", "aws_cloudwatch_log_group.magnifier", "aws_db_instance.default"]
 }
 
 resource "aws_ecs_task_definition" "magnifier" {
@@ -241,6 +241,17 @@ resource "aws_ecr_repository" "magnifier" {
 
 resource "aws_cloudwatch_log_group" "magnifier" {
   name              = "/ecs/magnifier"
+  retention_in_days = 30
+
+  tags {
+    Name        = "magnifier"
+    Application = "magnifier"
+    Terraform   = "true"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "magnifier_single_task" {
+  name              = "/ecs/magnifier-single-task"
   retention_in_days = 30
 
   tags {
@@ -308,7 +319,7 @@ data "template_file" "magnifier_single_task" {
   vars {
     REPOSITORY_URL    = "${aws_ecr_repository.magnifier.repository_url}"
     AWS_REGION        = "${var.AWS_REGION}"
-    LOGS_GROUP        = "${aws_cloudwatch_log_group.magnifier.name}"
+    LOGS_GROUP        = "${aws_cloudwatch_log_group.magnifier_single_task.name}"
     DATABASE_URL      = "${aws_db_instance.default.endpoint}"
     DATABASE_HOST     = "${aws_db_instance.default.address}"
     DATABASE_USER     = "${var.db_user}"
@@ -317,7 +328,7 @@ data "template_file" "magnifier_single_task" {
     registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
 
-  depends_on = ["aws_ecr_repository.magnifier"]
+  depends_on = ["aws_ecr_repository.magnifier", "aws_cloudwatch_log_group.magnifier_single_task", "aws_db_instance.default"]
 }
 
 resource "aws_ecs_task_definition" "magnifier_single_task" {
@@ -332,18 +343,5 @@ resource "aws_ecs_task_definition" "magnifier_single_task" {
   tags = {
     Terraform   = "true"
     Application = "magnifier"
-  }
-}
-
-resource "aws_ecs_service" "magnifier_single_task" {
-  name            = "magnifier-single-task"
-  cluster         = "${aws_ecs_cluster.fargate.id}"
-  launch_type     = "FARGATE"
-  task_definition = "${aws_ecs_task_definition.magnifier_single_task.arn}"
-  desired_count   = 1
-
-  network_configuration = {
-    subnets         = ["${module.base_vpc.private_subnets[0]}"]
-    security_groups = ["${aws_security_group.ecs.id}"]
   }
 }
