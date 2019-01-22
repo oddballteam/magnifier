@@ -1,13 +1,13 @@
 [
   {
     "name": "magnifier",
-    "image": "${registry_url}:latest",
+    "image": "${registry_url}:tf-setup",
     "networkMode": "awsvpc",
     "essential": true,
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/magnifier",
+        "awslogs-group": "${LOGS_GROUP}",
         "awslogs-region": "${AWS_REGION}",
         "awslogs-stream-prefix": "ecs"
       }

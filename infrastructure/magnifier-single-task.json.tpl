@@ -7,7 +7,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/magnifier-single-task",
+        "awslogs-group": "${LOGS_GROUP}",
         "awslogs-region": "${AWS_REGION}",
         "awslogs-stream-prefix": "ecs"
       }

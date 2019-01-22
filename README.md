@@ -167,7 +167,8 @@ Currently we are using rails to serve the static assets, long term this will pro
 
 ## Production Setup
 
-We are currently using AWS ECS' Fargat offering, with AWS RDS and public and private subnets
+We are currently using AWS ECS' Fargate offering, with RDS and public and private subnets
+
 ```
                             +--------------------+
 +-----------------+         |                    |
@@ -192,8 +193,9 @@ We are currently using AWS ECS' Fargat offering, with AWS RDS and public and pri
 
 All code is visible in `/infrastructure`
 
-
 Logs are currently being streamed to AWS Cloudwatch and tagged by the ECS task definition ID.
-
 By navigating to cloudwatch here: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=/ecs/magnifier , and selecting the latest stream you can see the current production logs
 
+In order to run a one-off task we currently have a `magnifier-single-task` service created with a desired task count of 0, simply tweak the command in `infrastructure/magnifier-single-task.json.tpl` and adjust the `desired_count` in `aws_ecs_service.magnifier_single_task` in infrastructure/main.tf to 1, `terraform plan` `terraform apply` and watch your new instance come online and [view the logs in cloudwatch](https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=/ecs/magnifier-single-task)
+
+That task is currently configured to run `rails db:migrate` tweak it to whatever you like, and it will allow for arbitrary execution on aws

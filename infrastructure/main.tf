@@ -2,7 +2,7 @@ provider "aws" {
   access_key = "${var.aws_access_key}"
   secret_key = "${var.aws_secret_key}"
   region     = "${var.aws_region}"
-  version    = "~> 1.35"
+  version    = "~> 1.56.0"
 }
 
 terraform {
@@ -184,8 +184,6 @@ data "template_file" "magnifier" {
     DATABASE_PASSWORD = "${var.db_pass}"
     registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
-
-  depends_on = ["aws_ecr_repository.magnifier", "aws_cloudwatch_log_group.magnifier", "aws_db_instance.default"]
 }
 
 resource "aws_ecs_task_definition" "magnifier" {
@@ -200,6 +198,10 @@ resource "aws_ecs_task_definition" "magnifier" {
   tags = {
     Terraform   = "true"
     Application = "magnifier"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -223,6 +225,7 @@ resource "aws_ecs_service" "magnifier" {
 
   depends_on = [
     "aws_alb_listener.magnifier",
+    "aws_iam_role_policy.ecs_task_assume",
   ]
 }
 
@@ -327,8 +330,6 @@ data "template_file" "magnifier_single_task" {
     DATABASE_PASSWORD = "${var.db_pass}"
     registry_url      = "${aws_ecr_repository.magnifier.repository_url}"
   }
-
-  depends_on = ["aws_ecr_repository.magnifier", "aws_cloudwatch_log_group.magnifier_single_task", "aws_db_instance.default"]
 }
 
 resource "aws_ecs_task_definition" "magnifier_single_task" {
@@ -344,4 +345,21 @@ resource "aws_ecs_task_definition" "magnifier_single_task" {
     Terraform   = "true"
     Application = "magnifier"
   }
+}
+
+resource "aws_ecs_service" "magnifier_single_task" {
+  name            = "magnifier-single-task"
+  cluster         = "${aws_ecs_cluster.fargate.id}"
+  launch_type     = "FARGATE"
+  task_definition = "${aws_ecs_task_definition.magnifier_single_task.arn}"
+  desired_count   = 0
+
+  network_configuration = {
+    subnets         = ["${module.base_vpc.private_subnets[0]}"]
+    security_groups = ["${aws_security_group.ecs.id}"]
+  }
+
+  depends_on = [
+    "aws_iam_role_policy.ecs_task_assume",
+  ]
 }
