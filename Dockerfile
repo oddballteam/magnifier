@@ -81,6 +81,7 @@ ARG database_password
 ENV DATABASE_PASSWORD=$database_password
 # Compile static assets
 RUN bundle exec rake webpacker:compile
+RUN bundle exec rake assets:precompile
 
 # Provide a Healthcheck for Docker risk mitigation
 HEALTHCHECK --interval=30s --start-period=5s \ 

@@ -31,3 +31,4 @@ config/secrets.yml.key
 
 # ignore RSpec performance examples
 spec/examples.txt
+*.tfvars

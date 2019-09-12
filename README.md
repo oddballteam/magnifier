@@ -143,13 +143,13 @@ To run the docker container locally, you'll need to inject the
 `RAILS_MASTER_KEY` via the environment. After ensuring the key is present in
 your current session with `env | grep RAILS_MASTER_KEY`, you can build the
 container with: 
-`docker build -t magnifier:latest --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY .`
+`RAILS_MASTER_KEY=$(cat config/master.key) docker-compose build`
 
 The first time building will take a few minutes, based on your internet speed. 
 
 After the container has been built, run it locally with: 
 
-`docker run -p 3000:3000 -e DATABASE_URL=postgresql://$USER@host.docker.internal/github-magnifier_development magnifier`
+`RAILS_MASTER_KEY=$(cat config/master.key) docker-compose up`
 
 ## Interacting with Docker container locally
 
@@ -165,5 +165,37 @@ For the following commands, first use `docker ps` to list the active containers 
 
 Currently we are using rails to serve the static assets, long term this will probably need to change and switch to using nginx or something similar
 
+## Production Setup
 
+We are currently using AWS ECS' Fargate offering, with RDS and public and private subnets
 
+```
+                            +--------------------+
++-----------------+         |                    |
+|                 |         |                    |
+|                 |         | Public Internet    |
+|  AWS Fargate    <---------+                    |
+|                 |         |                    |
+|                 |         |                    |
++--------+--------+         |                    |
+         |                  +--------------------+
+         |
+         |
+         v
++--------+--------+
+|                 |
+|  DB             |
+|                 |
+|                 |
+|                 |
++-----------------+
+```
+
+All code is visible in `/infrastructure`
+
+Logs are currently being streamed to AWS Cloudwatch and tagged by the ECS task definition ID.
+By navigating to cloudwatch here: https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=/ecs/magnifier , and selecting the latest stream you can see the current production logs
+
+In order to run a one-off task we currently have a `magnifier-single-task` service created with a desired task count of 0, simply tweak the command in `infrastructure/magnifier-single-task.json.tpl` and adjust the `desired_count` in `aws_ecs_service.magnifier_single_task` in infrastructure/main.tf to 1, `terraform plan` `terraform apply` and watch your new instance come online and [view the logs in cloudwatch](https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=/ecs/magnifier-single-task)
+
+That task is currently configured to run `rails db:migrate` tweak it to whatever you like, and it will allow for arbitrary execution on aws
